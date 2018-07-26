@@ -1,10 +1,3 @@
-rm(list = ls())
-# Testing set-up based on example from wikipedia #
-testmat <- matrix(as.logical(c(1,1,1,0,0,1,1,0,1,0,1,1,0,0,1,1,0,1,1,0,1,0,1,0,1,0,1,1,1,0)), nrow = 5)
-rownames(testmat) <- c('a', 'b', 'c', 'd', 'e')
-testmat
-
-
 AprioriGen <- function(L){
   # Only take the unique values of L #
   L <- unique(L, MARGIN = 2)
@@ -76,27 +69,8 @@ AprioriGen <- function(L){
   return(rel_cand[,1:iter] )
 }
 
-t <- AprioriGen(testmat)
+AprioriGen(testmat)
 
-names(t)[t]
-
-
-rm(AprioriGen)
-
-## to do:
-# Why are columns more than once? More efficient solution possible? #
-# Go on with algorithm #
-
-### TESTING ###
-cur_set <- t[,1]
-K <- 3
-nrows <- 5
-cur_set
-subs <- matrix(rep(cur_set, each = K + 1), ncol = K + 1, byrow = TRUE)
-subs2 <- subs
-subs2[0:K  * nrows + which(cur_set)] <- FALSE
-subs    
-subs2
 
 
 

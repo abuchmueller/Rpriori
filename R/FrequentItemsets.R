@@ -25,7 +25,7 @@ makeTansactionMatrix <- function(mat){
 
 Groc <-  makeTansactionMatrix(Groceries)
 
-f_items <- function(dataset, minsupport){
+FrequentItemsets <- function(dataset, minsupport){
   
   # Calculate frequent Itemsets of size 1 #
   L1 <- apply(dataset,2 , mean)
