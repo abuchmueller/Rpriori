@@ -3,7 +3,9 @@ Version: 0.1
 Title: Implementaion of the Apriori Algorithm
 Description: In this package a full implementation of the Apriori-Algorithm in R is provided
 Author: Tim Toebrock <timtoebrock@gmail.com>
+Maintainer: Tim Toebrock<timtoebrock@gmail.com>
 Depends: R (>= 3.5.1)
+Imports: arules,
 License: GPL-3
 LazyData: true
 RoxygenNote: 6.0.1
