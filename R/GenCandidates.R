@@ -62,7 +62,7 @@ GenCandidates <- function(L){
     # cbind the current candidates with all observations from L.
     # Then there should K + 1 duplicates when all subset of the current candidate are in L.
     if(sum(duplicated(cbind(L, subs), MARGIN = 2)) == K + 1) {
-      rel_cand[,1] <- cand[,col_num]
+      rel_cand[,col_num] <- cand[,col_num]
       
       iter <- iter + 1
     }

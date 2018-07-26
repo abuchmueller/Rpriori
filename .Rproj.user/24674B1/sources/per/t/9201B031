@@ -1,21 +1,21 @@
 {
     "collab_server" : "",
     "contents" : "",
-    "created" : 1532614386636.000,
+    "created" : 1532617062704.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "0",
-    "id" : "CCED22CC",
-    "lastKnownWriteTime" : 1532614596,
-    "last_content_update" : 1532614596233,
+    "hash" : "1082480518",
+    "id" : "9201B031",
+    "lastKnownWriteTime" : 1532624634,
+    "last_content_update" : 1532624634744,
     "path" : "E:/OwnData/OneDrive/Dropbox/Dropbox/Studies/Angewandte Statistik/Semester 2/Project Apriori/R/GenCandidates.R",
     "project_path" : "R/GenCandidates.R",
     "properties" : {
-        "cursorPosition" : "9,19",
-        "scrollLine" : "0"
+        "cursorPosition" : "82,0",
+        "scrollLine" : "42"
     },
-    "relative_order" : 2,
+    "relative_order" : 5,
     "source_on_save" : false,
     "source_window" : "",
     "type" : "r_source"

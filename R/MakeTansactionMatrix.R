@@ -11,10 +11,10 @@
 makeTansactionMatrix <- function(mat){
   
   # Get the underlying data matrix from the transaction matrix 
-  mat_out <- t(as.matrix(mat@data))
+  mat_out <- as.matrix(mat@data)
   
   # Add the rownames (which do represent the different items)
-  colnames(mat_out) <- mat@itemInfo$labels
+  rownames(mat_out) <- mat@itemInfo$labels
   
   
   # return the  resulting matrix #
