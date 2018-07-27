@@ -11,7 +11,7 @@ FrequentItemsets <- function(dataset, minsupport){
   L1 <- apply(dataset,1 , mean)
   L1 <- L1[L1 >= minsupport]
   L1_names <- names(L1)
-  L1_supp <- as.numeric(L1)
+  L1_sup <- as.numeric(L1)
   L1 <- diag(rep(TRUE, length(L1_names)))
   rownames(L1) <- L1_names
 
@@ -43,6 +43,7 @@ FrequentItemsets <- function(dataset, minsupport){
   
   k <- 3
   while (ncol(get(paste("L", k - 1, sep = ""))) > 0 ){
+    print(k)
     
     # Below here is experimental. not really tested yet.
     # Create new candidates from L(k-1)
@@ -63,13 +64,17 @@ FrequentItemsets <- function(dataset, minsupport){
   
   # Collect all frequent itemset in list #
   out_list <- list()
+  support <- c()
   
   for (i in 1:(k-1)){
     out_list[[i]] <- get(paste("L", i, sep = ""))
+    support <- c(support, get(paste("L", i, "_sup", sep = "")))
   }
   
+  
+  
   # combine list two one ouput. #
-  return(CombineCands(out_list))
+  return(list(sets = CombineCands(out_list), support = support))
 
 }
 
@@ -77,29 +82,32 @@ FrequentItemsets <- function(dataset, minsupport){
 
 
 ## Get Sample data ##
-
-data("Groceries")
-Groc <-  makeTansactionMatrix(Groceries)
-
-cands <- FrequentItemsets(Groc, minsupport = 0.05)
-cands[[2]]
-
-DetSupport(GenCandidates(cands), Transaction = Groc)
-
-
-DetSupport(L2)
-
-
-matrix(c(TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE, FALSE, TRUE, FALSE, TRUE),ncol = 3, dimnames = list(c('a', 'b', 'c', 'd'),NULL))
-matrix(c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, FALSE, TRUE, TRUE, TRUE),ncol = 3, dimnames = list(c('a', 'b', 'c', 'd'),NULL))
-
-a
-b <- GenCandidates(a)
-c <- GenCandidates(b)
-d <- GenCandidates(c)
-e <- GenCandidates(d)
-f <- GenCandidates(e)
-g <- GenCandidates(f)
+# 
+# data("Groceries")
+# Groc <-  makeTansactionMatrix(Groceries)
+# 
+# cands <- FrequentItemsets(Groc, minsupport = 0.05)
+# cands
+# CombineCands(cands)
+# 
+# apply(cands, 2, sum)
+# 
+# DetSupport(GenCandidates(cands), Transaction = Groc)
+# 
+# 
+# DetSupport(L2)
+# 
+# 
+# matrix(c(TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE, FALSE, TRUE, FALSE, TRUE),ncol = 3, dimnames = list(c('a', 'b', 'c', 'd'),NULL))
+# matrix(c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, FALSE, TRUE, TRUE, TRUE),ncol = 3, dimnames = list(c('a', 'b', 'c', 'd'),NULL))
+# 
+# a
+# b <- GenCandidates(a)
+# c <- GenCandidates(b)
+# d <- GenCandidates(c)
+# e <- GenCandidates(d)
+# f <- GenCandidates(e)
+# g <- GenCandidates(f)
 
 
 
