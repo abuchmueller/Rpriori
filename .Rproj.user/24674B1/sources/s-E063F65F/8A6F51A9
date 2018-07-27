@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1532689433646.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "8A6F51A9",
+    "lastKnownWriteTime" : 1532694821,
+    "last_content_update" : 1532694821127,
+    "path" : "E:/OwnData/OneDrive/Dropbox/Dropbox/Studies/Angewandte Statistik/Semester 2/Project Apriori/tests/testthat/test-CombineCands.R",
+    "project_path" : "tests/testthat/test-CombineCands.R",
+    "properties" : {
+        "cursorPosition" : "15,2",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
