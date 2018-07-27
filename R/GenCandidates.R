@@ -19,8 +19,7 @@ GenCandidates <- function(L){
   # Create output matrix of maximal possible length #
   ncols <- sum(1:ncol(L)) - 1
   nrows <- nrow(L)
-  cand <- matrix(rep(FALSE, nrows * ncols), nrow = nrows)
-  rownames(cand) <- rownames(L)
+  cand <- matrix(rep(FALSE, nrows * ncols), nrow = nrows, dimnames = list(rownames(L), NULL))
   
   # Step 1
   
@@ -37,27 +36,43 @@ GenCandidates <- function(L){
   }
   
   # Cut ouput matrix back on relevant (non only zero) values #
-  cand <- unique(cand[,1:(iter - 1)], MARGIN = 2)
+  if (iter > 2){
+    cand <- unique(cand[,1:(iter - 1)], MARGIN = 2)
+  } else {
+    if (any(apply(cand, 2, sum) == 0)){
+      cand <- cand[,1, drop = FALSE]
+    } else {
+      cand <- cand[,1:2, drop = FALSE]
+    }
+  }
+
 
   # Step 2
   # Counter for the number of relevant datasets #
-  iter <- 0
+  iter <- 1
   
   # Create the ouput matrix where I will save the relevant candidates #
   rel_cand <- cand
   rel_cand[] <- FALSE
   
   # Prepare the subset matrix that will always have as many rows as L and k - 1 cols #
-  subs <- matrix(rep(FALSE, K * nrows ), ncol = K)
+  #subs <- matrix(rep(FALSE, K * nrows ), ncol = K)
   
   for (col_num in 1:ncol(cand)){
-    
+
     # Create all k - 1 subset of that set #
     # Rep the current set k times to create all K-1 subsets #
     subs <- matrix(rep(cand[,col_num], each = K + 1), ncol = K + 1, byrow = TRUE)
     
     # Calculate the positions of the elements that I have to set to zero to get k-1 itemsets
-    pos <- 0:K  * nrows + which(cand[,col_num])
+    
+    # Check whether all positions are TRUE, if the case use other logic
+    if (! all(subs)){
+      pos <- 0:K  * nrows + which(cand[,col_num])
+    } else {
+      pos <- 0:K  * nrows + 1:4
+    }
+    
     
     # Now for each subset set one True values to false to have subsets of number K- 1
     subs[pos] <- FALSE
@@ -67,7 +82,7 @@ GenCandidates <- function(L){
     # cbind the current candidates with all observations from L.
     # Then there should K + 1 duplicates when all subset of the current candidate are in L.
     if(sum(duplicated(cbind(L, subs), MARGIN = 2)) == K + 1) {
-      rel_cand[,col_num] <- cand[,col_num]
+      rel_cand[,iter] <- cand[,col_num]
       
       iter <- iter + 1
     }
@@ -77,12 +92,16 @@ GenCandidates <- function(L){
     
     
   }
-  if(iter > 0){
-  return(rel_cand[,1:iter, drop = FALSE])
+
+  if(iter > 1){
+  return(rel_cand[,1:(iter - 1), drop = FALSE])
   } else {
     return(rel_cand[,0, drop = FALSE])
   }
 }
+
+
+
 
 
 

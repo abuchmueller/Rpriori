@@ -21,6 +21,10 @@ test_that("input itemsets of length 2 output should be empty.", {
 })
 
 
+### TO DO: ###
+# ADD A TEST WHERE THERE IS ONLY ONE CANDIDATE, i.e. an input of two vectors with 3 dataset out of 4 #
+
+
 # here i will test the create of length 2 candidates #
 
 

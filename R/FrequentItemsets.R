@@ -7,6 +7,13 @@
 
 FrequentItemsets <- function(dataset, minsupport){
   
+  ######################################################
+  # Manual Insertion ... pls delete
+  data("Groceries")
+  dataset <- makeTansactionMatrix(Groceries)
+  minsupport = 0.02
+  ########################################################
+  
   # Calculate frequent Itemsets of size 1 #
   L1 <- apply(dataset,1 , mean)
   L1 <- L1[L1 >= minsupport]
@@ -43,9 +50,7 @@ FrequentItemsets <- function(dataset, minsupport){
   
   k <- 3
   while (ncol(get(paste("L", k - 1, sep = ""))) > 0 ){
-    print(k)
-    
-    # Below here is experimental. not really tested yet.
+
     # Create new candidates from L(k-1)
     assign(paste("L", k, sep = ""), GenCandidates(get(paste("L", k - 1, sep = ""))))
     
@@ -58,7 +63,7 @@ FrequentItemsets <- function(dataset, minsupport){
     
     # Delete rows that do no have a single product in them. #
     assign(paste("L", k, sep = ""), get(paste("L", k , sep = ""))[apply(get(paste("L", k , sep = "")),1,sum) >0,])
-    
+
     k <- k + 1
   }
   
