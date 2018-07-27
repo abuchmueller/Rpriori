@@ -8,6 +8,10 @@
 #' @return The support of the candidate wihtin the transactions as floating-point value.
 
 DetSupport_row <- function(cand, Transaction){
+  ### Comment!:
+   # Make sure the this function can deal with a different ordering of the rows in the Transaction and the cand dataset. Right now that is not
+   # implemented yet.
+  
   
   # If the input is a vector, make it a matrix instead #
   if (is.vector(mat_rel[,1])){
