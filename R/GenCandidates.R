@@ -1,10 +1,10 @@
 #' Apriori Gen of candidates K-1
 #' 
 #' Takes in a incident matrix of transaction, where the rows do describe the potential items and each colomn does represent the itemsets.
+#' @name GenCandidates
 #' @param L Incident matrix of the transactions
 #' @return The candidate for the next iteration of Apriori
-#' @name GenCandidates
-#' 
+
 GenCandidates <- function(L){
   
   # Only take the unique values of L #

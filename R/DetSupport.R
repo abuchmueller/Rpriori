@@ -1,10 +1,10 @@
 #' Determine the support of a single candidate set within the transactions
 #' 
+#' @name DetSupport_row
 #' @param cand This should represent the candidates the support has to be checked. It has to be an Incidence matrix where the rows do describe the different items.
 #' Also it has to have rownames that are a subset of the rownames of Transaction.
 #' @param Transaction This should be all the transaction from which the occurence (support) of the candidate should be checked. It has to be a incident matrix 
 #' with named rows that do represent the different items.
-#' @name DetSupport_row
 #' @return The support of the candidate wihtin the transactions as floating-point value.
 
 DetSupport_row <- function(cand, Transaction){

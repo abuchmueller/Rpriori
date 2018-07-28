@@ -11,7 +11,7 @@
 # 
 # Groc <-  makeTansactionMatrix(Groceries)
 # cands <- FrequentItemsets(Groc, minsupport = 0.02)
-# res_me <- Getsets(cands)
+# res_me <- GetSets(cands)
 # res_me <- res_me[res_me$Support != 1.00000000,]
 # 
 # # print ordered result from apriori and me

@@ -1,0 +1,22 @@
+#' Extract Rules
+#' 
+#' This function extracts the rule in the form of {It1, ... ItN} -> {ITK}.
+#' @name ExtractRules
+#' @export
+#' @param rules The left hand side and the right hand side of the rules incident matrix where the names rows do represent the items. The both matrices should
+#' be saved in a list.
+#' @return The rules from the left hand and right hand side in the form of {It1, ... ItN} -> {ITK}.
+
+ExtractRules <- function(rules){
+  
+  lhs_rules <- apply(rules$lhs,2, function(col){
+    paste("{", paste(names(col)[col], collapse = ", "), "}", sep = "")
+  }) 
+  
+  rhs_rules <- apply(rules$rhs,2, function(col){
+    paste("{", names(col)[col], "}", sep = "")
+  }) 
+  
+  return(paste(lhs_rules, rhs_rules, sep =  ' -> '))
+}
+

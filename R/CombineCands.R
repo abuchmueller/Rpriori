@@ -1,8 +1,10 @@
 #' Combining incidence matrices of different length
+#' 
+#' @name CombineCands
 #' @param list_input has to be a list of matrices. These matrices should have appropriate rownames describing the different items. The items should represent 
 #' the different candidates.
 #' @output The result will be yet another incident matrix that will have all items rows of all input matrices and will represent all itemset in the input matrices.
-#' @name CombineCands
+
 CombineCands <- function(list_input){
   
   # Determine the dimensions of the result matrix #

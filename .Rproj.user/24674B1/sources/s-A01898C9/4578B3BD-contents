@@ -1,3 +1,0 @@
-testthat("Toy test", {
-  expect_equal(AssociationRules(1,2,3),1)
-})

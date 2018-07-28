@@ -2,8 +2,7 @@
 % Please edit documentation in R/FrequentItemsets.R
 \name{FrequentItemsets}
 \alias{FrequentItemsets}
-\title{Frequent Itemsets base on minimal support
-This function gives the frequenitemsets given a minimal level of support.}
+\title{Frequent Itemsets base on minimal support}
 \usage{
 FrequentItemsets(dataset, minsupport)
 }
@@ -16,6 +15,5 @@ FrequentItemsets(dataset, minsupport)
 The is a list that does store the frequent itemsets as a incidence matrix as well as the resulting support as a vector.
 }
 \description{
-Frequent Itemsets base on minimal support
 This function gives the frequenitemsets given a minimal level of support.
 }

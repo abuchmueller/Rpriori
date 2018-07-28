@@ -1,9 +1,12 @@
 #' Frequent Itemsets base on minimal support
+#' 
 #' This function gives the frequenitemsets given a minimal level of support.
+#' @name FrequentItemsets
+#' @export
 #' @param dataset This should be an incident matrix of the baskets where the rows describe the items and the columns describe the individual bastets. Naming of the items is important
 #' @param minsupport This defines the minimal level of the support the resulting itemsets should have.
 #' @return The is a list that does store the frequent itemsets as a incidence matrix as well as the resulting support as a vector.
-#' @name FrequentItemsets
+
 
 FrequentItemsets <- function(dataset, minsupport){
   
