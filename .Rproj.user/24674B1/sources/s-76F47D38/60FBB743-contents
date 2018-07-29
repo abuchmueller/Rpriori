@@ -1,4 +1,4 @@
-context("Test CombineCands")
+context("CombineCands")
 
 
 test_that("Manually created test of CombineCands", {

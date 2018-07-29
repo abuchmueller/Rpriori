@@ -7,16 +7,16 @@
     "folds" : "",
     "hash" : "0",
     "id" : "79B2BE45",
-    "lastKnownWriteTime" : 1532853763,
-    "last_content_update" : 1532853763479,
+    "lastKnownWriteTime" : 1532857395,
+    "last_content_update" : 1532857395108,
     "path" : "E:/OwnData/OneDrive/Dropbox/Dropbox/Studies/Angewandte Statistik/Semester 2/Project Apriori/R/AssociationRules.R",
     "project_path" : "R/AssociationRules.R",
     "properties" : {
-        "cursorPosition" : "75,18",
-        "scrollLine" : "50",
+        "cursorPosition" : "73,10",
+        "scrollLine" : "59",
         "tempName" : "Untitled1"
     },
-    "relative_order" : 2,
+    "relative_order" : 1,
     "source_on_save" : false,
     "source_window" : "",
     "type" : "r_source"

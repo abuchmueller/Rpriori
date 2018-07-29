@@ -18,5 +18,9 @@ ExtractRules <- function(rules){
   }) 
   out_data <- data.frame('lhs' = lhs_rules, 'REPLACE' = rep("=>", length(lhs_rules)), rhs = rhs_rules, Support = rules$supp, Confidence = rules$conf)
   colnames(out_data)[2] <- ""
+  out_data <- out_data[order(out_data$Support, out_data$Confidence, decreasing = TRUE),]
+  rownames(out_data) <- 1:nrow(out_data)
   return(out_data)
 }
+
+

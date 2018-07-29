@@ -1,4 +1,4 @@
-context("Test DetSupport")
+context("Testing the function DetSupport that calclates the support for candidates")
 
 
 testthat::test_that("Simple test of DetSupport_row with candidates that have different amount of items but all items as rows",{

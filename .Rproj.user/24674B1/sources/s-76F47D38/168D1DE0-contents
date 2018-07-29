@@ -1,4 +1,4 @@
-context("Test GenCandidates")
+context("Unit testing of the function GenCandidates that does generate Candidates for frequent itemset and rule mining")
 
 
 test_that("Test of the example from wikipedia", {

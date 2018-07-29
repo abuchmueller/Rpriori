@@ -57,20 +57,21 @@ AssociationRules <- function(FrequentItems, Itemsets, minconfidence, minsupport 
 
 
 
-
-## EXAMPLE ###
+# 
+# # EXAMPLE ###
 # rm(list = ls())
-# items <- matrix(c(TRUE, TRUE, FALSE, FALSE, FALSE, FALSE,
+# input_sets <- matrix(c(TRUE, TRUE, FALSE, FALSE, FALSE, FALSE,
 #          TRUE, FALSE, TRUE, TRUE, TRUE, FALSE,
 #          FALSE, TRUE, TRUE, TRUE, FALSE, TRUE,
 #          TRUE, TRUE, TRUE, TRUE, FALSE, FALSE,
 #          TRUE, TRUE, TRUE, FALSE, FALSE, TRUE),nrow = 6, dimnames = list( c("Bread", "Milk", "Diaper", "Beer", "Eggs", "Coke")))
 # 
-# 
-# rules_me <- AssociationRules(FrequentItems = NULL, items, minconfidence = 0.8, minsupport = 0.3, arefrequent = FALSE)
+# rules_me <- AssociationRules(FrequentItems = NULL, items, minconfidence = 0.3, minsupport = 0.8, arefrequent = FALSE)
 # rules_apriori <- apriori(t(items), parameter = list(support = 0.3, confidence = 0.8))
 # inspect(rules_apriori)
 # ExtractRules(rules_me)
+# 
+# rules_me
 
 # 
 # ### EXAMPLE FOR 

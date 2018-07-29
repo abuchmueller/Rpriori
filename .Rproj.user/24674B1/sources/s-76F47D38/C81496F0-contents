@@ -1,4 +1,4 @@
-context("Test GenCandidates")
+context("Testing Gencandidates the candidates generation for apriori")
 
 
 test_that("Test of the example from wikipedia", {

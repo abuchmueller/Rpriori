@@ -56,19 +56,9 @@ DetRules <- function(Items, len, Items_support){
   }
 }
 
-# 
-# # Example for len 1 #
-# items <- matrix(c(TRUE, TRUE, FALSE, FALSE, FALSE, FALSE,
-#                   TRUE, FALSE, TRUE, FALSE, TRUE, FALSE,
-#                   FALSE, TRUE, TRUE, TRUE, FALSE, TRUE,
-#                   TRUE, TRUE, TRUE, FALSE, FALSE, TRUE),nrow = 6, dimnames = list( c("Bread", "Milk", "Diaper", "Beer", "Eggs", "Coke")))
-# 
-# 
-# rules <- DetRules(items, 1)
-# ExtractRules(rules)
-# 
-# # Example 2 
-# 
+
+
+# # Example 2
 # items <- matrix(as.logical(c(1,1,1,0,0,0,
 #                              1,0,0,1,0,0,
 #                              0,0,0,1,1,0,
