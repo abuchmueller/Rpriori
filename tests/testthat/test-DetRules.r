@@ -1,30 +1,21 @@
-context("Test DetRules")
+context("Test DetRules 1 and k")
 
 
 test_that("A simple test for rule Generation of consequent_length one", {
   
-  items <- matrix(c(TRUE, TRUE, FALSE, FALSE,
-                    TRUE, FALSE, TRUE, FALSE,
-                    FALSE, TRUE, TRUE, TRUE,  
-                    TRUE, TRUE, TRUE, FALSE),nrow = 4, dimnames = list( c("Bread", "Milk", "Diaper", "Beer")))
+  FrequentItems <- readRDS(system.file("testdata","DetRules_1_FrequentItemets.rds", package="ProjectApriori"))
+  FrequentItems_support <- readRDS(system.file("testdata","DetRules_1_FrequentItems_support.rds", package="ProjectApriori"))
+  result <- readRDS(system.file("testdata","DetRules_1_R1.rds", package="ProjectApriori"))
+  expect_equal(DetRules_1(FrequentItems, Items_support =FrequentItems_support) , result)
+})
+
   
-  lhs <- matrix(c(
-    FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE,
-    TRUE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, TRUE,
-    FALSE, FALSE,  TRUE, FALSE,  TRUE, FALSE,  TRUE,  TRUE,  TRUE, FALSE,
-    FALSE, FALSE, FALSE, FALSE, TRUE,  TRUE, FALSE, FALSE, FALSE, FALSE
-  ), nrow = 4,dimnames = list( c("Bread", "Milk", "Diaper", "Beer")), byrow = TRUE)
+test_that("DetRules_K: Generate only one rule of length 2 from rules of length 1", {
   
-  rhs <- matrix(c(
-    TRUE, FALSE,  TRUE, FALSE, FALSE, FALSE, FALSE,  TRUE,  FALSE, FALSE,
-    FALSE,  TRUE, FALSE, FALSE,  TRUE, FALSE, FALSE, FALSE,  TRUE, FALSE,
-    FALSE, FALSE, FALSE,  TRUE, FALSE,  TRUE, FALSE, FALSE, FALSE,  TRUE,
-    FALSE, FALSE, FALSE, FALSE, FALSE, FALSE,  TRUE, FALSE, FALSE, FALSE
-  ), nrow = 4, dimnames = list( c("Bread", "Milk", "Diaper", "Beer")), byrow = TRUE)
-  
-  supp <- c(0.8, 0.8, 0.3, 0.3, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4)
-  
-  res <- list(lhs = lhs, rhs = rhs, support = supp)
-  
-  expect_equal(DetRules(items, 1, Items_support = c(0.8,0.3,0.4,0.4)), res)
+  # Example for rules of length 2 where only one rules is created (Special Case)
+  # Create input set #
+  input <- readRDS(system.file("testdata","test_Detrules1.rds", package="ProjectApriori"))
+  # Create output set #
+  output <- readRDS(system.file("testdata","test_Detrules2.rds",package="ProjectApriori"))
+  expect_equal(DetRules_K(input), output)
 })

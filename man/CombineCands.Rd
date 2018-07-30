@@ -10,6 +10,9 @@ CombineCands(list_input)
 \item{list_input}{has to be a list of matrices. These matrices should have appropriate rownames describing the different items. The items should represent 
 the different candidates.}
 }
+\value{
+The result will be yet another incident matrix that will have all items rows of all input matrices and will represent all itemset in the input matrices.
+}
 \description{
 Combining incidence matrices of different length
 }

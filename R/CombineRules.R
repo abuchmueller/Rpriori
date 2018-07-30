@@ -1,0 +1,45 @@
+#' Combine a list of rules with potentially different items to one big matrix
+#' 
+#' @name CombineRules
+#' @param  inlist A list containing the different rule matrices. Theses should be incident matrices with the items as rows and the itemts as columns
+#' @return One big incident matrix including all rules.
+
+CombineRules <- function(inlist){
+  
+  # Determine the dimensions of the result matrix #
+  ncols <- 0
+  items <- c()
+  for (cand in list_input){
+    ncols <- ncols + ncol(cand)
+    items <- unique(c(items, rownames(cand)))
+  }
+  
+  
+}
+
+CombineCands <- function(list_input){
+  
+  # Determine the dimensions of the result matrix #
+  ncols <- 0
+  items <- c()
+  for (cand in list_input){
+    ncols <- ncols + ncol(cand)
+    items <- unique(c(items, rownames(cand)))
+  }
+  
+  # Build matrix #
+  res_mat <- matrix(rep(FALSE, ncols * length(items)),ncol = ncols, dimnames = list(items, NULL))
+  
+  # Fill matrix #
+  cur_col <- 1
+  for (cand in list_input){
+    if (ncol(cand) > 0){
+      res_mat[rownames(res_mat) %in% rownames(cand), cur_col:(cur_col + ncol(cand) - 1)] <- cand
+      
+      cur_col <- cur_col + ncol(cand)
+    }
+  }
+  
+  return(res_mat)
+}
+

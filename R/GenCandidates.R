@@ -21,7 +21,10 @@ GenCandidates <- function(L){
   nrows <- nrow(L)
   cand <- matrix(rep(FALSE, nrows * ncols), nrow = nrows, dimnames = list(rownames(L), NULL))
   
-  # Step 1
+  #########
+  # Step 1: Joining Itemsets 
+  ########
+  
   
   # This iter will count the number of real merges that happened #
   iter <- 1
@@ -46,8 +49,11 @@ GenCandidates <- function(L){
     }
   }
 
-
-  # Step 2
+  ##################
+  # Step 2: Pruning
+  #################
+  
+  
   # Counter for the number of relevant datasets #
   iter <- 1
   
@@ -99,12 +105,6 @@ GenCandidates <- function(L){
     return(rel_cand[,0, drop = FALSE])
   }
 }
-
-
-
-
-
-
 
 
 

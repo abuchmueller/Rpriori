@@ -4,7 +4,7 @@
 \alias{ExtractRules}
 \title{Extract Rules}
 \usage{
-ExtractRules(rules)
+ExtractRules(rules, maxNumConsequent = NULL)
 }
 \arguments{
 \item{rules}{The left hand side and the right hand side of the rules incident matrix where the names rows do represent the items. The both matrices should

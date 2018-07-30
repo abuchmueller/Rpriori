@@ -4,16 +4,16 @@
 \alias{AssociationRules}
 \title{Calculate Association rules with minimal confidence and support.}
 \usage{
-AssociationRules(FrequentItems, Itemsets, minconfidence, minsupport = NULL,
+AssociationRules(FrequentItems, Itemsets, minsupport = NULL, minconfidence,
   arefrequent = TRUE)
 }
 \arguments{
 \item{Itemsets}{This should either be the transaction matrix, the then paramter arefrequent should be set to FALSE or it should be the frequent itemsets with
 the paramter arefrequent = TRUE.}
 
-\item{minconfidence}{This should be the minimal confidence the rules are supposed to have.}
-
 \item{minsupport}{Only necessary if the Itemset are not the frequent Itemsets. Then it should describe the minimal support of the rules.}
+
+\item{minconfidence}{This should be the minimal confidence the rules are supposed to have.}
 
 \item{arefrequent}{Are the input Itemsets the frequent Itemsets ?}
 }

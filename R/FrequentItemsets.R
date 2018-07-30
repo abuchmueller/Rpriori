@@ -12,11 +12,9 @@ FrequentItemsets <- function(dataset, minsupport){
   
   ######################################################
   # # Manual Insertion ... pls delete
-  # data("Groceries")
-  # dataset <- makeTansactionMatrix(Groceries)
-  # minsupport = 0.02
+  # dataset = Itemsets
+  # minsupport = minsupport
   ########################################################
-  
   # Calculate frequent Itemsets of size 1 #
   L1 <- apply(dataset,1 , mean)
   L1 <- L1[L1 >= minsupport]
@@ -25,34 +23,9 @@ FrequentItemsets <- function(dataset, minsupport){
   L1 <- diag(rep(TRUE, length(L1_names)))
   rownames(L1) <- L1_names
 
-  # Calculate all candidates of size 2 
-  # How many combinations are there, these do represent the columns in the new matrix
-  cols_need <- sum((1:(nrow(L1) - 1)))
-  
-  # Here the matrix is initialized. It does contain all items/rows from L1 and the amount or columns that are needed.#
-  L2 <- matrix(rep(FALSE, nrow(L1) * cols_need), nrow = nrow(L1), dimnames = list(rownames(L1),NULL))
-
-  # This numbers do represent the different columns and are used for the positions of the ones.
-  cols <- 0:(cols_need - 1) * nrow(L1)
-  
-  # Here I calculate first the ones of the first element and then of the secon (per column there are two one, since items)
-  pos <- c(rep(1:(nrow(L1) - 1), times = (nrow(L1) - 1):1 ) + cols, unlist(lapply(2:nrow(L1), seq, to = nrow(L1))) + cols)
-
-  # I overwrite the corresponding elements with true #
-  L2[pos] <- TRUE
-  
-  # Check frequency of itemsets of size 2 
-  L2_sup <- DetSupport(L2, dataset)
-  
-  # Delete itemset that do not have minimal support 
-  L2 <- L2[,L2_sup >= minsupport, drop = FALSE]
-  L2_sup <- L2_sup[L2_sup >= minsupport, drop = FALSE]
-  
-  # Delete the rows that do not have at least on value #
-  L2 <- L2[apply(L2,1,sum) >0,]
-  
-  k <- 3
-  while (ncol(get(paste("L", k - 1, sep = ""))) > 0 ){
+  # Calculate all frequent Itemsets with size > 1
+  k <- 2
+  while (ncol(get(paste("L", k - 1, sep = ""))) > 1 ){
 
     # Create new candidates from L(k-1)
     assign(paste("L", k, sep = ""), GenCandidates(get(paste("L", k - 1, sep = ""))))
@@ -65,7 +38,7 @@ FrequentItemsets <- function(dataset, minsupport){
     assign(paste("L", k, "_sup", sep = ""), get(paste("L", k, "_sup", sep = ""))[get(paste("L", k, "_sup", sep = "")) >= minsupport, drop = FALSE])
     
     # Delete rows that do no have a single product in them. #
-    assign(paste("L", k, sep = ""), get(paste("L", k , sep = ""))[apply(get(paste("L", k , sep = "")),1,sum) >0,])
+    assign(paste("L", k, sep = ""), get(paste("L", k , sep = ""))[apply(get(paste("L", k , sep = "")),1,sum) >0,,drop = FALSE])
 
     k <- k + 1
   }
@@ -79,12 +52,12 @@ FrequentItemsets <- function(dataset, minsupport){
     support <- c(support, get(paste("L", i, "_sup", sep = "")))
   }
   
-  
-  
+
   # combine list two one ouput. #
   return(list(sets = CombineCands(out_list), support = support))
-
 }
+
+
 
 
 
@@ -116,6 +89,37 @@ FrequentItemsets <- function(dataset, minsupport){
 # e <- GenCandidates(d)
 # f <- GenCandidates(e)
 # g <- GenCandidates(f)
+
+
+### OLD PART OF THE PROGRAM MANUAL CREATION OF ITEMSETS SIZE 2. MAYBE FASTER THAN APRIORI GEN. ###
+# Calculate all candidates of size 2 
+# How many combinations are there, these do represent the columns in the new matrix
+#cols_need <- sum((1:(nrow(L1) - 1)))
+
+# Here the matrix is initialized. It does contain all items/rows from L1 and the amount or columns that are needed.#
+#L2 <- matrix(rep(FALSE, nrow(L1) * cols_need), nrow = nrow(L1), dimnames = list(rownames(L1),NULL))
+
+# This numbers do represent the different columns and are used for the positions of the ones.
+#cols <- 0:(cols_need - 1) * nrow(L1)
+
+# Here I calculate first the ones of the first element and then of the secon (per column there are two one, since items)
+#pos <- c(rep(1:(nrow(L1) - 1), times = (nrow(L1) - 1):1 ) + cols, unlist(lapply(2:nrow(L1), seq, to = nrow(L1))) + cols)
+
+# I overwrite the corresponding elements with true #
+#L2[pos] <- TRUE
+
+# # Create L2 via apriori-Gen
+# L2 <- GenCandidates(L1)
+# 
+# # Check frequency of itemsets of size 2 
+# L2_sup <- DetSupport(L2, dataset)
+# 
+# # Delete itemset that do not have minimal support 
+# L2 <- L2[,L2_sup >= minsupport, drop = FALSE]
+# L2_sup <- L2_sup[L2_sup >= minsupport, drop = FALSE]
+# 
+# # Delete the rows that do not have at least on value #
+# L2 <- L2[apply(L2,1,sum) >0,]
 
 
 

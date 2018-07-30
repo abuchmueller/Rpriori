@@ -1,6 +1,5 @@
 # library(arules)
 # 
-# rm(list = ls())
 # 
 # data("Groceries")
 # 
@@ -12,18 +11,16 @@
 # Groc <-  makeTansactionMatrix(Groceries)
 # cands <- FrequentItemsets(Groc, minsupport = 0.02)
 # res_me <- GetSets(cands)
-# res_me <- res_me[res_me$Support != 1.00000000,]
 # 
 # # print ordered result from apriori and me
 # res_arues <- res_arues[order(res_arues$support),]
 # res_me <- res_me[order(res_me$Support),]
-# res_arues[122,]
-# res_me[122,]
+# res_arues[31,]
+# res_me[31,]
 # 
 # apply(cands$sets, 2, sum)
 # 
 # apply(groc_apr@items, 2, sum)
-# 
-# cands$sets
+
 
 
