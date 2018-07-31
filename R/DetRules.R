@@ -9,8 +9,8 @@
 DetRules_1 <- function(Items, Items_support){
   
   # # ### Manual Header #####
-  # Items = FrequentItems
-  # Items_support = FrequentItems_support
+  # Items <- FrequentItems
+  # Items_support <- FrequentItems_support
   # #######################
   
   # Set a itemID so that I can recognise from which original set the rules come. #
@@ -22,6 +22,10 @@ DetRules_1 <- function(Items, Items_support){
   
   # Here I save the positions at which the elements are not FALSE #
   pos_items <- apply(Items, 2, which)
+  
+  if (! is.list(pos_items)){
+    pos_items <- lapply(seq_len(ncol(pos_items)), function(i) pos_items[,i])
+  }
   
   # Length of the consequent of the rule is 1, therefore apriori cannot be used. #
     
