@@ -15,5 +15,7 @@ test_that("Manually created test of CombineCands", {
                         TRUE, TRUE, TRUE, FALSE,
                         TRUE, FALSE, FALSE, TRUE ), nrow = 4, dimnames = list(c("a", "b", "c", "d"), NULL)), "ngCMatrix")
   CombineCands(test_list)
+  CombineCands
+  
   expect_equal(CombineCands(test_list), result)
 }) 
