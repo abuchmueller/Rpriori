@@ -6,9 +6,12 @@
 #' @return The candidate for the next iteration of Apriori
 
 GenCandidates <- function(L){
+  ## Manual Header ##
+  # L <- L1
+  ####################
   
-  # Only take the unique values of L #
-  L <- unique(L, MARGIN = 2)
+  L <- GiveUniqueCol(L)
+  
   # Of what size are the current datasets? #
   if (ncol(L) > 0){
   K <- sum(L[,1])
@@ -17,15 +20,17 @@ GenCandidates <- function(L){
   }
   
   # Create output matrix of maximal possible length #
-  ncols <- sum(1:ncol(L)) - 1
+  ncols <- sum(1:(ncol(L)- 1)) 
   nrows <- nrow(L)
-  cand <- matrix(rep(FALSE, nrows * ncols), nrow = nrows, dimnames = list(rownames(L), NULL))
+  cand <- sparseMatrix(i = c(),
+                          j = c(),
+                          dim = c(nrows, ncols),
+                          dimnames = list(rownames(L), NULL))
   
-  #########
+  
+  ##########################
   # Step 1: Joining Itemsets 
-  ########
-  
-  
+  ##########################
   # This iter will count the number of real merges that happened #
   iter <- 1
   
@@ -40,7 +45,7 @@ GenCandidates <- function(L){
   
   # Cut ouput matrix back on relevant (non only zero) values #
   if (iter > 2){
-    cand <- unique(cand[,1:(iter - 1)], MARGIN = 2)
+    cand <- GiveUniqueCol(cand[,1:(iter - 1)])
   } else {
     if (any(apply(cand, 2, sum) == 0)){
       cand <- cand[,1, drop = FALSE]
@@ -61,21 +66,29 @@ GenCandidates <- function(L){
   rel_cand <- cand
   rel_cand[] <- FALSE
   
-  # Prepare the subset matrix that will always have as many rows as L and k - 1 cols #
-  #subs <- matrix(rep(FALSE, K * nrows ), ncol = K)
   
   for (col_num in 1:ncol(cand)){
-
+    
     # Create all k - 1 subset of that set #
     # Rep the current set k times to create all K-1 subsets #
-    subs <- matrix(rep(cand[,col_num], each = K + 1), ncol = K + 1, byrow = TRUE)
+    true_rows <- which(cand[,col_num, drop = FALSE])
+    true_cols <- rep(1:(K + 1), each = length(true_rows))
+
+    true_rows <- rep(true_rows, K + 1)
     
+    subs <- sparseMatrix(i = true_rows,
+                         j = true_cols,
+                         dim = c(nrow(cand), K + 1),
+                         dimnames = list(rownames(cand), NULL))
     # Calculate the positions of the elements that I have to set to zero to get k-1 itemsets
     
     # Check whether all positions are TRUE, if the case use other logic
     if (! all(subs)){
       pos <- 0:K  * nrows + which(cand[,col_num])
     } else {
+      ####################################################################
+      ### WHATS THAT's ALL ABOUT ??? 1:4 in every case? SURE? INVESTIGATE!
+      ####################################################################
       pos <- 0:K  * nrows + 1:4
     }
     
@@ -87,7 +100,7 @@ GenCandidates <- function(L){
     # Explaination for the condition:#
     # cbind the current candidates with all observations from L.
     # Then there should K + 1 duplicates when all subset of the current candidate are in L.
-    if(sum(duplicated(cbind(L, subs), MARGIN = 2)) == K + 1) {
+    if(sum(FindNDuplicates(cbind(L, subs)) == K + 1)) {
       rel_cand[,iter] <- cand[,col_num]
       
       iter <- iter + 1

@@ -12,7 +12,10 @@
 # 
 # result_arules <- apriori(t(input_sets), parameter = list(support = 0.3, confidence = 0.4, minlen=2))
 # 
-# result <- AssociationRules(Itemsets = input_sets, minsupport = 0.3, minconfidence = 0.4,  arefrequent = FALSE)
+# input_sets_spares <- makeTansactionMatrix(input_sets)
+
+# result <- AssociationRules(Itemsets = input_sets_spares , minsupport = 0.3, minconfidence = 0.4,  arefrequent = FALSE)
+# 
 # me <- ExtractRules(result, maxNumConsequent = 1)
 # arules <- inspect(result_arules)[order(result_arules@quality$support,result_arules@quality$confidence, decreasing = TRUE),]
 # length(arules$support)

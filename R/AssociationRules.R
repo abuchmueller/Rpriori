@@ -12,11 +12,10 @@
 
 AssociationRules <- function(FrequentItems, Itemsets, minsupport = NULL, minconfidence,  arefrequent = TRUE){
   # #### MANUAL HEAD #####
-  # FrequentItems = fr_tr
-  # Itemsets =  groc_Epub
-  # minsupport = 0.002
-  # minconfidence = 0.0001
-  # arefrequent = TRUE
+  # Itemsets = input_sets_spares
+  # minsupport = 0.3
+  # minconfidence = 0.4
+  # arefrequent = FALSE
   # ###########################################################################
 
   # If arefrequent is false then the frequent itemsets have to be calculated first. 
