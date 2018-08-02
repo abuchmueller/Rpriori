@@ -2,13 +2,12 @@
 #' 
 #' Takes in a incident matrix of transaction, where the rows do describe the potential items and each colomn does represent the itemsets.
 #' @name GenCandidates
-#' @export
 #' @param L Incident matrix of the transactions
 #' @return The candidate for the next iteration of Apriori
 
 GenCandidates <- function(L){
   ## Manual Header ##
-  #L <- input
+  #L <- testmat
   ####################
   
   L <- GiveUniqueCol(L)
@@ -72,7 +71,7 @@ GenCandidates <- function(L){
     
     # Create all k - 1 subset of that set #
     # Rep the current set k times to create all K-1 subsets #
-    true_rows <- cand[,col_num, drop = FALSE]@i + 1
+    true_rows <- which(cand[,col_num, drop = FALSE])
     true_cols <- rep(1:(K + 1), each = length(true_rows))
 
     true_rows <- rep(true_rows, K + 1)

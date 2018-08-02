@@ -3,7 +3,7 @@
 # # Comp with arules: simple ex. #
 # ##################################
 # 
- # Try to set-up example with more than one two consquent rules
+# Try to set-up example with more than one two consquent rules
 input_sets <- matrix(c(TRUE, TRUE, FALSE, FALSE, FALSE, FALSE,
          TRUE, FALSE, TRUE, TRUE, TRUE, FALSE,
         FALSE, TRUE, TRUE, TRUE, FALSE, TRUE,

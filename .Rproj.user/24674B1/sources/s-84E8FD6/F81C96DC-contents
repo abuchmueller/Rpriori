@@ -14,7 +14,6 @@
 #'     items <- unique(c(items, rownames(cand)))
 #'   }
 #'   
-#'   
 #' }
 #' 
 #' CombineCands <- function(list_input){

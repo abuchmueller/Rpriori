@@ -3,4 +3,5 @@
 export(AssociationRules)
 export(ExtractRules)
 export(FrequentItemsets)
+export(GenCandidates)
 export(GetSets)

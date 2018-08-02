@@ -12,10 +12,10 @@
 
 AssociationRules <- function(FrequentItems, Itemsets, minsupport = NULL, minconfidence,  arefrequent = TRUE){
   # #### MANUAL HEAD #####
-  Itemsets = input_sets_spares
-  minsupport = 0.3
-  minconfidence = 0.4
-  arefrequent = FALSE
+  # Itemsets = input_sets_spares
+  # minsupport = 0.3
+  # minconfidence = 0.4
+  # arefrequent = FALSE
   # ###########################################################################
 
   # If arefrequent is false then the frequent itemsets have to be calculated first. 
