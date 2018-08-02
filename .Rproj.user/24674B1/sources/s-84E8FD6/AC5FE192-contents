@@ -8,7 +8,7 @@
 
 GenCandidates <- function(L){
   ## Manual Header ##
-  # L <- rules$rhs[,rules$item_id == unique_ids[f_it], drop = FALSE]
+  #L <- L1
   ####################
   
   L <- GiveUniqueCol(L)
@@ -52,12 +52,7 @@ GenCandidates <- function(L){
     if (any(apply(cand, 2, sum) == 0)){
       cand <- cand[,1, drop = FALSE]
     } else {
-      if (ncol(cand) == 1){
-        cand <- cand[,1, drop = FALSE]
-      } else {
-        cand <- cand[,1:2, drop = FALSE]
-      }
-      
+      cand <- cand[,1:2, drop = FALSE]
     }
   }
 

@@ -3,16 +3,16 @@
 # # Comp with arules: simple ex. #
 # ##################################
 # 
- # Try to set-up example with more than one two consquent rules
-input_sets <- matrix(c(TRUE, TRUE, FALSE, FALSE, FALSE, FALSE,
-         TRUE, FALSE, TRUE, TRUE, TRUE, FALSE,
-        FALSE, TRUE, TRUE, TRUE, FALSE, TRUE,
-         TRUE, TRUE, TRUE, TRUE, FALSE, FALSE,
-         TRUE, TRUE, TRUE, FALSE, FALSE, TRUE),nrow = 6, dimnames = list( c("Bread", "Milk", "Diaper", "Beer", "Eggs", "Coke")))
-
-result_arules <- apriori(t(input_sets), parameter = list(support = 0.3, confidence = 0.4, minlen=2))
-
-input_sets_spares <- makeTansactionMatrix(input_sets)
+# Try to set-up example with more than one two consquent rules
+# input_sets <- matrix(c(TRUE, TRUE, FALSE, FALSE, FALSE, FALSE,
+#          TRUE, FALSE, TRUE, TRUE, TRUE, FALSE,
+#         FALSE, TRUE, TRUE, TRUE, FALSE, TRUE,
+#          TRUE, TRUE, TRUE, TRUE, FALSE, FALSE,
+#          TRUE, TRUE, TRUE, FALSE, FALSE, TRUE),nrow = 6, dimnames = list( c("Bread", "Milk", "Diaper", "Beer", "Eggs", "Coke")))
+# 
+# result_arules <- apriori(t(input_sets), parameter = list(support = 0.3, confidence = 0.4, minlen=2))
+# 
+# input_sets_spares <- makeTansactionMatrix(input_sets)
 
 # result <- AssociationRules(Itemsets = input_sets_spares , minsupport = 0.3, minconfidence = 0.4,  arefrequent = FALSE)
 # 

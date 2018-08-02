@@ -11,7 +11,7 @@
 FrequentItemsets <- function(dataset, minsupport){
   
   ######################################################
-  #Manual Insertion ... pls delete
+  # Manual Insertion ... pls delete
   # dataset = input_sets_spares
   # minsupport = 0.3
   ########################################################
@@ -21,8 +21,11 @@ FrequentItemsets <- function(dataset, minsupport){
   L1 <- L1[L1 >= minsupport]
   L1_names <- names(L1)
   L1_sup <- as.numeric(L1)
-  L1 <- .sparseDiagonal(n = length(L1_names), shape = 'g', kind ='n')
-  rownames(L1) <- L1_names
+  L1 <- sparseMatrix(i = 1:length(L1_names),
+                          j = 1:length(L1_names),
+                          giveCsparse = FALSE,
+                          dim = c(length(L1_names), length(L1_names)),
+                          dimnames = list(L1_names, NULL))
   
   # Calculate all frequent Itemsets with size > 1
   k <- 2

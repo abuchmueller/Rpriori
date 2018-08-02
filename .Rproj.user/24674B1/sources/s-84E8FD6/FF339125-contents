@@ -9,16 +9,18 @@
 DetRules_1 <- function(Items, Items_support){
   
   # # ### Manual Header #####
-  # Items <- FrequentItems
-  # Items_support <- FrequentItems_support
+  Items <- FrequentItems
+  Items_support <- FrequentItems_support
   # #######################
   
   # Set a itemID so that I can recognise from which original set the rules come. #
   id <- 1:ncol(Items)
   
-  
   # Here I save the number of items for each input set.
-  item_n <- apply(Items, 2, sum) 
+  item_n <- 1:ncol(Items)
+  Items@i
+  Items@p
+  
   
   # Here I save the positions at which the elements are not FALSE #
   pos_items <- apply(Items, 2, which)
