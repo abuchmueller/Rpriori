@@ -41,17 +41,17 @@
 
 # For the use case in L1 we need right now 20 seconds #
 
-# L1 <- readRDS(system.file("testdata","Perf_L1.rds", package="ProjectApriori"))
-# 
-# #debugonce(GenCandidates)
-# start_time <- Sys.time()
-# 
-# res <- GenCandidates(L1)
-# end_time <- Sys.time()
-# 
-# print(paste("Execution took",end_time - start_time, sep = ' '))
-# 
+L1 <- readRDS(system.file("testdata","Perf_L1.rds", package="ProjectApriori"))
+debugonce(GenCandidates)
+#debugonce(GenCandidates)
+start_time <- Sys.time()
 
+res <- GenCandidates(L1)
+end_time <- Sys.time()
+
+print(paste("Execution took",end_time - start_time, sep = ' '))
+# 
+# 
 
 
 

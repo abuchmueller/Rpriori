@@ -11,6 +11,15 @@ GenCandidates <- function(L){
   # L <- rules$rhs[,rules$item_id == unique_ids[f_it], drop = FALSE]
   ####################
   
+  # Create numeric, sparse matrix from L #
+  L_num <- sparseMatrix(i = L@i,
+            j = L@j,
+            x = rep(1, length(L@i)),
+            giveCsparse = FALSE,
+            index1 = FALSE,
+            dim = c(nrow(L), ncol(L)),
+            dimnames = list(rownames(L), NULL))
+  
   L <- GiveUniqueCol(L)
   
   # Of what size are the current datasets? #
@@ -86,6 +95,7 @@ GenCandidates <- function(L){
     subs <- sparseMatrix(i = true_rows,
                          j = true_cols,
                          giveCsparse = FALSE,
+                         x = rep(1, length(true_rows)),
                          dim = c(nrow(cand), K + 1),
                          dimnames = list(rownames(cand), NULL))
     # Calculate the positions of the elements that I have to set to zero to get k-1 itemsets
@@ -104,18 +114,12 @@ GenCandidates <- function(L){
     # Now for each subset set one True values to false to have subsets of number K- 1
     subs[pos] <- FALSE
     
-    # Check whether all of them are in L #
-    # Explaination for the condition:#
-    # cbind the current candidates with all observations from L.
-    # Then there should K + 1 duplicates when all subset of the current candidate are in L.
-    if(sum(FindNDuplicates(cbind(L, subs)) == K + 1)) {
-      rel_cand[,iter] <- cand[,col_num]
-      
+    # Here we have to check whether all candidates in subs are also in the frequent
+    # itemsets from last iteration (L). If true then add them to the relevant candidate set else don't 
+    if( all(rowSums(t(subs) %*% L >= K)) >= 1){
+      rel_cand[,iter] <- cand[, col_num]
       iter <- iter + 1
     }
-    # Only if all of the candidate is true candiate.
-    # Put him in the rel_cand set #
-    # make counter one higher. #
     
     
   }
