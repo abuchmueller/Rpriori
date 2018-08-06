@@ -5,15 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "1731296338",
+    "hash" : "0",
     "id" : "A8FFD4EC",
-    "lastKnownWriteTime" : 1533543646,
-    "last_content_update" : 1533543646113,
+    "lastKnownWriteTime" : 1533554935,
+    "last_content_update" : 1533554935756,
     "path" : "E:/OwnData/OneDrive/Dropbox/Dropbox/Studies/Angewandte Statistik/Semester 2/Project Apriori/R/GenCandidates.R",
     "project_path" : "R/GenCandidates.R",
     "properties" : {
-        "cursorPosition" : "135,0",
-        "scrollLine" : "102"
+        "cursorPosition" : "53,5",
+        "scrollLine" : "26"
     },
     "relative_order" : 2,
     "source_on_save" : false,

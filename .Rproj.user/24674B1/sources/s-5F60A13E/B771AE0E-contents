@@ -1,12 +1,11 @@
 ###
-# Optimize GiveUniqueCol
-### The use case right now takes about 9 seconds and is the majority of the runtime of Gen_candidates. #
-# 
+#Optimize GiveUniqueCol
+## The use case right now takes about 9 seconds and is the majority of the runtime of Gen_candidates. #
+
 # cand <- readRDS(system.file("testdata",'test_cand.rds', package="ProjectApriori"))
 # 
 # debugonce(GiveUniqueCol)
 # start_time <- Sys.time()
-# 
 # res <- GiveUniqueCol(cand)
 # end_time <- Sys.time()
 # 
@@ -41,17 +40,16 @@
 
 # For the use case in L1 we need right now 20 seconds #
 
-L1 <- readRDS(system.file("testdata","Perf_L1.rds", package="ProjectApriori"))
-debugonce(GenCandidates)
-#debugonce(GenCandidates)
-start_time <- Sys.time()
-
-res <- GenCandidates(L1)
-end_time <- Sys.time()
-
-print(paste("Execution took",end_time - start_time, sep = ' '))
+# L1 <- readRDS(system.file("testdata","Perf_L1.rds", package="ProjectApriori"))
 # 
+# #debugonce(GenCandidates)
+# start_time <- Sys.time()
 # 
+# res <- GenCandidates(L1)
+# end_time <- Sys.time()
+# 
+# print(paste("Execution took",end_time - start_time, sep = ' '))
+
 
 
 
@@ -64,9 +62,10 @@ print(paste("Execution took",end_time - start_time, sep = ' '))
 # 
 # 
 # start_time <- Sys.time()
-# debugonce(AssociationRules)
-# rules_praprio <- AssociationRules(Itemsets =  groc_trans,minsupport = 0.07, minconfidence = 0.2, arefrequent = FALSE)
+# rules_praprio <- AssociationRules(Itemsets =  groc_trans,minsupport = 0.05, minconfidence = 0.2, arefrequent = FALSE)
 # end_time <- Sys.time()
 # print(paste("Execution took",end_time - start_time, sep = ' '))
-# 
-# rules_praprio <- AssociationRules(FrequentItems = fr_tr, Itemsets =  groc_trans,minsupport = 0.03, minconfidence = 0.2, arefrequent = TRUE)
+
+
+
+

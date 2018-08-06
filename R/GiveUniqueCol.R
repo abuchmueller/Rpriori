@@ -2,49 +2,10 @@
 #' 
 #' @name GiveUniqueCol
 #' @param mat Sparse matrix, where the rows are the items and the columns are the itemsets of type ngCmatrix
+#' @export
 #' @return Returns only non-duplicate columns of matrix. Ordering might be changed.
 
 GiveUniqueCol <- function(mat){
-
-  rel_col <- rep(TRUE, ncol(mat))
-  cols_lost <- 0
-  for (i in 1:ncol(mat)){
-    rel <- TRUE
-    curr_col <- i + 1
-    while (rel & curr_col < (ncol(mat) + 1)){
-      if (all(mat[,i] == mat[,rel_col][,curr_col - cols_lost])){
-        # We found a duplicate #
-        rel <- FALSE
-        rel_col[i] <- FALSE
-        cols_lost <- cols_lost + 1
-        
-      }
-      curr_col <- curr_col + 1
-    }
-  }
-  return(mat[,rel_col, drop = FALSE])
+  return(mat[,!Duplicate(mat), drop = FALSE])
 }
 
-
-#  
-# input4 <- matrix(as.logical(c(1,0,1,1,1,1,1,1,0,1,0,1,1,0,1)), nrow = 3)
-# mat <- as(input4, "TsparseMatrix")
-# 
-# res4 <- matrix(as.logical(c(1,1,1,1,1,0,1,0,1)), nrow = 3)
-# 
-# res4
-# 
-# GiveUniqueCol_2 <- function(mat){
-#   
-#   # Make the matrix a numeric sparse matrix #
-#   mat <- sparseMatrix(i = mat@i , j = mat@j,
-#                       x = rep(1, length(mat@i)),
-#                       dims = c(nrow(mat), ncol(mat)),
-#                       index1 = FALSE,
-#                       dimnames= list(row.names(mat),NULL))
-#   
-#   col_sums = colSums(mat)
-#   
-#   # make product with transpose mat
-#   mat_com = t(mat) %*% mat
-# }

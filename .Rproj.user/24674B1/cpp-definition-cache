@@ -1,2 +1,143 @@
 [
+    {
+        "definitions" : [
+            {
+                "column" : 16,
+                "file" : "E:/OwnData/OneDrive/Dropbox/Dropbox/Studies/Angewandte Statistik/Semester 2/Project Apriori/src/ptree.c",
+                "kind" : 3,
+                "line" : 26,
+                "name" : "pnode",
+                "parent_name" : "",
+                "usr" : "c:@S@pnode"
+            },
+            {
+                "column" : 3,
+                "file" : "E:/OwnData/OneDrive/Dropbox/Dropbox/Studies/Angewandte Statistik/Semester 2/Project Apriori/src/ptree.c",
+                "kind" : 8,
+                "line" : 31,
+                "name" : "PN",
+                "parent_name" : "",
+                "usr" : "c:ptree.c@630@T@PN"
+            },
+            {
+                "column" : 13,
+                "file" : "E:/OwnData/OneDrive/Dropbox/Dropbox/Studies/Angewandte Statistik/Semester 2/Project Apriori/src/ptree.c",
+                "kind" : 6,
+                "line" : 37,
+                "name" : "pnfree(PN *)",
+                "parent_name" : "",
+                "usr" : "c:ptree.c@886@F@pnfree"
+            },
+            {
+                "column" : 13,
+                "file" : "E:/OwnData/OneDrive/Dropbox/Dropbox/Studies/Angewandte Statistik/Semester 2/Project Apriori/src/ptree.c",
+                "kind" : 6,
+                "line" : 46,
+                "name" : "nbfree",
+                "parent_name" : "",
+                "usr" : "c:ptree.c@1009@F@nbfree"
+            },
+            {
+                "column" : 12,
+                "file" : "E:/OwnData/OneDrive/Dropbox/Dropbox/Studies/Angewandte Statistik/Semester 2/Project Apriori/src/ptree.c",
+                "kind" : 6,
+                "line" : 52,
+                "name" : "pnadd(PN *, int *, int)",
+                "parent_name" : "",
+                "usr" : "c:ptree.c@1082@F@pnadd"
+            },
+            {
+                "column" : 12,
+                "file" : "E:/OwnData/OneDrive/Dropbox/Dropbox/Studies/Angewandte Statistik/Semester 2/Project Apriori/src/ptree.c",
+                "kind" : 6,
+                "line" : 91,
+                "name" : "pnget(PN *, int *, int)",
+                "parent_name" : "",
+                "usr" : "c:ptree.c@1974@F@pnget"
+            },
+            {
+                "column" : 13,
+                "file" : "E:/OwnData/OneDrive/Dropbox/Dropbox/Studies/Angewandte Statistik/Semester 2/Project Apriori/src/ptree.c",
+                "kind" : 6,
+                "line" : 108,
+                "name" : "pncount(PN *, int *, int)",
+                "parent_name" : "",
+                "usr" : "c:ptree.c@2315@F@pncount"
+            },
+            {
+                "column" : 6,
+                "file" : "E:/OwnData/OneDrive/Dropbox/Dropbox/Studies/Angewandte Statistik/Semester 2/Project Apriori/src/ptree.c",
+                "kind" : 6,
+                "line" : 131,
+                "name" : "R_pncount(SEXP, SEXP, SEXP, SEXP, SEXP)",
+                "parent_name" : "",
+                "usr" : "c:@F@R_pncount"
+            },
+            {
+                "column" : 13,
+                "file" : "E:/OwnData/OneDrive/Dropbox/Dropbox/Studies/Angewandte Statistik/Semester 2/Project Apriori/src/ptree.c",
+                "kind" : 6,
+                "line" : 479,
+                "name" : "pnindex(PN *)",
+                "parent_name" : "",
+                "usr" : "c:ptree.c@11630@F@pnindex"
+            },
+            {
+                "column" : 6,
+                "file" : "E:/OwnData/OneDrive/Dropbox/Dropbox/Studies/Angewandte Statistik/Semester 2/Project Apriori/src/ptree.c",
+                "kind" : 6,
+                "line" : 489,
+                "name" : "R_pnindex(SEXP, SEXP, SEXP)",
+                "parent_name" : "",
+                "usr" : "c:@F@R_pnindex"
+            },
+            {
+                "column" : 13,
+                "file" : "E:/OwnData/OneDrive/Dropbox/Dropbox/Studies/Angewandte Statistik/Semester 2/Project Apriori/src/ptree.c",
+                "kind" : 6,
+                "line" : 615,
+                "name" : "pnsmax(PN *, int *, int, int)",
+                "parent_name" : "",
+                "usr" : "c:ptree.c@14391@F@pnsmax"
+            },
+            {
+                "column" : 6,
+                "file" : "E:/OwnData/OneDrive/Dropbox/Dropbox/Studies/Angewandte Statistik/Semester 2/Project Apriori/src/ptree.c",
+                "kind" : 6,
+                "line" : 632,
+                "name" : "R_pnclosed(SEXP, SEXP, SEXP)",
+                "parent_name" : "",
+                "usr" : "c:@F@R_pnclosed"
+            },
+            {
+                "column" : 13,
+                "file" : "E:/OwnData/OneDrive/Dropbox/Dropbox/Studies/Angewandte Statistik/Semester 2/Project Apriori/src/ptree.c",
+                "kind" : 6,
+                "line" : 759,
+                "name" : "pnmax(PN *, int *, int, int)",
+                "parent_name" : "",
+                "usr" : "c:ptree.c@17481@F@pnmax"
+            },
+            {
+                "column" : 6,
+                "file" : "E:/OwnData/OneDrive/Dropbox/Dropbox/Studies/Angewandte Statistik/Semester 2/Project Apriori/src/ptree.c",
+                "kind" : 6,
+                "line" : 779,
+                "name" : "R_pnmax(SEXP, SEXP, SEXP)",
+                "parent_name" : "",
+                "usr" : "c:@F@R_pnmax"
+            },
+            {
+                "column" : 6,
+                "file" : "E:/OwnData/OneDrive/Dropbox/Dropbox/Studies/Angewandte Statistik/Semester 2/Project Apriori/src/ptree.c",
+                "kind" : 6,
+                "line" : 888,
+                "name" : "R_pnrindex(SEXP, SEXP)",
+                "parent_name" : "",
+                "usr" : "c:@F@R_pnrindex"
+            }
+        ],
+        "file" : "E:/OwnData/OneDrive/Dropbox/Dropbox/Studies/Angewandte Statistik/Semester 2/Project Apriori/src/ptree.c",
+        "file_last_write" : 1533551387
+    }
 ]

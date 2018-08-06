@@ -101,7 +101,7 @@ GenCandidates <- function(L){
     # Calculate the positions of the elements that I have to set to zero to get k-1 itemsets
     
     # Check whether all positions are TRUE, if the case use other logic
-    if (! all(subs)){
+    if (! all(subs == 1)){
       pos <- 0:K  * nrows + which(cand[,col_num])
     } else {
       ####################################################################
@@ -116,7 +116,7 @@ GenCandidates <- function(L){
     
     # Here we have to check whether all candidates in subs are also in the frequent
     # itemsets from last iteration (L). If true then add them to the relevant candidate set else don't 
-    if( all(rowSums(t(subs) %*% L >= K)) >= 1){
+    if( all(rowSums(t(subs) %*% L_num >= K)) >= 1){
       rel_cand[,iter] <- cand[, col_num]
       iter <- iter + 1
     }
