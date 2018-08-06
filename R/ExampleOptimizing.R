@@ -57,15 +57,25 @@
 # data("Groceries")
 # groc_trans <- makeTansactionMatrix(Groceries)
 # 
-# rules_aprio <- apriori(Groceries,  parameter = list(support = 0.07, confidence = 0.1, minlen=2))
+# rules_aprio <- apriori(Groceries,  parameter = list(support = 0.05, confidence = 0.1, minlen=2))
 # 
 # 
+# #debugonce(AssociationRules)
 # 
 # start_time <- Sys.time()
-# rules_praprio <- AssociationRules(Itemsets =  groc_trans,minsupport = 0.05, minconfidence = 0.2, arefrequent = FALSE)
+# rules_praprio <- AssociationRules(Itemsets =  groc_trans,minsupport = 0.05, minconfidence = 0.1, arefrequent = FALSE)
 # end_time <- Sys.time()
 # print(paste("Execution took",end_time - start_time, sep = ' '))
-
-
-
+# 
+# 
+# result_arules <- inspect(rules_aprio)
+# result_arules <- result_arules[order(result_arules$support, result_arules$confidence, decreasing = TRUE),]
+# result_praprio <- ExtractRules(rules_praprio, maxNumConsequent = 1)
+# length(result_praprio$Support)
+# 
+# result_arules
+# result_praprio
+# 
+# length(result_arules$support)
+# length(result_praprio$Support)
 

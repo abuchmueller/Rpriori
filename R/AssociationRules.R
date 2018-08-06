@@ -47,8 +47,8 @@ AssociationRules <- function(FrequentItems, Itemsets, minsupport = NULL, minconf
     
   # Delete Items that are no longer relevant for the rules.
   rel_item <- !(apply(R1$lhs, 1, sum) == 0  & apply(R1$rhs, 1, sum) == 0)
-  R1$lhs <- R1$lhs[rel_item,]
-  R1$rhs <- R1$rhs[rel_item,]
+  R1$lhs <- R1$lhs[rel_item, ,drop = FALSE]
+  R1$rhs <- R1$rhs[rel_item, ,drop = FALSE]
   
   # Not sure whether it is smart to cut the items out of the frequent items. 
   R1$frequentItems <- R1$frequentItems[rel_item,]

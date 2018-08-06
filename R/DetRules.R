@@ -198,22 +198,3 @@ DetRules_K <- function(rules){
     
   }
 }
-
-
-# # # Example 2
-# input_sets <- matrix(as.logical(c(1,1,1,0,0,0,
-#                              1,0,0,1,0,0,
-#                              0,0,0,1,1,0,
-#                              1,1,0,1,0,0,
-#                              1,1,1,1,0,1,
-#                              0,1,1,0,0,1,
-#                              0,1,1,0,0,1 )),nrow = 6, dimnames = list( c("Beef", "Chicken", "Milk", "Cheese", "Boots", "Clothes")))
-# # # 
-# res_apriori <- apriori(t(items), parameter = list(support = 0.3, confidence = 0.8) )
-# inspect(res_apriori)
-# 
-# rules <- DetRules(items, 1)
-# ExtractRules(rules)
-
-# Example for len 2 #
-# Example for len 3 #

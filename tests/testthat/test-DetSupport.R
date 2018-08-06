@@ -1,5 +1,11 @@
 context("Test DetSupport")
 
+testthat::test_that("Empty input, Empty output",{
+ 
+  cand <- readRDS(system.file("testdata","Test_GiveUniquecols_L3.rds", package="ProjectApriori"))  
+  
+  testthat::expect_equal(DetSupport(cand, NULL), c(0)[0])
+})
 
 testthat::test_that("Simple test of DetSupport_row with candidates that have different amount of items but all items as rows",{
   # A candidate containing 4 items #

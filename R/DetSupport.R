@@ -12,6 +12,10 @@
 
 DetSupport <- function(cand, Transaction){
   
+  if (ncol(cand) == 0 ){
+    return(c(1)[0])
+  }  
+  
   # Make cand matrix to integer sparse matrix #
   cand_filled <- sparseMatrix(i = c() , j = c(),
                       dims = c(nrow(Transaction), ncol(cand)),
@@ -43,4 +47,6 @@ DetSupport <- function(cand, Transaction){
   
   return(support / ncol(Transaction))
 }
+
+
 

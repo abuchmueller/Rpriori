@@ -9,3 +9,4 @@ GiveUniqueCol <- function(mat){
   return(mat[,!Duplicate(mat), drop = FALSE])
 }
 
+

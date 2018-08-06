@@ -27,30 +27,31 @@
 # ##################################
 # # Comp with arules: Grocery data #
 # ##################################
-# # rm(list = ls())
+# rm(list = ls())
 # compute frequent itemsets with apriori
 # data("Groceries")
 # groc_trans <- makeTansactionMatrix(Groceries)
-# groc_apr <- apriori(Groceries, parameter = list(support = 0.03,  target="frequent itemsets"))
-# fr_tr <- ExtractFrequentSets(groc_apr)
+# 
 # 
 # start_time <- Sys.time()
 # rules_aprio <- apriori(Groceries,  parameter = list(support = 0.03, confidence = 0.2, minlen=2))
 # end_time <- Sys.time()
 # 
-# print(paste("Execution took",end_time - start_time, sep = ' '))
+# print(end_time - start_time)
+# 
+# 
 # 
 # start_time <- Sys.time()
 # rules_praprio <- AssociationRules(Itemsets =  groc_trans,minsupport = 0.03, minconfidence = 0.2, arefrequent = FALSE)
 # end_time <- Sys.time()
-# print(paste("Execution took",end_time - start_time, sep = ' '))
+# print(end_time - start_time)
 # 
-# rules_praprio <- AssociationRules(FrequentItems = fr_tr, Itemsets =  groc_trans,minsupport = 0.03, minconfidence = 0.2, arefrequent = TRUE)
 # 
 # result_arules <- inspect(rules_aprio)
 # result_arules <- result_arules[order(result_arules$support, result_arules$confidence, decreasing = TRUE),]
 # result_praprio <- ExtractRules(rules_praprio, maxNumConsequent = 1)
 # length(result_praprio$Support)
+# length(result_arules$support)
 # 
 # result_arules
 # result_praprio
