@@ -1,0 +1,4 @@
+memory profiling: GC profiling: line profiling: sample.interval=10000
+:2025034:2192161:136556112:0:"f" "doTryCatch" "tryCatchOne" "tryCatchList" "tryCatch" "withCallingHandlers" ".rs.callAs" "Rprof" "profvis" 
+:2025374:2192161:136610096:34:"cat" "defaultHandler" "doWithOneRestart" "withOneRestart" "withRestarts" "message" "value[[3]]" "tryCatchOne" "tryCatchList" "doTryCatch" "tryCatchOne" "tryCatchList" "tryCatch" "profvis" 
+:2025374:2192161:136610096:0:"cat" "defaultHandler" "doWithOneRestart" "withOneRestart" "withRestarts" "message" "value[[3]]" "tryCatchOne" "tryCatchList" "doTryCatch" "tryCatchOne" "tryCatchList" "tryCatch" "profvis" 
