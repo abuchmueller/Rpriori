@@ -20,33 +20,51 @@ DetSupport <- function(cand, Transaction){
   cand_filled <- sparseMatrix(i = c() , j = c(),
                       dims = c(nrow(Transaction), ncol(cand)),
                       index1 = FALSE,
-                      giveCsparse = FALSE,
+                      giveCsparse = TRUE,
                       dimnames= list(row.names(Transaction),NULL))
   
   
   cand_filled[rownames(Transaction) %in% rownames(cand),] <- cand
     
-  cand <- sparseMatrix(i = cand_filled@j , j = cand_filled@i,
-                       x = rep(1, length(cand_filled@i)),
-                       dims = c( ncol(cand_filled), nrow(cand_filled)),
-                       index1 = FALSE,
-                       dimnames= list(NULL,row.names(cand_filled)))
+  cand <- t(cand_filled * 1)
   
   # Make Transactions matrix to integer sparse matrix #
   Transaction <- sparseMatrix(i = Transaction@i , j = Transaction@j,
                        x = rep(1, length(Transaction@i)),
                        dims = c(nrow(Transaction), ncol(Transaction)),
                        index1 = FALSE,
+                       giveCsparse = TRUE,
                        dimnames= list(row.names(Transaction),NULL))
   
   frequs <- cand %*% Transaction
   itemNum <- rowSums(cand)
   
-  comp_mat <- matrix(rep(itemNum, each = ncol(Transaction)), nrow = nrow(cand), byrow = TRUE)
-  support <- rowSums(frequs >= comp_mat)
+  comp <- frequs >= itemNum
+  
+  support <- rowSums(comp)
   
   return(support / ncol(Transaction))
 }
 
+# L1 <- readRDS('testdata/optim_GendCandidates_L1.rds')
+# data("Groceries")
+# groc_trans <- makeTansactionMatrix(Groceries)
+# 
+# 
+# L2 <- GenCandidates(L1)
+# 
+# profvis({
+#   sup <- DetSupport(L2, groc_trans )
+# })
+
+# 
+# profvis(
+#   {
+#      comp <- frequs - itemNum
+#      num_rows <- nrow(comp)
+#     t <- apply(comp, 2, function(x) return(num_rows - nnzero(comp)))
+#   }
+# )
+# 
 
 

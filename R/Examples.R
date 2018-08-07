@@ -56,6 +56,8 @@
 # profvis({
 #   rules_praprio <- AssociationRules(Itemsets =  groc_trans,minsupport = 0.03, minconfidence = 0.2, arefrequent = FALSE)
 # })
+
+
 # 
 # 
 # 

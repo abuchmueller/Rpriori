@@ -7,22 +7,13 @@
 #' @return The candidate for the next iteration of Apriori
 
 GenCandidates <- function(L){
-  ## Manual Header ##
-  # L <- rules$rhs[,rules$item_id == unique_ids[f_it], drop = FALSE]
-  ####################
   
-  # Create numeric, sparse matrix from L #
-  L_num <- sparseMatrix(i = L@i,
-                        j = L@j,
-                        x = rep(1, length(L@i)),
-                        giveCsparse = FALSE,
-                        index1 = FALSE,
-                        dim = c(nrow(L), ncol(L)),
-                        dimnames = list(rownames(L), NULL))
-  
+  # Make sure that L does only have unique columns. This is assumed later on. 
   L <- GiveUniqueCol(L)
   
-  # Of what size are the current datasets? #
+  # K does store the number of items in the current Itemsets. We assume that in L there are only itemsets of a certain length.
+  # What is reasonable since this does coincide with the logic of apriori both in the frequent Itemset as well as rule generation.
+  
   if (ncol(L) > 0){
     K <- sum(L[,1])
   } else {
@@ -53,6 +44,8 @@ GenCandidates <- function(L){
       } 
     }
   }
+  
+  
   
   # Cut ouput matrix back on relevant (non only zero) values #
   if (iter > 2){
@@ -85,6 +78,8 @@ GenCandidates <- function(L){
   return(cand[, select, drop = FALSE])
 }
 
-
-
-
+# L1 <- readRDS('testdata/optim_GendCandidates_L1.rds')
+# 
+# profvis({
+#   GenCandidates(L1)
+# })
