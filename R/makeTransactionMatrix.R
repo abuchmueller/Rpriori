@@ -1,14 +1,15 @@
 #' Make Transaction Dataset from arules to non- sparse matrix
 #' 
 #' Takes a object of class ... from arules and makes non-sparse matrix from it.
+#' @name makeTransactionMatrix
+#' @export
 #' @param mat Incident matrix of the transactions
 #' @return The non-sparse matrix
-#' @name makeTansactionMatrix
 #' 
 
 # The following function will take a arules transaction matrix and create a normal matrix from it #
 # This does not make any sense performance wise but in order to create the first version of our code it is easier to understand #
-makeTansactionMatrix <- function(mat){
+makeTransactionMatrix <- function(mat){
   
   if (class(mat)[1] == "transactions"){
     # Input is a transaction from arules
