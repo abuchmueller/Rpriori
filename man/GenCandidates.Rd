@@ -2,16 +2,17 @@
 % Please edit documentation in R/GenCandidates.R
 \name{GenCandidates}
 \alias{GenCandidates}
-\title{Apriori Gen of candidates K-1}
+\title{Generate Candidate of length k + 1 based on frequent itemsets of length k.}
 \usage{
 GenCandidates(L)
 }
 \arguments{
-\item{L}{Incident matrix of the transactions}
+\item{L}{Sparse incident matrix of the candidates.}
 }
 \value{
-The candidate for the next iteration of Apriori
+The candidates of length k + 1 as a sparse incident matrix. rownames are kept.
 }
 \description{
-Takes in a incident matrix of transaction, where the rows do describe the potential items and each colomn does represent the itemsets.
+Takes in a incident matrix of transaction, where the rows do describe the potential items
+ and each colomn does represent the itemsets.
 }
