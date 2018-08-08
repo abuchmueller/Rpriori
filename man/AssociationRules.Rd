@@ -2,24 +2,33 @@
 % Please edit documentation in R/AssociationRules.R
 \name{AssociationRules}
 \alias{AssociationRules}
-\title{Calculate Association rules with minimal confidence and support.}
+\title{Calculate Association rules with minimal support and confidence.}
 \usage{
 AssociationRules(FrequentItems, Itemsets, minsupport = NULL, minconfidence,
   arefrequent = TRUE)
 }
 \arguments{
-\item{Itemsets}{This should either be the transaction matrix, the then paramter arefrequent should be set to FALSE or it should be the frequent itemsets with
-the paramter arefrequent = TRUE.}
+\item{FrequentItems}{If the function is provided with the frequent itemsets they should
+be inserted here. The structure has to be a sparse incident matrix where the rows do represent
+the items and the columns do represent the individual itemsets. Also the paramter arefrequent
+should be set to TRUE.}
 
-\item{minsupport}{Only necessary if the Itemset are not the frequent Itemsets. Then it should describe the minimal support of the rules.}
+\item{Itemsets}{Sparse incident matrix of the transactions where the rows represent the items
+and the columsn the individual itemsets.}
 
-\item{minconfidence}{This should be the minimal confidence the rules are supposed to have.}
+\item{minsupport}{Minimal support of the rules.}
 
-\item{arefrequent}{Are the input Itemsets the frequent Itemsets ?}
+\item{minconfidence}{Minimal confidence of the rules.}
+
+\item{arefrequent}{Are the Frequent itemsets provided?}
 }
 \value{
-Incident matrix of the association rules with minimal support and confidence.
+list with the rhs and lhs of the rules as sparse incident matrices. Also a vector 
+containing the support and confidence of the inidivual rules is provided. The i'th element of 
+the vector does represent the rule that is defined by the i'th column of the lhs and rhs matrix.
 }
 \description{
-This function takes either frequent Itemsets as input or calculates them by itself and based on these itemsets it estimates the rules with minimal confidence.
+This function calculates association rules of consequent length >= 1 based on frequent itemsets.
+If the Frequent itemsets are already calculated than one should provide them in the paramter 
+FrequentItems and set the paramter arefrequent to TRUE (default).
 }
