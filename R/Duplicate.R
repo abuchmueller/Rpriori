@@ -28,7 +28,8 @@ Duplicate <- function(mat){
     mat_col <- .Call(R_pnindex, mat, NULL, FALSE)
     
     # applying duplicated gives whether some of the IDs are repeated and therefore the
-    # repeated columns
+    # repeated columns. By doing this we automatically select the first columns of the 
+    # repeated column (we could change this in duplicated)
     return(duplicated(mat_col))
   } else {
     
