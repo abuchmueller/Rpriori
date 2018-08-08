@@ -19,33 +19,18 @@ DetSupport <- function(cand, Transaction){
     return(c(1)[0])
   }  
   
-  # We need to multiply cand later on with the Transaction matrix. But it can be the case
-  # that the cand matrix does only have subsets of the columns of the Transaction matrix.
-  # Therefore cand_filled is created that does have all rows of Transaction but the same columns
-  # and itemsets as cand. Obviously many rows are zero.
+  # We need to multiply Transaction with cand later on. Therefore they have to have the same
+  # rows. Only the rows are relevant that are also in Transaction.
+  Transaction <- Transaction[row.names(Transaction) %in% row.names(cand),,drop = FALSE]
   
-  cand_filled <- sparseMatrix(i = c() , j = c(),
-                              dims = c(nrow(Transaction), ncol(cand)),
-                              index1 = FALSE,
-                              giveCsparse = TRUE,
-                              dimnames= list(row.names(Transaction),NULL))
-  
-  
-  # Overwrite the correct values in cand_filled so that it does contain the itemset from cand.
-  cand_filled[rownames(Transaction) %in% rownames(cand),] <- cand
+
   
   # make cand from logical to numeric and also transpose is since we do need to 
   # multiply the transposed later on.
-  cand <- t(cand_filled * 1)
+  cand <- t(cand * 1)
   
   # Make Transactions matrix to integer sparse matrix #
-  Transaction <- sparseMatrix(i = Transaction@i , j = Transaction@j,
-                              x = rep(1, length(Transaction@i)),
-                              dims = c(nrow(Transaction), ncol(Transaction)),
-                              index1 = FALSE,
-                              giveCsparse = TRUE,
-                              dimnames= list(row.names(Transaction),NULL))
-  
+  Transaction <- Transaction * 1
   
   # The matrix product of cand with Transaction reveals how many items a certain
   # itemset had that matched with the candidate. If this are as many as the itemset hat obviously

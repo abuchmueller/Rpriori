@@ -15,7 +15,7 @@
 # Det Support #
 ## currently 14 secs #
 # data("Groceries")
-# groc_trans <- makeTansactionMatrix(Groceries)
+# groc_trans <- ProjectApriori::makeTransactionMatrix(Groceries)
 # 
 # L2 <- readRDS(system.file("testdata","Perf_L2.rds", package="ProjectApriori"))
 # 
@@ -23,7 +23,7 @@
 # res_1 <- DetSupport(L2, groc_trans)
 # end_time <- Sys.time()
 # 
-# print(paste("Execution took",end_time - start_time, sep = ' '))
+# print(end_time - start_time)
 # 
 # 
 # start_time <- Sys.time()
