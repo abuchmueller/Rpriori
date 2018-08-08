@@ -2,16 +2,16 @@
 % Please edit documentation in R/makeTransactionMatrix.R
 \name{makeTransactionMatrix}
 \alias{makeTransactionMatrix}
-\title{Make Transaction Dataset from arules to non- sparse matrix}
+\title{Make Transaction Dataset from arules to sparse matrix}
 \usage{
 makeTransactionMatrix(mat)
 }
 \arguments{
-\item{mat}{Incident matrix of the transactions}
+\item{mat}{Object of class Itemmatrix form arules}
 }
 \value{
 The non-sparse matrix
 }
 \description{
-Takes a object of class ... from arules and makes non-sparse matrix from it.
+Takes a object of class Itemmatrix from arules and make it a  sparse matrix.
 }
