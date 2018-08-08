@@ -7,12 +7,14 @@
 ExtractFrequentSets(Apriori_object)
 }
 \arguments{
-\item{Apriori_object}{This has to be the ouput of the apriori command from the arules package when looking for frequent itemsets}
+\item{Apriori_object}{This has to be the ouput of the apriori command from the arules
+package when looking for frequent itemsets}
 }
 \value{
-Gives back a list with sets, the frequent itemsets and support their corresponding support. The format is similar to the output of
-ProjectApriori function FrequentItemsets.
+Gives back a list with sets, the frequent itemsets and  their corresponding
+ support. The format is similar to the output of ProjectApriori function FrequentItemsets.
 }
 \description{
-This function does extract the sets and the support of a search for the frequent itemsets with arules apriori function
+This function does extract the sets and the support of a search for the frequent itemsets
+ with arules apriori function
 }

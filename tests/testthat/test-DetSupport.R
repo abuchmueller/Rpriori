@@ -74,7 +74,6 @@ testthat::test_that("Simple test of DetSupport_row with candidates that have dif
                     TRUE, FALSE, TRUE, TRUE, TRUE),dimnames = list(c('a', 'b', 'c', 'd', 'e'), NULL), nrow = 5)
   trans <- as(trans, 'ngTMatrix')
   
-  
   testthat::expect_equal(DetSupport(cand1, trans), 0.3)
   testthat::expect_equal(DetSupport(cand2, trans), 0.8)
   testthat::expect_equal(DetSupport(cand3, trans), 0.1)

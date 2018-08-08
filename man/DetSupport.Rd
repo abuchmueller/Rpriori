@@ -2,22 +2,25 @@
 % Please edit documentation in R/DetSupport.R
 \name{DetSupport}
 \alias{DetSupport}
-\title{Determine the support of a matrix of candidate set within the transactions}
+\title{Determine the support of a matrix of candidate set within the transactions.}
 \usage{
 DetSupport(cand, Transaction)
 }
 \arguments{
-\item{cand}{This should represent the matrix of  candidates for which the support has to be checked.
-It has to be an Incidence matrix where the rows do describe the different items.
-Each columns should represent one candidate.
+\item{cand}{This should represent the matrix of  candidates for which the support has to be
+ checked.
+It has to be an sparse incidence matrix where the rows do describe the different items.
+Each column should represent one candidate.
 Also it has to have rownames that are a subset of the rownames of Transaction.}
 
-\item{Transaction}{This should be all the transaction from which the occurence (support) of the candidate should be checked. It has to be a incident matrix 
+\item{Transaction}{This should be all the transaction from which the occurence (support)
+ of the candidate should be checked. It has to be a incident matrix 
 with named rows that do represent the different items.}
 }
 \value{
-The support of the candidates wihtin the transactions as a vector of floating-point value.
+The support of the candidates wihtin the transactions
+ as a vector of floating-point value.
 }
 \description{
-Determine the support of a matrix of candidate set within the transactions
+Determine the support of a matrix of candidate set within the transactions.
 }

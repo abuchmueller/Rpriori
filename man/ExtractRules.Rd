@@ -7,12 +7,17 @@
 ExtractRules(rules, maxNumConsequent = NULL)
 }
 \arguments{
-\item{rules}{The left hand side and the right hand side of the rules incident matrix where the names rows do represent the items. The both matrices should
-be saved in a list.}
+\item{rules}{A output object from Project_Apriori's Association rules function has to be used
+here.}
+
+\item{maxNumConsequent}{The maximum length of consequents that the rules of the ouput should 
+have. In Default all rules are shown.}
 }
 \value{
-The rules from the left hand and right hand side in the form of {It1, ... ItN} -> {ITK}.
+The rules from the left hand and right hand side in the form of {It1, ... ItN} -> {ITK} 
+in a data.frame. This data.frame does have columns lhs, rhs, unnamed, support and confidence.
 }
 \description{
-This function extracts the rule in the form of {It1, ... ItN} -> {ITK}.
+This function extracts the rule from the output of ProjectAprioris Association rules
+function in the form of {It1, ... ItN} -> {ITK}.
 }

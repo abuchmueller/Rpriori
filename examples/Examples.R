@@ -30,7 +30,7 @@
 # rm(list = ls())
 # compute frequent itemsets with apriori
 # data("Groceries")
-# groc_trans <- makeTansactionMatrix(Groceries)
+# groc_trans <- makeTransactionMatrix(Groceries)
 # 
 # 
 # start_time <- Sys.time()

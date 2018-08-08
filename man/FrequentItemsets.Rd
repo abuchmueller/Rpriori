@@ -2,18 +2,21 @@
 % Please edit documentation in R/FrequentItemsets.R
 \name{FrequentItemsets}
 \alias{FrequentItemsets}
-\title{Frequent Itemsets base on minimal support}
+\title{Calculate frequent itemset with minimal support}
 \usage{
 FrequentItemsets(dataset, minsupport)
 }
 \arguments{
-\item{dataset}{This should be an incident matrix of the baskets where the rows describe the items and the columns describe the individual bastets. Naming of the items is important}
+\item{dataset}{This should be an sparse incident matrix of the baskets 
+where the rows describe the items and the columns describe the individual bastets.
+ Naming of the items is important.}
 
 \item{minsupport}{This defines the minimal level of the support the resulting itemsets should have.}
 }
 \value{
-The is a list that does store the frequent itemsets as a incidence matrix as well as the resulting support as a vector.
+The is a list that does store the frequent itemsets as a sparse incidence matrix
+ as well as the resulting support as a vector.
 }
 \description{
-This function gives the frequenitemsets given a minimal level of support.
+This function calculate the frequent itemset with a minimal support.
 }
