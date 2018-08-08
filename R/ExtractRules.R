@@ -12,7 +12,7 @@
 #' in a data.frame. This data.frame does have columns lhs, rhs, unnamed, support and confidence.
 
 ExtractRules <- function(rules, maxNumConsequent = NULL){
-  
+      
   # For both the lhs and the rhs of the rules we select for each column the itemsets by names
   # that exist and combine them to vectors of strings where each string does reperesent one column
   # in the form {It1, It2, ..., Itn}. For the lhs this is the base itemset and for the rhs 
