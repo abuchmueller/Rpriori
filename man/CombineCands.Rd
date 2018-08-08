@@ -2,17 +2,22 @@
 % Please edit documentation in R/CombineCands.R
 \name{CombineCands}
 \alias{CombineCands}
-\title{Combining incidence matrices of different length}
+\title{Combining list of sparse incident matrix  of itemsets with different length.}
 \usage{
 CombineCands(list_input)
 }
 \arguments{
-\item{list_input}{has to be a list of matrices. These matrices should have appropriate rownames describing the different items. The items should represent 
-the different candidates.}
+\item{list_input}{List of sparse incident matrices. These matrices may have different number 
+of rows, columns and number of items}
 }
 \value{
-The result will be yet another incident matrix that will have all items rows of all input matrices and will represent all itemset in the input matrices.
+The result will be yet another incident matrix that will have all items
+ rows of all input matrices and will represent all itemset in the input matrices.
 }
 \description{
-Combining incidence matrices of different length
+This functions takes a list of sparce incident matrices as input. This incident may have
+ different number or rows (different items), different number of columns 
+ (different number of itemsets) as well es different number of items per itemset. Then these
+  matrices are combined to a big, sparse incident matrix that does have all rows and columns
+   of the input matrices.
 }
