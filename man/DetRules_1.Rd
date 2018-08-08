@@ -2,16 +2,21 @@
 % Please edit documentation in R/DetRules.R
 \name{DetRules_1}
 \alias{DetRules_1}
-\title{Determine all possible association rules with consequent length 1for given frequent transaction.}
+\title{Determine all possible association rules with consequent length 1 for given frequent transaction.}
 \usage{
 DetRules_1(Items, Items_support)
 }
 \arguments{
 \item{Items}{Frequent Itemsets of different length, but at least two.}
 
-\item{Items_support}{Here the support of the frequent itemsets should be stored.}
+\item{Items_support}{Support of the frequent itemsets should be stored.}
+}
+\value{
+a list containing the rhs, lhs and support of the candidates. The vector Item_id shows
+from which frequent itemset the specific rules comes from and is needed later on to determine 
+the frequent itemsets.
 }
 \description{
-This function take the frequent transactions as input and generates rules of length len. It uses the Apriori-gen for more efficient generation
-of rule candidates.
+This function takes the frequent itemsets as input and generates rules of length 1.
+It uses the Apriori-gen for more efficient generation of rule candidates.
 }
