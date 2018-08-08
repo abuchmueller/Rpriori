@@ -7,7 +7,7 @@
 #' @return The non-sparse matrix
 #' 
 
-# The following function will take a arules transaction matrix and create a normal matrix from it #
+# The following function will convert an arules transaction matrix into a normal matrix #
 # This does not make any sense performance wise but in order to create the first version of our code it is easier to understand #
 makeTransactionMatrix <- function(mat){
   
