@@ -1,10 +1,6 @@
 #### This file stores printing methods for all classes (Itemsets, FrequentItems & Rules) ####
 #############################################################################################
 
-
-## check if we have methods listed for following classes: TransactionMatrix [currently ngTMatrix], FrequentItems [currently list], Rules [currently list]
-showMethods("print") #Edit out later
-
 # This tells the generic print function what to print when the object is of class ngTMatrix
 # Printing method for TransactionsMatrix class 
 # For now it prints the names of the items on the TransactionMatrix
@@ -12,7 +8,7 @@ showMethods("print") #Edit out later
 setMethod("print", signature(x = "ngTMatrix"), function(x) {
   print(x@Dimnames[[1]])
 })
-print(TransactionMatrix)
+#print(TransactionMatrix)
 
 # Printing method for transactions class
 setMethod("print", signature(x = "transactions"), function(x) {
@@ -24,10 +20,10 @@ setMethod("print", signature(x = "transactions"), function(x) {
 
 # setClass() ## Placeholder to implement FrequentItems properly as an S4 class later on
 
-# For now we create an S3 class from frequent_items and coerce it into an S4 class
-class(frequent_items) <- "FrequentItems"
-setOldClass("FrequentItems")
-isS4(frequent_items)
+# For now we create an S3 class from frequent_items and coerce it into an S4 class (Reactivate this block after building package)
+#class(frequent_items) <- "FrequentItems" 
+#setOldClass("FrequentItems") 
+#isS4(frequent_items)
 
 # Printing method for FrequentItems class
 setMethod("print", signature(x = "FrequentItems"), function(x) {
@@ -38,7 +34,7 @@ setMethod("print", signature(x = "FrequentItems"), function(x) {
   }
   print(output)
 })
-print(frequent_items)
+#print(frequent_items)
 
 
 ## Rules
@@ -46,15 +42,15 @@ print(frequent_items)
 
 # setClass()  #Placeholder to implement Rules properly as an S4 class later on
 
-# For now we create an S3 class from Rules and coerce it into an S4 class 
-class(Rules) <- "Rules"
-setOldClass("Rules") # currently not working as Rules stays an S4 class object the method however works fine afterwards
-isS4(Rules)
+# For now we create an S3 class from Rules and coerce it into an S4 class (Reactivate this block after building package)
+#class(Rules) <- "Rules"
+#setOldClass("Rules") # currently not working as Rules stays an S4 class object the method however works fine afterwards
+#isS4(Rules) 
 
 setMethod("print", signature(x = "Rules"), function(x) {
   print(ExtractRules(Rules))
 })
-print(Rules)
+#print(Rules)
 
 
 
