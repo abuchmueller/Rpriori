@@ -9,6 +9,9 @@ Duplicate(mat)
 \arguments{
 \item{mat}{a sparse matrix.}
 }
+\value{
+A boolean vector that does have one element for each column in the matrix.
+}
 \description{
 This function is based on a c function from the arules package that finds duplicated columns
 in a sparse matrix

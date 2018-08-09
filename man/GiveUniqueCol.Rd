@@ -7,7 +7,8 @@
 GiveUniqueCol(mat)
 }
 \arguments{
-\item{mat}{Sparse matrix, where the rows are the items and the columns are the itemsets of type ngCmatrix}
+\item{mat}{Sparse incident matrix, where the rows are the items and the columns
+are the itemsets of type ngCmatrix}
 }
 \value{
 Returns only non-duplicate columns of matrix. Ordering might be changed.

@@ -5,7 +5,7 @@
 #' @useDynLib ProjectApriori R_pnindex
 #' @name Duplicate
 #' @param mat a sparse matrix.
-#' @output A boolean vector that does have one element for each column in the matrix.
+#' @return A boolean vector that does have one element for each column in the matrix.
 
 Duplicate <- function(mat){
   
