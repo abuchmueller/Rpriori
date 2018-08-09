@@ -1,2 +1,7 @@
 .Rhistory
-.Rproj.user
+.Rproj.user/
+*.[oa]
+.RData
+*.dll
+*.so
+
