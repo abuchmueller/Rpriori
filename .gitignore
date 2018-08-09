@@ -1,7 +1,6 @@
 .Rhistory
 .Rproj.user/
-*.[oa]
 .RData
-*.dll
-*.so
-
+src/*
+!src/ptree.c
+.Rproj.user
