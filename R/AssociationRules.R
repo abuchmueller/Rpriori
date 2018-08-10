@@ -47,7 +47,7 @@ AssociationRules <- function(FrequentItems, Itemsets, minsupport = NULL, minconf
   R1 <- DetRules_1(FrequentItems, Items_support = FrequentItems_support)
   
   # Calculate confidence for all candidates of rules with consequent length 1.
-  R1$confidence <- R1$support / DetSupport(R1$lhs, Itemsets)
+  R1$confidence <- R1$support / DetSupport(R1$lhs, Itemsets, TRUE)
 
   # Prune out the candidates that do not have minimal confidence.
   rel_its <- R1$conf >= minconfidence
