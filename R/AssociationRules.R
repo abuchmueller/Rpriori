@@ -77,7 +77,7 @@ AssociationRules <- function(FrequentItems, Itemsets, minsupport = NULL, minconf
     
     # Calculate confidence for newly generated rules and save them in the intermediate 
     # object R_cur.
-    R_cur$confidence <- R_cur$support / DetSupport(R_cur$lhs, Itemsets)
+    R_cur$confidence <- R_cur$support / DetSupport(R_cur$lhs, Itemsets, TRUE)
     
     # Prune Rules out do not have minconf #
     rel_its <- R_cur$conf >= minconfidence

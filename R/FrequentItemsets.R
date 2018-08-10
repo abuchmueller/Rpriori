@@ -59,7 +59,8 @@ FrequentItemsets <- function(dataset, minsupport){
     assign(paste("L", k, sep = ""), GenCandidates(get(paste("L", k - 1, sep = ""))))
     
     # Calculate the support of the newly created Candidates
-    assign(paste("L", k, "_sup", sep = ""), DetSupport(get(paste("L", k , sep = "")), dataset))
+    assign(paste("L", k, "_sup", sep = ""), DetSupport(get(paste("L", k , sep = "")), dataset,
+                                                       same_item_num = TRUE))
     
     # Prune the candidates that do not have minimal support.
     assign(paste("L", k, sep = ""),

@@ -9,10 +9,11 @@
 #' @param Transaction This should be all the transaction from which the occurence (support)
 #'  of the candidate should be checked. It has to be a incident matrix 
 #' with named rows that do represent the different items.
+#' @param Itemsetsize If all candidate
 #' @return The support of the candidates wihtin the transactions
 #'  as a vector of floating-point value.
 #' @import Matrix
-DetSupport <- function(cand, Transaction){
+DetSupport <- function(cand, Transaction, same_item_num = FALSE){
   
   # if empty candidates are supplied than return an empty vector as support.
   if (ncol(cand) == 0 ){
@@ -23,7 +24,6 @@ DetSupport <- function(cand, Transaction){
   # rows. Only the rows are relevant that are also in Transaction.
   Transaction <- Transaction[row.names(Transaction) %in% row.names(cand),,drop = FALSE]
   
-
   
   # make cand from logical to numeric and also transpose is since we do need to 
   # multiply the transposed later on.
@@ -37,12 +37,28 @@ DetSupport <- function(cand, Transaction){
   # that itemset did contain the candidate.
   frequs <- cand %*% Transaction
   
-  # Here I count how man items each candidate had.
-  itemNum <- rowSums(cand)
+  if (! same_item_num){
+    # If the items could have different number of items we have to determine the number of items 
+    # and compare the matrix later to a vector.
+    
+    # Here I count how man items each candidate had.
+    itemNum <- rowSums(cand)
+    
+    # When there are as many machtes in a column of frequs as items in the respective candidates than
+    # this candidate was part of that set.
+    comp <- frequs == itemNum
+  } else {
+    # When all items have the same size we can just use the size of the first one as a dummy and 
+    # then can compare the matrix to a single value.
+    
+    # Here I count how man items each candidate had as 
+    itemNum <- sum(cand[1,])
+    
+    # When there are as many machtes in a column of frequs as items in the respective candidates than
+    # this candidate was part of that set.
+    comp <- frequs == itemNum
+  }
   
-  # When there are as many machtes in a column of frequs as items in the respective candidates than
-  # this candidate was part of that set.
-  comp <- frequs >= itemNum
   
   # the support (absolut count here) is represented by how often we had a match with the candates
   # in all itemsets of Transaction
@@ -52,3 +68,5 @@ DetSupport <- function(cand, Transaction){
   # return the relative support.
   return(support / ncol(Transaction))
 }
+
+
