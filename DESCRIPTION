@@ -13,3 +13,18 @@ License: GPL-3
 LazyData: true
 RoxygenNote: 6.1.0
 Suggests: testthat
+Collate: 
+    'AssociationRules.R'
+    'CombineCands.R'
+    'DetRules.R'
+    'DetSupport.R'
+    'Duplicate.R'
+    'ExtractFrequentSets.R'
+    'ExtractRules.R'
+    'FrequentItemsets.R'
+    'GenCandidates.R'
+    'GetSets.R'
+    'GiveUniqueCol.R'
+    'allClasses.R'
+    'allMethods.R'
+    'makeTransactionMatrix.R'
