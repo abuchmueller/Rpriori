@@ -4,7 +4,7 @@
 \alias{DetSupport}
 \title{Determine the support of a matrix of candidate set within the transactions.}
 \usage{
-DetSupport(cand, Transaction)
+DetSupport(cand, Transaction, same_item_num = FALSE)
 }
 \arguments{
 \item{cand}{This should represent the matrix of  candidates for which the support has to be
@@ -16,6 +16,8 @@ Also it has to have rownames that are a subset of the rownames of Transaction.}
 \item{Transaction}{This should be all the transaction from which the occurence (support)
  of the candidate should be checked. It has to be a incident matrix 
 with named rows that do represent the different items.}
+
+\item{Itemsetsize}{If all candidate}
 }
 \value{
 The support of the candidates wihtin the transactions

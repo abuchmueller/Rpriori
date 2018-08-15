@@ -44,6 +44,7 @@ DetRules_1 <- function(Items, Items_support){
                                    giveCsparse = FALSE,
                                    dim = c(nrow(Items), ncols),
                                    dimnames = list(rownames(Items), NULL))
+    
     rhs <- out_mat <- sparseMatrix(i = c(),
                                    j = c(),
                                    giveCsparse = FALSE,
