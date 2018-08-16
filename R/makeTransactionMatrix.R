@@ -22,10 +22,8 @@ makeTransactionMatrix <- function(mat){
     # Add the rownames (which do represent the different items)
     rownames(mat_out) <- mat@itemInfo$labels
     
-    # return the  resulting matrix # (as TAMatrix obeject)
-    return(new("TAMatrix", data  = mat_out, 
-               dim = mat_out@Dim, items = mat_out@Dimnames[[1]])
-    )
+    # return the  resulting matrix #
+    return(mat_out)
   } 
   
   if (is.matrix(mat)){
@@ -43,10 +41,6 @@ makeTransactionMatrix <- function(mat){
                             giveCsparse = FALSE,
                             dim = c(nrow(mat), ncol(mat)),
                             dimnames = list(rownames(mat), NULL))
-    
-    #Construct TAMatrix object
-    return(new("TAMatrix", data  = out_mat, 
-               dim = out_mat@Dim, items = out_mat@Dimnames[[1]]))
+    return(out_mat)
   }
 }
-
