@@ -45,5 +45,5 @@ fitems <- new("FIMatrix", data = frequent_items$sets, support = frequent_items$s
 
 #Rules
 rulez <- new("Rules", lhs = Rules$lhs, rhs = Rules$rhs, support = Rules$support, confidence = Rules$confidence)
-
+rules.arules <- apriori(Groceries, parameter = list(supp = 0.01, conf = 0.5));inspect(rules.arules)
 
