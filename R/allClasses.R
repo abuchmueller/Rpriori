@@ -56,7 +56,11 @@ setClass("Rules",
            lhs = "ngTMatrix",
            rhs = "ngTMatrix",
            support = "numeric",
-           confidence = "numeric"
+           confidence = "numeric",
+           lift = "ANY",
+           leverage = "ANY",
+           itemsetID = "ANY",
+           FrequentItemsets = "ANY"
          )
 )
 
