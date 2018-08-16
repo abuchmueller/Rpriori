@@ -9,13 +9,17 @@
 setClass("TAMatrix",
         representation(
            data  = "ngTMatrix", 
-           dim  = "ANY",
-           items = "ANY"
-         ),
+           dim  = "integer",
+           items = "character"
+         )
        #lacks validity checking
-       prototype(dim = data.frame(), items=data.frame())
-        
 )
+
+#setValidity("TAMatrix", "initialize"))
+
+#setMethod("intitialize", "TAMatrix", function(.Object) {
+  
+#})
 
 setClass("TAMatrix2", 
          slots = list(
@@ -34,9 +38,10 @@ setClass("TAMatrix2",
 setClass("FIMatrix", 
          representation(
            data = "ngTMatrix",
-           support = "ANY"),
-         prototype(support = data.frame())
+           support = "numeric")
 )
+
+#setMethod("initialize", signature())
 
 #' An S4 class to represent an frequent Itemsets in a sparse Matrix
 #' @name Rules
