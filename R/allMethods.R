@@ -39,7 +39,7 @@ setMethod("print", signature(x = "FIMatrix"), function(x) {
 # Idea here is to simply display the rules in a way that a human can read them easily: if lhs is purchased => rhs is frequently purchased, too (+support & confidence).
 
 setMethod("print", signature(x = "Rules"), function(x) {
-  print(ExtractRules(Rules, maxNumConsequent = 1))
+  ExtractRules(x, maxNumConsequent = 1)
 })
 
 
