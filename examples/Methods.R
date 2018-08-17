@@ -15,8 +15,11 @@ TransactionMatrix <- makeTransactionMatrix(Groceries)
 #Sparse matrix of frequent itemsets + supportvector containing support for each itemset
 frequent_items <- FrequentItemsets(TransactionMatrix, 0.01)
 #Object of 'Rule' class (right now it's just 4 lists)
-Rules <- AssociationRules(Itemsets=TransactionMatrix, minsupport = 0.01, 
-                          minconfidence = 0.5, arefrequent = FALSE)
+Rules <- AssociationRules(Itemsets=TransactionMatrix, minsupport = 0.03, 
+                          minconfidence = 0.4, arefrequent = FALSE)
+Rules <- AssociationRules(FrequentItems = frequent_items, Itemsets = TransactionMatrix, minsupport = 0.03,
+                          minconfidence = 0.4, arefrequent = TRUE)
+
 ##This should use generic print and output the rules nicely (Billo Version)
 print.rules <- function(x) {
   ExtractRules(x)
