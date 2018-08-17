@@ -45,7 +45,7 @@ makeTransactionMatrix <- function(mat){
   
  # Create Object of class TAMatrix #
   out <- new('TAMatrix',data  = out_mat, 
-             dim  = ncol(out_mat),
+             dim  = c(nrow(out_mat),ncol(out_mat)),
              items = row.names(out_mat))
   
   return(out)

@@ -5,13 +5,13 @@
 #'  (different number of itemsets) as well es different number of items per itemset. Then these
 #'   matrices are combined to a big, sparse incident matrix that does have all rows and columns
 #'    of the input matrices.
-#' @name CombineCands
+#' @name CombineFIMatrix
 #' @param list_input List of sparse incident matrices. These matrices may have different number 
 #' of rows, columns and number of items
 #' @return The result will be yet another incident matrix that will have all items
 #'  rows of all input matrices and will represent all itemset in the input matrices.
 
-CombineCands <- function(list_input){
+CombineFIMatrix <- function(list_input){
   
   # Determine the dimensions of the result matrix
   # It should have all rows, columns from all input matrices
@@ -24,17 +24,19 @@ CombineCands <- function(list_input){
   
   # Iterate over the list and add the number of columns as well as the items.
   for (cand in list_input){
-    ncols <- ncols + ncol(cand)
-    items <- unique(c(items, rownames(cand)))
+    ncols <- ncols + ncol(cand@data)
+    items <- unique(c(items, rownames(cand@data)))
   }
   
   # Create the output matrix based on the dimension calculated above.
   # The matrix is created completely empty and will be filled later.
-  res_mat <- sparseMatrix(i = c(),
+  res_mat <- new('FIMatrix',
+                 data = sparseMatrix(i = c(),
                           j = c(),
                           giveCsparse = FALSE,
                           dim = c(length(items), ncols),
-                          dimnames = list(items, NULL))
+                          dimnames = list(items, NULL)),
+                 support = rep(-1, ncols))
   
   
   # Iterate again over the matrices in the input list and fill the output matrix with 
@@ -45,16 +47,20 @@ CombineCands <- function(list_input){
   cur_col <- 1
   
   for (cand in list_input){
-    if (ncol(cand) > 0){
+    if (ncol(cand@data) > 0){
       
       # It is ensured that the current matrix is not empty.
       # Select only the rows from the output matrix that are also in the current matrix as well
       # as the columns in the output matrix that will represent the current matrix.
       # This selection of the output matrix can simply be overwritten by the current matrix.
-      res_mat[rownames(res_mat) %in% rownames(cand), cur_col:(cur_col + ncol(cand) - 1)] <- cand
+      res_mat@data[rownames(res_mat@data) %in% rownames(cand@data),
+              cur_col:(cur_col + ncol(cand@data) - 1)] <- cand@data
+      
+      # Here we combine the support of the of the input frequent itemsets
+      res_mat@support[cur_col:(cur_col + ncol(cand@data) - 1)] = cand@support
       
       # this 
-      cur_col <- cur_col + ncol(cand)
+      cur_col <- cur_col + ncol(cand@data)
     }
   }
   

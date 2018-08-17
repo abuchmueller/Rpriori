@@ -33,18 +33,20 @@ data("Groceries")
 groc_trans <- makeTransactionMatrix(Groceries)
 
 
-start_time <- Sys.time()
-rules_aprio <- apriori(Groceries,  parameter = list(support = 0.03, confidence = 0.2, minlen=2))
-end_time <- Sys.time()
-print(end_time - start_time)
-
-
-
-
-start_time <- Sys.time()
-rules_praprio <- AssociationRules(Itemsets =  groc_trans,minsupport = 0.03, minconfidence = 0.2, arefrequent = FALSE)
-end_time <- Sys.time()
-print(end_time - start_time)
+# 
+# 
+# start_time <- Sys.time()
+# rules_aprio <- apriori(Groceries,  parameter = list(support = 0.03, confidence = 0.2, minlen=2))
+# end_time <- Sys.time()
+# print(end_time - start_time)
+# 
+# 
+# 
+# 
+# start_time <- Sys.time()
+# rules_praprio <- AssociationRules(Itemsets =  groc_trans,minsupport = 0.03, minconfidence = 0.2, arefrequent = FALSE)
+# end_time <- Sys.time()
+# print(end_time - start_time)
 
 
 # 
@@ -77,12 +79,16 @@ print(end_time - start_time)
 # ##################################
 # # Comp with arules:  #
 # ##################################
-
+# 
 # data("Epub")
 # 
-# groc_Epub <- makeTansactionMatrix(Epub)
-# apr_Epub <- apriori(Epub, parameter = list(support = 0.002,  target="frequent itemsets"))
+# groc_Epub <- makeTransactionMatrix(Epub)
+# apr_Epub <- apriori(Epub, parameter = list(support = 0.01,  target="frequent itemsets"))
 # fr_tr <- ExtractFrequentSets(apr_Epub)
+# 
+# length(fr_tr$support)
+# FrequentItemsets(groc_Epub, 0.01)
+# 
 # 
 # rules_aprio <- apriori(Epub,  parameter = list(support = 0.002, confidence = 0.0001, minlen=2))
 # rules_praprio <- AssociationRules(FrequentItems = fr_tr, Itemsets =  groc_Epub,minsupport = 0.002, minconfidence = 0.0001, arefrequent = TRUE)
