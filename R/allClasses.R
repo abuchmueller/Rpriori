@@ -15,19 +15,6 @@ setClass("TAMatrix",
        #lacks validity checking
 )
 
-#setValidity("TAMatrix", "initialize"))
-
-#setMethod("intitialize", "TAMatrix", function(.Object) {
-  
-#})
-
-setClass("TAMatrix2", 
-         slots = list(
-           data = "ngTMatrix", 
-           dim = "integer", 
-           items = "character")
-)
-
 
 #' An S4 class to represent an frequent Itemsets in a sparse Matrix
 #' @name FIMatrix
@@ -41,9 +28,8 @@ setClass("FIMatrix",
            support = "numeric")
 )
 
-#setMethod("initialize", signature())
 
-#' An S4 class to represent an frequent Itemsets in a sparse Matrix
+#' An S4 class to represent association rules and additional information
 #' @name Rules
 #' @rdname Rules-class  
 #' @slot lhs Left-hand side 
@@ -61,7 +47,10 @@ setClass("Rules",
            leverage = "ANY",
            itemsetID = "ANY",
            FrequentItemsets = "ANY"
-         )
+         ),
+         validity = function(object) {
+           stopifnot(length(object@rhs)==length(object@lhs)) 
+         }
 )
 
 

@@ -3,9 +3,9 @@
 \docType{class}
 \name{Rules}
 \alias{Rules}
-\title{An S4 class to represent an frequent Itemsets in a sparse Matrix}
+\title{An S4 class to represent association rules and additional information}
 \description{
-An S4 class to represent an frequent Itemsets in a sparse Matrix
+An S4 class to represent association rules and additional information
 }
 \section{Slots}{
 
