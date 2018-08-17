@@ -103,11 +103,22 @@
 
 
 
+## Issue: ###
 
 
-
-
-
-
-
-
+# data("Groceries")
+# TransactionMatrix <- makeTransactionMatrix(Groceries)
+# 
+# #debugonce(AssociationRules)
+# 
+# Rules <- AssociationRules(Itemsets=TransactionMatrix, minsupport = 0.01,
+#                           minconfidence = 0.5, arefrequent = FALSE)
+# 
+# 
+# ExtractRules(Rules)
+# 
+# rules.arules <- apriori(Groceries, parameter = list(supp = 0.01, conf = 0.5));
+# rules.arules <- inspect(rules.arules)
+# rules.arules <- rules.arules[order(rules.arules$support, rules.arules$confidence, decreasing = TRUE),]
+# rules.arules
+# ExtractRules(Rules)

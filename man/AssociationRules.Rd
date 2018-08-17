@@ -4,8 +4,8 @@
 \alias{AssociationRules}
 \title{Calculate Association rules with minimal support and confidence.}
 \usage{
-AssociationRules(FrequentItems, Itemsets, minsupport = NULL,
-  minconfidence, arefrequent = TRUE)
+AssociationRules(FrequentItems, Itemsets, minsupport = NULL, minconfidence,
+  arefrequent = TRUE)
 }
 \arguments{
 \item{FrequentItems}{If the function is provided with the frequent itemsets they should
