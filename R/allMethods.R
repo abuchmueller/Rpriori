@@ -4,7 +4,7 @@
 #' @include allClasses.R
 
 # This tells the generic print function what to print when the object is of class ngTMatrix
-# Printing method for TransactionsMatrix class (later)
+# Printing method for TransactionsMatrix class
 # For now it prints the names of the items in the TransactionMatrix
 
 
@@ -16,9 +16,9 @@ setMethod("length", signature(x = "TAMatrix"), function(x) {
   return(x@dim[1])
 })
 
-# setMethod("summary", signature(x = "TAMatrix"), function(x) {
-#   print(x@dim)
-# })
+# setMethod("summary", "TAMatrix", function(x) {
+#    cat(".")
+#  })
 
 
 ## FrequentItems ##
@@ -35,6 +35,14 @@ setMethod("print", signature(x = "FIMatrix"), function(x) {
   print(output)
 })
 
+setMethod("length", "FIMatrix", function(x) {
+  return(x@data@Dim[1])
+})
+
+# setMethod("summary", "FIMatrix", function(x) {
+#   cat(".")
+# })
+
 ## Rules ## 
 # Idea here is to simply display the rules in a way that a human can read them easily: if lhs is purchased => rhs is frequently purchased, too (+support & confidence).
 
@@ -42,7 +50,7 @@ setMethod("print", signature(x = "Rules"), function(x) {
   ExtractRules(x, maxNumConsequent = 1)
 })
 
-
-
-
+setMethod("length", "Rules", function(x) {
+  x@lhs@Dim[2]
+})
 
