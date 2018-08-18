@@ -80,14 +80,17 @@ groc_trans <- makeTransactionMatrix(Groceries)
 # # Comp with arules:  #
 # ##################################
 # 
-# data("Epub")
-# 
-# groc_Epub <- makeTransactionMatrix(Epub)
-# apr_Epub <- apriori(Epub, parameter = list(support = 0.01,  target="frequent itemsets"))
-# fr_tr <- ExtractFrequentSets(apr_Epub)
-# 
-# length(fr_tr$support)
-# FrequentItemsets(groc_Epub, 0.01)
+data("Epub")
+
+groc_Epub <- makeTransactionMatrix(Epub)
+apr_Epub <- apriori(Epub, parameter = list(support = 0.01,  target="frequent itemsets"))
+fr_tr <- ExtractFrequentSets(apr_Epub)
+
+length(fr_tr$support)
+rownames(fr_tr$sets[rowSums(fr_tr$sets) > 0,]) == rownames(FrequentItemsets(groc_Epub, 0.01)@data)
+
+
+
 # 
 # 
 # rules_aprio <- apriori(Epub,  parameter = list(support = 0.002, confidence = 0.0001, minlen=2))

@@ -58,19 +58,22 @@ FrequentItemsets <- function(dataset, minsupport){
     # Calculate the support of the newly created Candidates
     L_temp_support =  DetSupport(L_temp, dataset, same_item_num = TRUE)
     
+    # Make L_temp object of class TIMatrix so that we can subset both the matrix
+    # and the support at the same time.
+    L_temp <- new("FIMatrix",
+                  data = L_temp,
+                  support = L_temp_support)
+    
     # Prune the candidates that do not have minimal support.
-    L_temp = L_temp[,L_temp_support >= minsupport, drop = FALSE]
-    L_temp_support = L_temp_support[L_temp_support >= minsupport, drop = FALSE]
+    L_temp <- L_temp[,L_temp@support >= minsupport]
     
     # It may happen during the generation of Candidates that a certain Item does
     # not occur anymore and does not have any TRUE values in its respective row.
     # Since we do not need this item any longer I delete it here.
-    L_temp = L_temp[rowSums(L_temp) > 0,, drop = FALSE]
+    L_temp <- L_temp[rowSums(L_temp@data) > 0,]
     
     # Create new object of class FIMatrix the contains the frequent itemset of length k
-    assign(paste("L", k, sep = ""), new('FIMatrix',
-                                        data = L_temp,
-                                        support =L_temp_support))
+    assign(paste("L", k, sep = ""), L_temp)
     
     k <- k + 1
   }

@@ -51,3 +51,4 @@ test_that("Test subsetting of FIMatrix",{
                                                   dimnames = list(c('a'),NULL)), "ngTMatrix"),
                                  support = c( 0.6)))
 })
+

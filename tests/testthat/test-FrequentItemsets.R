@@ -12,7 +12,6 @@ test_that("Simple test ", {
   result <- new("FIMatrix",
                 data = as(result$sets, "ngTMatrix"),
                 support = result$support)
-  
-  
+
   expect_equal(FrequentItemsets(dataset, minsupport = 0.3), result)
 })
