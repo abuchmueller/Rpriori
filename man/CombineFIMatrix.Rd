@@ -2,7 +2,7 @@
 % Please edit documentation in R/CombineCands.R
 \name{CombineFIMatrix}
 \alias{CombineFIMatrix}
-\title{Combining list of sparse incident matrix  of itemsets with different length.}
+\title{Combining list of FIMatrix containing frequent itemsets with different length.}
 \usage{
 CombineFIMatrix(list_input)
 }
@@ -11,11 +11,10 @@ CombineFIMatrix(list_input)
 of rows, columns and number of items}
 }
 \value{
-The result will be yet another incident matrix that will have all items
- rows of all input matrices and will represent all itemset in the input matrices.
+Another object of class FIMatrix that contains all the input Itemsets.
 }
 \description{
-This functions takes a list of sparce incident matrices as input. This incident may have
+This functions takes a list of FIMatrices matrices as input. The FIMatrices may have
  different number or rows (different items), different number of columns 
  (different number of itemsets) as well es different number of items per itemset. Then these
   matrices are combined to a big, sparse incident matrix that does have all rows and columns

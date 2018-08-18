@@ -4,24 +4,24 @@
 # ##################################
 # 
 # Try to set-up example with more than one two consquent rules
-# input_sets <- matrix(c(TRUE, TRUE, FALSE, FALSE, FALSE, FALSE,
-#          TRUE, FALSE, TRUE, TRUE, TRUE, FALSE,
-#         FALSE, TRUE, TRUE, TRUE, FALSE, TRUE,
-#          TRUE, TRUE, TRUE, TRUE, FALSE, FALSE,
-#          TRUE, TRUE, TRUE, FALSE, FALSE, TRUE),nrow = 6, dimnames = list( c("Bread", "Milk", "Diaper", "Beer", "Eggs", "Coke")))
-# 
-# result_arules <- apriori(t(input_sets), parameter = list(support = 0.3, confidence = 0.4, minlen=2))
-# 
-# input_sets_spares <- makeTansactionMatrix(input_sets)
+input_sets <- matrix(c(TRUE, TRUE, FALSE, FALSE, FALSE, FALSE,
+         TRUE, FALSE, TRUE, TRUE, TRUE, FALSE,
+        FALSE, TRUE, TRUE, TRUE, FALSE, TRUE,
+         TRUE, TRUE, TRUE, TRUE, FALSE, FALSE,
+         TRUE, TRUE, TRUE, FALSE, FALSE, TRUE),nrow = 6, dimnames = list( c("Bread", "Milk", "Diaper", "Beer", "Eggs", "Coke")))
 
-# result <- AssociationRules(Itemsets = input_sets_spares , minsupport = 0.3, minconfidence = 0.4,  arefrequent = FALSE)
-# 
-# me <- ExtractRules(result, maxNumConsequent = 1)
-# arules <- inspect(result_arules)[order(result_arules@quality$support,result_arules@quality$confidence, decreasing = TRUE),]
-# length(arules$support)
-# length(me$Support)
-# arules
-# me
+result_arules <- apriori(t(input_sets), parameter = list(support = 0.3, confidence = 0.4, minlen=2))
+
+input_sets_spares <- makeTransactionMatrix(input_sets)
+
+result <- AssociationRules(Itemsets = input_sets_spares , minsupport = 0.3, minconfidence = 0.4,  arefrequent = FALSE)
+
+me <- ExtractRules(result, maxNumConsequent = 1)
+arules <- inspect(result_arules)[order(result_arules@quality$support,result_arules@quality$confidence, decreasing = TRUE),]
+length(arules$support)
+length(me$Support)
+arules
+me
 
 
 # ##################################
@@ -35,18 +35,18 @@ groc_trans <- makeTransactionMatrix(Groceries)
 
 # 
 # 
-# start_time <- Sys.time()
-# rules_aprio <- apriori(Groceries,  parameter = list(support = 0.03, confidence = 0.2, minlen=2))
-# end_time <- Sys.time()
-# print(end_time - start_time)
+start_time <- Sys.time()
+rules_aprio <- apriori(Groceries,  parameter = list(support = 0.03, confidence = 0.2, minlen=2))
+end_time <- Sys.time()
+print(end_time - start_time)
 # 
 # 
 # 
 # 
-# start_time <- Sys.time()
-# rules_praprio <- AssociationRules(Itemsets =  groc_trans,minsupport = 0.03, minconfidence = 0.2, arefrequent = FALSE)
-# end_time <- Sys.time()
-# print(end_time - start_time)
+start_time <- Sys.time()
+rules_praprio <- AssociationRules(Itemsets =  groc_trans,minsupport = 0.03, minconfidence = 0.2, arefrequent = FALSE)
+end_time <- Sys.time()
+print(end_time - start_time)
 
 
 # 
@@ -63,17 +63,17 @@ groc_trans <- makeTransactionMatrix(Groceries)
 # 
 # 
 # 
-# result_arules <- inspect(rules_aprio)
-# result_arules <- result_arules[order(result_arules$support, result_arules$confidence, decreasing = TRUE),]
-# result_praprio <- ExtractRules(rules_praprio, maxNumConsequent = 1)
-# length(result_praprio$Support)
-# length(result_arules$support)
+result_arules <- inspect(rules_aprio)
+result_arules <- result_arules[order(result_arules$support, result_arules$confidence, decreasing = TRUE),]
+result_praprio <- ExtractRules(rules_praprio, maxNumConsequent = 1)
+length(result_praprio$Support)
+length(result_arules$support)
 # 
-# result_arules
-# result_praprio
+result_arules
+result_praprio
 # 
-# length(result_arules$support)
-# length(result_praprio$Support)
+length(result_arules$support)
+length(result_praprio$Support)
 
 
 # ##################################

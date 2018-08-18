@@ -13,5 +13,5 @@ test_that("Simple test ", {
                 data = as(result$sets, "ngTMatrix"),
                 support = result$support)
 
-  expect_equal(FrequentItemsets(dataset, minsupport = 0.3), result)
+  expect_equal(FindFrequentItemsets(dataset, minsupport = 0.3), result)
 })

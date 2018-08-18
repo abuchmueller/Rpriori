@@ -1,7 +1,7 @@
 #' Calculate frequent itemset with minimal support
 #' 
 #' This function calculate the frequent itemset with a minimal support. 
-#' @name FrequentItemsets
+#' @name FindFrequentItemsets
 #' @export
 #' @param dataset This should be an sparse incident matrix of the baskets 
 #' where the rows describe the items and the columns describe the individual bastets.
@@ -11,7 +11,7 @@
 #'  as well as the resulting support as a vector.
 
 
-FrequentItemsets <- function(dataset, minsupport){
+FindFrequentItemsets <- function(dataset, minsupport){
   
   ##################################
   # Calculate candidates of size 1 #

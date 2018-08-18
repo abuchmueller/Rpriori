@@ -52,3 +52,45 @@ test_that("Test subsetting of FIMatrix",{
                                  support = c( 0.6)))
 })
 
+test_that("Test subsetting of Rules",{
+  testmat <- new('Rules',
+                 lhs = as(matrix(c(1,0,1,0,0,0,1,0,1,1,1,0),
+                                  nrow = 3,
+                                  byrow = TRUE,
+                                  dimnames = list(c('a', 'b', 'c'),NULL)), "ngTMatrix"),
+                 rhs = as(matrix(c(1,0,1,0,0,0,1,0,1,1,1,0),
+                                 nrow = 3,
+                                 byrow = TRUE,
+                                 dimnames = list(c('a', 'b', 'c'),NULL)), "ngTMatrix"),
+                 support = c(0.4, 0.5, 0.6, 0.7),
+                 confidence = c(0.4, 0.5, 0.6, 0.7),
+                 lift = c(0.4, 0.5, 0.6, 0.7),
+                 leverage = c(0.4, 0.5, 0.6, 0.7),
+                 itemsetID = c(0.4, 0.5, 0.6, 0.7),
+                 FrequentItemsets = as(matrix(c(1,0,1,0,0,0,1,0,1,1,1,0),
+                                             nrow = 3,
+                                             byrow = TRUE,
+                                             dimnames = list(c('a', 'b', 'c'),NULL)), "ngTMatrix"))
+
+
+  expect_equal(testmat[1,3], new('Rules',
+                                  lhs = as(matrix(c(1),
+                                                  nrow = 1,
+                                                  byrow = TRUE,
+                                                  dimnames = list(c('a'),NULL)), "ngTMatrix"),
+                                 rhs = as(matrix(c(1),
+                                                 nrow = 1,
+                                                 byrow = TRUE,
+                                                 dimnames = list(c('a'),NULL)), "ngTMatrix"),
+                                 support = c( 0.6),
+                                 confidence = c( 0.6),
+                                 lift = c( 0.6),
+                                 leverage = c( 0.6),
+                                 itemsetID = c( 0.6),
+                                 FrequentItemsets = as(matrix(c(1,0,1,0,0,0,1,0,1,1,1,0),
+                                                              nrow = 3,
+                                                              byrow = TRUE,
+                                                              dimnames = list(c('a', 'b', 'c'),NULL)),
+                                                       "ngTMatrix")
+                                 ))
+})
