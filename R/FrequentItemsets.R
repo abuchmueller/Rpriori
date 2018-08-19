@@ -1,7 +1,7 @@
 #' Calculate frequent itemset with minimal support
 #' 
 #' This function calculate the frequent itemset with a minimal support. 
-#' @name FrequentItemsets
+#' @name FindFrequentItemsets
 #' @export
 #' @param dataset This should be an sparse incident matrix of the baskets 
 #' where the rows describe the items and the columns describe the individual bastets.
@@ -11,7 +11,7 @@
 #'  as well as the resulting support as a vector.
 
 
-FrequentItemsets <- function(dataset, minsupport){
+FindFrequentItemsets <- function(dataset, minsupport){
   
   ##################################
   # Calculate candidates of size 1 #
@@ -19,7 +19,7 @@ FrequentItemsets <- function(dataset, minsupport){
   
   # The row means do represent the support of a single items since it it the mean of the 
   # occurence of the items in all itemsets
-  L1 <- rowMeans(dataset)
+  L1 <- rowMeans(dataset@data)
   
   # Only select the itemsets that have minimal support.
   L1 <- L1[L1 >= minsupport]
@@ -28,18 +28,15 @@ FrequentItemsets <- function(dataset, minsupport){
   # the items in the dataset.
   L1_names <- names(L1)
   
-  # Get rid of the rownames in the support vector.
-  L1_sup <- as.numeric(L1)
-  
-  # Here, the sparse matrix is created that does contain the itemsets of length one. This
-  # is a digaonal matrix (since for each itemset we do only have one iterm), but I create 
-  # it this way so that it is not by default compressed.
-  L1 <- sparseMatrix(i = 1:length(L1_names),
-                          j = 1:length(L1_names),
-                          giveCsparse = FALSE,
-                          dim = c(length(L1_names), length(L1_names)),
-                          dimnames = list(L1_names, NULL))
-  
+  # Create object of class FIMatrix for the frequent itemsets of length 1
+  L1 <- new("FIMatrix", 
+            data = sparseMatrix(i = 1:length(L1_names),
+                                j = 1:length(L1_names),
+                                giveCsparse = FALSE,
+                                dim = c(length(L1_names), length(L1_names)),
+                                dimnames = list(L1_names, NULL)),
+            support = as.numeric(L1))
+
   
   ####################################
   # Calculate Candidates of size > 1 #
@@ -52,50 +49,49 @@ FrequentItemsets <- function(dataset, minsupport){
   # The assign and get operators do make the following code a bit more complicated
   # but it is not possible to know in advance what the maximum length of Itemsets 
   # will be.
-  while (ncol(get(paste("L", k - 1, sep = ""))) > 1 ){
+  while (ncol(get(paste("L", k - 1, sep = ""))@data) > 1 ){
 
     # Create new candidates from of length k  based on the generated Candidates from the 
     # last step.
-    assign(paste("L", k, sep = ""), GenCandidates(get(paste("L", k - 1, sep = ""))))
+    L_temp =  GenCandidates(get(paste("L", k - 1, sep = ""))@data)
     
     # Calculate the support of the newly created Candidates
-    assign(paste("L", k, "_sup", sep = ""), DetSupport(get(paste("L", k , sep = "")), dataset,
-                                                       same_item_num = TRUE))
+    L_temp_support =  DetSupport(L_temp, dataset, same_item_num = TRUE)
+    
+    # Make L_temp object of class TIMatrix so that we can subset both the matrix
+    # and the support at the same time.
+    L_temp <- new("FIMatrix",
+                  data = L_temp,
+                  support = L_temp_support)
     
     # Prune the candidates that do not have minimal support.
-    assign(paste("L", k, sep = ""),
-           get(paste("L", k , sep = ""))[,get(paste("L", k, "_sup", sep = "")) >= minsupport,
-                                         drop = FALSE])
-    assign(paste("L", k, "_sup", sep = ""),
-           get(paste("L", k, "_sup", sep = ""))[get(paste("L", k, "_sup", sep = "")) >= minsupport,
-                                                drop = FALSE])
+    L_temp <- L_temp[,L_temp@support >= minsupport]
     
     # It may happen during the generation of Candidates that a certain Item does
     # not occur anymore and does not have any TRUE values in its respective row.
     # Since we do not need this item any longer I delete it here.
-    assign(paste("L", k, sep = ""),
-           get(paste("L", k , sep = ""))[apply(get(paste("L", k , sep = "")),1,sum) >0,,
-                                         drop = FALSE])
-
+    L_temp <- L_temp[rowSums(L_temp@data) > 0,]
+    
+    # Create new object of class FIMatrix the contains the frequent itemset of length k
+    assign(paste("L", k, sep = ""), L_temp)
+    
     k <- k + 1
   }
   
-  # Here, all generated Items and their respective will be collected in a list and vector.
+  # Here, all generated FIMatrices are collected in a list to combine them.
   
-  # Initiallize that list and vector.
+  # Initiallize that list.
   out_list <- list()
-  support <- c()
   
   # Iterate from i to K-1, the maximum number of successfully generated candidates, and append
   # them to the list and their support to the vector.
   for (i in 1:(k-1)){
     out_list[[i]] <- get(paste("L", i, sep = ""))
-    support <- c(support, get(paste("L", i, "_sup", sep = "")))
   }
   
 
   # Give back the results as a list containing the Candidates as a sparse incident matrix
   # and their support as a vector.
   # Rely on the CombineCands fuction to combine the different generated Candidates matrices.
-  return(list(sets = CombineCands(out_list), support = support))
+  return(CombineFIMatrix(out_list))
 }

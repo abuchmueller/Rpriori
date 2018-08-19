@@ -3,28 +3,25 @@
 #' This function takes the frequent itemsets as input and generates rules of length 1.
 #' It uses the Apriori-gen for more efficient generation of rule candidates.
 #' @name DetRules_1
-#' @param Items Frequent Itemsets of different length, but at least two.
-#' @param Items_support Support of the frequent itemsets should be stored.
+#' @param Items Object of class FIItem containing frequent itemsets of different length,
+#'  but at least two.
 #' @return a list containing the rhs, lhs and support of the candidates. The vector Item_id shows
 #' from which frequent itemset the specific rules comes from and is needed later on to determine 
 #' the frequent itemsets.
 
-DetRules_1 <- function(Items, Items_support){
+DetRules_1 <- function(Items){
   
   # This variable contains a unique number for each frequent input set. It is needed later on to
   # determine based on which frequent itemset a certain rules was created.
   id <- 1:ncol(Items)
+
   
-  # Initiallize a variable that will contain the number of items for each itemset.
-  item_n <- rep(NA, ncol(Items))
-  
-  # iterate over the columns (itemsets) in Items to determine the number of items in each of them.
-  for (i in 1:ncol(Items)){
-    item_n[i] <- sum(Items@j == (i - 1))
-  }
+  # Determine the number in each itemset.
+  item_n <- colSums(Items)
+
   
   # Here I save the positions of the items in each itemset.
-  pos_items <- apply(Items, 2, which)
+  pos_items <- apply(Items@data, 2, which)
   
   # The apply function does give a matrix if possible. But I need a list of vectors later on.
   # If this happened I convert the ouput back to list.
@@ -43,13 +40,13 @@ DetRules_1 <- function(Items, Items_support){
                                    j = c(),
                                    giveCsparse = FALSE,
                                    dim = c(nrow(Items), ncols),
-                                   dimnames = list(rownames(Items), NULL))
+                                   dimnames = list(items(Items), NULL))
     
     rhs <- out_mat <- sparseMatrix(i = c(),
                                    j = c(),
                                    giveCsparse = FALSE,
                                    dim = c(nrow(Items), ncols),
-                                   dimnames = list(rownames(Items), NULL))
+                                   dimnames = list(items(Items), NULL))
     
     # The lhs side first rep the input columns by the number of items in each. To avoid the
     # rep function I manualle calculate the positions of the items that exist in the itemsets.
@@ -62,7 +59,7 @@ DetRules_1 <- function(Items, Items_support){
     # The support of the input itemsets will be the same therfore I have to rep the input support
     # according to the number of items in each itemsets since that. The same logic applies to id
     # which does represent from which frequent itemset the candidate is generated.
-    Items_support <- rep(Items_support, times = item_n)
+    Items_support <- rep(Items@support, times = item_n)
     id <- rep(id, times = item_n)
     
     # Here I calculate the position of the itemsets on the rhs. This is simple since for each
@@ -76,8 +73,17 @@ DetRules_1 <- function(Items, Items_support){
     lhs[pos] <- FALSE
     rhs[pos] <- TRUE
     
-    # Return all the generated items as a list.
-    return(list(lhs = lhs, rhs = rhs, support = Items_support, item_id = id, frequentItems = Items))
+    # Return all the generated items as object of class Rules. Set all values of confidence,
+    # lift and leverage to -1 since they will be calculated later on.
+    return(new('Rules',
+               lhs = lhs,
+               rhs = rhs,
+               support = Items_support,
+               confidence = rep(-1, length(Items_support)),
+               lift = rep(-1, length(Items_support)),
+               leverage = rep(-1, length(Items_support)),
+               itemsetID = id,
+               FrequentItemsets = Items@data))
 }
 
 #' Determine all possible association rules with consequent length 1for given frequent transaction.
@@ -85,26 +91,24 @@ DetRules_1 <- function(Items, Items_support){
 #' This function take the frequent transactions as input and generates rules of length len. It uses the Apriori-gen for more efficient generation
 #' of rule candidates.
 #' @name DetRules_K
-#' @param rules List containing rhs, lhs, support, confidence, ID as well as the original frequent items of the rules.
-
+#' @param rules Object of class Rules from Project_Apriori containing the current rules with 
+#' minimal support and confidence.
 
 DetRules_K <- function(rules){
 
   # We can only created new rules for frequent itemsets that had at least two items
-  # Two have two rules the item_id of the respective frequent itemset has to be repeated at least once.
-  duplicated_cand <- duplicated(rules$item_id)|   duplicated(rules$item_id, fromLast = TRUE)
+  # To have two rules the itemsetID of the respective frequent itemset has to be repeated at least once.
+  duplicated_cand <- duplicated(rules@itemsetID)| duplicated(rules@itemsetID, fromLast = TRUE)
   
   if (!any(duplicated_cand)){
     
     # We cannot create any rules here. Give list of empty elements back.
-    return(list(lhs = rules$lhs[,0], rhs = rules$rhs[,0], support = rules$support[0], item_id = rules$item_id[0], frequentItems = rules$frequentItems))
+    return(rules[0,0])
   } 
 
   # Only use the itemsets that have at least 2 items #
-  rules$lhs <- rules$lhs[,duplicated_cand]
-  rules$rhs <- rules$rhs[,duplicated_cand]
-  rules$support <- rules$support[duplicated_cand]
-  rules$item_id <- rules$item_id[duplicated_cand]
+  rules <- rules[,duplicated_cand]
+
 
   # For each frequent Itemset I have to create the possible m_item consquents based on its rules
   # See that here we need to go through the frequent itemsets that may be represented by more than
@@ -115,25 +119,25 @@ DetRules_K <- function(rules){
   ncols <- 0
   
   # Save the total number of columns (items)
-  nrows <- nrow(rules$lhs)
+  nrows <- nrow(rules)
   
   # Initiallize the number of columns, support and id vector.
-  ncols_each <- supp <- id<- rep(NA, length(unique(rules$item_id)))
+  ncols_each <- supp <- id<- rep(NA, length(unique(rules@itemsetID)))
   
   # This does contain the underlying frequent itemsets I will iterate trough to create
   # candidates of new rules for each.
-  unique_ids <- unique(rules$item_id)
+  unique_ids <- unique(rules@itemsetID)
   
 
   # Iterate over the underlying frequent itemsets and for each generate rules with consequent 
   # length k + 1. Also save the number of colums (candidates), the support and id for each.
   for (f_it in 1:length(unique_ids)){
 
-    list_cand[[f_it]] <- GenCandidates(rules$rhs[,rules$item_id == unique_ids[f_it], drop = FALSE])
+    list_cand[[f_it]] <- GenCandidates(rules@rhs[,rules@itemsetID == unique_ids[f_it], drop = FALSE])
     ncols <- ncols + ncol(list_cand[[f_it]])
     ncols_each[f_it] <- ncol(list_cand[[f_it]])
-    supp[f_it] <- rules$support[rules$item_id == unique_ids[f_it]][1]
-    id[f_it] <- rules$item_id[rules$item_id == unique_ids[f_it]][1]
+    supp[f_it] <- rules@support[rules@itemsetID == unique_ids[f_it]][1]
+    id[f_it] <- rules@itemsetID[rules@itemsetID == unique_ids[f_it]][1]
   }
   
   # support and id should have the length of the lhs / rhs later on. That is for each frequent 
@@ -146,26 +150,33 @@ DetRules_K <- function(rules){
                                  j = c(),
                                  giveCsparse = FALSE,
                                  dim = c(nrows, ncols),
-                                 dimnames = list(rownames(rules$lhs), NULL))
+                                 dimnames = list(items(rules), NULL))
   rhs <- out_mat <- sparseMatrix(i = c(),
                                  j = c(),
                                  giveCsparse = FALSE,
                                  dim = c(nrows, ncols),
-                                 dimnames = list(rownames(rules$lhs), NULL))
+                                 dimnames = list(items(rules), NULL))
   
   # If lhs and rhs are empty than we did not create any new candidates
   # and we can output the empty results #
   if (ncol(lhs) == 0 || ncol(rhs) == 0){
-    return(list(lhs = lhs, rhs = rhs, support = supp, item_id = id,
-                frequentItems = rules$frequentItems ))
+    return(new("Rules",
+               lhs = lhs,
+               rhs = rhs,
+               support = supp,
+               confidence = rep(-1, length(supp)),
+               lift = rep(-1, length(supp)),
+               leverage = rep(-1, length(supp)),
+               itemsetID = id,
+               FrequentItemsets = rules@FrequentItemsets))
   } else {
     
     # In the following we will need the relevant frequent itemsets that's why I will
     # create a new variable for that.
     # the relevant frequent itemsets are the frequent itemset that do have rules
-    # for them as shown via item_id
-    rel_frequentItems <- rules$frequentItems[,1:ncol(rules$frequentItems) 
-                                             %in% unique(rules$item_id), drop = FALSE]
+    # for them as shown via itemsetID
+    rel_frequentItems <- rules@FrequentItemsets[,1:ncol(rules@FrequentItemsets) 
+                                             %in% unique(rules@itemsetID), drop = FALSE]
     
     # If we have only one rel_frequentItems left we have a special case
     # where we have to apply another logic #
@@ -175,11 +186,11 @@ DetRules_K <- function(rules){
     # Here we have to replicate the different frequent itemssets according to their 
     # appearance in ncols_each that is the number of items in each frequent itemset.
     if (! OnlyOnefrequ){
-      num_items <- apply(rules$frequentItems[,1:ncol(rules$frequentItems) %in%
-                                               unique(rules$item_id)], 2, sum)
+      num_items <- apply(rules@FrequentItemsets[,1:ncol(rules@FrequentItemsets) %in%
+                                               unique(rules@itemsetID)], 2, sum)
     } else {
-      num_items <- sum(rules$frequentItems[,1:ncol(rules$frequentItems) %in%
-                                             unique(rules$item_id)])
+      num_items <- sum(rules@FrequentItemsets[,1:ncol(rules@FrequentItemsets) %in%
+                                             unique(rules@itemsetID)])
     }
     
     
@@ -229,7 +240,14 @@ DetRules_K <- function(rules){
     lhs[rhs] <- FALSE
     
     # output res resulting rules.
-    return(list(lhs = lhs, rhs = rhs, support = supp, item_id = id, frequentItems = rules$frequentItems ))
-    
+    return(new("Rules",
+               lhs = lhs,
+               rhs = rhs,
+               support = supp,
+               confidence = rep(-1, length(supp)),
+               lift = rep(-1, length(supp)),
+               leverage = rep(-1, length(supp)),
+               itemsetID = id,
+               FrequentItemsets = rules@FrequentItemsets))
   }
 }

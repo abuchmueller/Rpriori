@@ -4,12 +4,11 @@
 \alias{DetRules_1}
 \title{Determine all possible association rules with consequent length 1 for given frequent transaction.}
 \usage{
-DetRules_1(Items, Items_support)
+DetRules_1(Items)
 }
 \arguments{
-\item{Items}{Frequent Itemsets of different length, but at least two.}
-
-\item{Items_support}{Support of the frequent itemsets should be stored.}
+\item{Items}{Object of class FIItem containing frequent itemsets of different length,
+but at least two.}
 }
 \value{
 a list containing the rhs, lhs and support of the candidates. The vector Item_id shows

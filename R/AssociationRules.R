@@ -5,12 +5,10 @@
 #' FrequentItems and set the paramter arefrequent to TRUE (default).
 #' @name AssociationRules
 #' @export
-#' @param FrequentItems If the function is provided with the frequent itemsets they should
-#'  be inserted here. The structure has to be a sparse incident matrix where the rows do represent
-#'  the items and the columns do represent the individual itemsets. Also the paramter arefrequent
-#'  should be set to TRUE.
-#' @param Itemsets Sparse incident matrix of the transactions where the rows represent the items
-#' and the columsn the individual itemsets.
+#' @param FrequentItems Object of class TIMatrix that contains the frequent itemsets with minimal
+#' support. The support used to calculate them must be the same as specified in minsupport.
+#' @param Itemsets Object of class TAMatrix that does contain the transactions underlying the rule
+#' Mining.
 #' @param minconfidence Minimal confidence of the rules.
 #' @param minsupport Minimal support of the rules.
 #' @param arefrequent Are the Frequent itemsets provided?
@@ -25,75 +23,58 @@ AssociationRules <- function(FrequentItems, Itemsets, minsupport = NULL, minconf
   if (! arefrequent){
     # Calculate the frequent itemsets with minimal support minsupport with the help of the 
     # Project_Apriori function Frequent Itemsets
-    FrequentItems <- FrequentItemsets(Itemsets, minsupport = minsupport)
-    
-    # Get the frequent itemsets and the support out of the result of Frequent itemsets.
-    FrequentItems_support <- FrequentItems$support
-    FrequentItems <- FrequentItems$sets
-  } else {
-    
-    # If the frequent itemsets are provided extract them here.
-    FrequentItems_support <- FrequentItems$support
-    FrequentItems <- FrequentItems$sets
+    FrequentItems <- FindFrequentItemsets(Itemsets, minsupport = minsupport)
   }
 
   # Only frequent itemsets of length >1 are relevant for rules with consequent length > 1.
   # Therefore, I will select only these itemsets from the itemset matrix. 
-  select <- apply(FrequentItems, 2, sum) > 1
+  select <- colSums(FrequentItems) > 1
   FrequentItems <- FrequentItems[,select]
-  FrequentItems_support <- FrequentItems_support[select]
   
   # Generate Rules of consequent length 1.
-  R1 <- DetRules_1(FrequentItems, Items_support = FrequentItems_support)
+  R1 <- DetRules_1(FrequentItems)
   
   # Calculate confidence for all candidates of rules with consequent length 1.
-  R1$confidence <- R1$support / DetSupport(R1$lhs, Itemsets, FALSE)
+  R1@confidence <- R1@support / DetSupport(R1@lhs, Itemsets, FALSE)
 
   # Prune out the candidates that do not have minimal confidence.
-  rel_its <- R1$conf >= minconfidence
-  R1$lhs <- R1$lhs[,rel_its, drop = FALSE]
-  R1$rhs <- R1$rhs[,rel_its, drop = FALSE]
-  R1$support <- R1$support[rel_its, drop = FALSE]
-  R1$confidence <- R1$confidence[rel_its, drop = FALSE]
-  R1$item_id <- R1$item_id[rel_its, drop = FALSE]
+  rel_its <- R1@confidence >= minconfidence
+  R1 <- R1[,rel_its]
+
     
   # It might happen that some Items are no longer relevant for the rules in the sense that they 
   # do not exist anymore. This case is fulfilled if a row in the rhs and lhs does not have any
   # entry with 1.
-  rel_item <- !(apply(R1$lhs, 1, sum) == 0  & apply(R1$rhs, 1, sum) == 0)
-  R1$lhs <- R1$lhs[rel_item, ,drop = FALSE]
-  R1$rhs <- R1$rhs[rel_item, ,drop = FALSE]
-  R1$frequentItems <- R1$frequentItems[rel_item,]
+  rel_item <- !(rowSums(R1, lhs = TRUE) == 0  & rowSums(R1, lhs = FALSE) == 0)
+  R1 <- R1[rel_item,]
+  
+  R1@FrequentItemsets <- R1@FrequentItemsets[rel_item,]
 
   # Find rules of consequent longer than 1.
   k <- 2 
   
   # Abort the loop if the generated candidates from the last step are empty.
-  while (ncol(get(paste("R", k - 1, sep = ""))$rhs) > 0 &&
-         ncol(get(paste("R", k - 1, sep = ""))$lhs) > 0){
+  while (ncol(get(paste("R", k - 1, sep = ""))) > 0 ){
     
     # Determine the rules of length k + 1.
     R_cur <- DetRules_K(get(paste("R", k - 1, sep = "")))
     
     # Calculate confidence for newly generated rules and save them in the intermediate 
     # object R_cur.
-    R_cur$confidence <- R_cur$support / DetSupport(R_cur$lhs, Itemsets, FALSE)
+    R_cur@confidence <- R_cur@support / DetSupport(R_cur@lhs, Itemsets, FALSE)
     
     # Prune Rules out do not have minconf #
-    rel_its <- R_cur$conf >= minconfidence
-    R_cur$lhs <- R_cur$lhs[,rel_its, drop = FALSE]
-    R_cur$rhs <- R_cur$rhs[,rel_its, drop = FALSE]
-    R_cur$support <- R_cur$support[rel_its, drop = FALSE]
-    R_cur$confidence <- R_cur$confidence[rel_its, drop = FALSE]
-    R_cur$item_id <- R_cur$item_id[rel_its, drop = FALSE]
+    rel_its <- R_cur@confidence >= minconfidence
+    R_cur <- R_cur[,rel_its]
+
     
     # It might happen that some Items are no longer relevant for the rules in the sense that they 
     # do not exist anymore. This case is fulfilled if a row in the rhs and lhs does not have any
     # entry with 1.
-    rel_item <- !(apply(R_cur$lhs, 1, sum) == 0  & apply(R_cur$rhs, 1, sum) == 0)
-    R_cur$lhs <- R_cur$lhs[rel_item, , drop = FALSE]
-    R_cur$rhs <- R_cur$rhs[rel_item,, drop = FALSE]
-    R_cur$frequentItems <- R_cur$frequentItems[rel_item,, drop = FALSE]
+    rel_item <- !(rowSums(R1, lhs = TRUE) == 0  & rowSums(R1, lhs = FALSE) == 0)
+    
+    R_cur <- R_cur[rel_item, ]
+    R_cur@FrequentItemsets <- R_cur@FrequentItemsets[rel_item,, drop = FALSE]
     
     # Assign the generated rules to the object Rk that is dynamically created based on the value
     # for k.
@@ -105,22 +86,16 @@ AssociationRules <- function(FrequentItems, Itemsets, minsupport = NULL, minconf
   
   # Initiallize the list in which the different elements (rhs, lfs, support, confidence) from
   # the iterations 1 to k - 1 will be saved.
-  rhsides <- list()
-  lhsides <- list()
-  support <- c()
-  confidence <- c()
+  out_list <- list()
   
   # Iterate from 1 to k-1 to collect the outputs from the iterations 1 to k -1 to their lists.
   for (i in 1:(k-1)){
-    rhsides[[i]] <- get(paste("R", i, sep = ""))$rhs
-    lhsides[[i]] <- get(paste("R", i, sep = ""))$lhs
-    support <- c(support, get(paste("R", i, sep = ""))$support)
-    confidence <- c(confidence,get(paste("R", i, sep = ""))$confidence )
+    out_list[[i]] <- get(paste("R", i, sep = ""))
   }
   
   # Return all the relevant ouputs (rhs, lhs, support and confidence) in a list. Additionally
   # the different rhsides and lhsides have to be compbined to one matrix using the CombineCands
   # function of this package.
-  return(list(lhs = CombineCands(lhsides), rhs = CombineCands(rhsides), support = support, confidence = confidence))  
+  return( CombineRules(out_list))  
 }
 

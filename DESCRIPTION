@@ -27,4 +27,5 @@ Collate:
     'GiveUniqueCol.R'
     'allClasses.R'
     'allMethods.R'
+    'allSubsetMethods.R'
     'makeTransactionMatrix.R'
