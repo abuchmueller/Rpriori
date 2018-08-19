@@ -98,7 +98,7 @@ FindFrequentItemsets <- function(dataset, minsupport){
   return(CombineFIMatrix(out_list))
 }
 
-
-profvis({
-  FindFrequentItemsets(groc_trans, 0.01)
-})
+# 
+# profvis({
+#   FindFrequentItemsets(groc_trans, 0.01)
+# })

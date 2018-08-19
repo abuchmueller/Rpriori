@@ -24,7 +24,6 @@ DetSupport <- function(cand, Transaction, same_item_num = FALSE){
   # rows. Only the rows are relevant that are also in Transaction.
   Transaction <- Transaction@data[row.names(Transaction@data) %in% row.names(cand),,drop = FALSE]
   
-  
   # make cand from logical to numeric and also transpose is since we do need to 
   # multiply the transposed later on.
   cand <- t(cand * 1)
@@ -68,6 +67,7 @@ DetSupport <- function(cand, Transaction, same_item_num = FALSE){
   # return the relative support.
   return(support / ncol(Transaction))
 }
+
 
 
 
