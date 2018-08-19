@@ -29,11 +29,13 @@ FindFrequentItemsets <- function(dataset, minsupport){
   L1_names <- names(L1)
   
   # Create object of class FIMatrix for the frequent itemsets of length 1
+  len_names <- length(L1_names)
+  vec_names <- 1:len_names
   L1 <- new("FIMatrix", 
-            data = sparseMatrix(i = 1:length(L1_names),
-                                j = 1:length(L1_names),
+            data = sparseMatrix(i = vec_names,
+                                j = vec_names,
                                 giveCsparse = FALSE,
-                                dim = c(length(L1_names), length(L1_names)),
+                                dim = c(len_names, len_names),
                                 dimnames = list(L1_names, NULL)),
             support = as.numeric(L1))
 
@@ -95,3 +97,8 @@ FindFrequentItemsets <- function(dataset, minsupport){
   # Rely on the CombineCands fuction to combine the different generated Candidates matrices.
   return(CombineFIMatrix(out_list))
 }
+
+
+profvis({
+  FindFrequentItemsets(groc_trans, 0.01)
+})
