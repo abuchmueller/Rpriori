@@ -43,6 +43,8 @@ print(end_time - start_time)
 # 
 # 
 # 
+debugonce(AssociationRules)
+
 start_time <- Sys.time()
 rules_praprio <- AssociationRules(Itemsets =  groc_trans,minsupport = 0.03, minconfidence = 0.2, arefrequent = FALSE)
 end_time <- Sys.time()
@@ -54,9 +56,9 @@ print(end_time - start_time)
 #   rules_aprio <- apriori(Groceries,  parameter = list(support = 0.03, confidence = 0.2, minlen=2))
 # })
 # # 
-# profvis({
-#   rules_praprio <- AssociationRules(Itemsets =  groc_trans,minsupport = 0.03, minconfidence = 0.2, arefrequent = FALSE)
-# })
+profvis({
+  rules_praprio <- AssociationRules(Itemsets =  groc_trans,minsupport = 0.03, minconfidence = 0.2, arefrequent = FALSE)
+})
 
 
 # 

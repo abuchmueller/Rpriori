@@ -22,75 +22,33 @@ GenCandidates <- function(L){
     return(L)
   }
   
-  # Initiate the output matrix of maximal possible length. We will potentially prune it 
-  # at the end
-  
-  # The maximal number of combinations of the input matrices does equal  the sum of the 
-  # sequence of 1 to the number of columns - 1  of L. This holds since we have to compare the 
-  # first column to all other columns except the first one, the second one to all other 
-  # columns except the first and the second and so on.
-  ncols <- sum(1:(ncol(L)- 1)) 
-  
-  # the output matrix should have as many rows as the input matrix L
-  nrows <- nrow(L)
-  
-  cand <- sparseMatrix(i = c(),
-                       j = c(),
-                       giveCsparse = FALSE,
-                       dim = c(nrows, ncols),
-                       dimnames = list(rownames(L), NULL))
-  
-  
   ############################
   # Step 1: Joining Itemsets #
   ############################
   
-  # Here, we will combine all itemset that have at least k - 1 common items.
-  iter <- 1
+  # Here we have to combine all two itemsets that have at least K common itemsets.
   
-  # Here we apply the logic described above.
-  for (base_col in 1:(ncol(L) - 1)){
-    for (ref_col in (base_col + 1):ncol(L)){
-      
-      # This condition ensure that the two compared itemsets have at least k - 1 common
-      # items. Only if the they do, they are  added to the output matrix.
-      if (sum(L[,base_col] & L[,ref_col]) >= K - 1){
-        cand[ ,iter] <- L[,base_col] | L[,ref_col]
-        
-        # We need this counter both to keep track of at which column we have to insert the 
-        # new candiate as well as for the pruning later on.
-        iter <- iter + 1
-      } 
-    }
-  }
+  # First find all possible combination of two columns from the input matrix
+  poss_combs <- combn(1:ncol(L), 2)
   
+  # The resulting matrix poss_comps has two rows. For each column the first does desribe the column
+  # of the input matrix that has to combined with the column described in the second row. Therefore,
+  # I will first of all create the matrix the result from the selection of the first column, then
+  # the one that results from the selection of the second columns and then combine them.
   
-  # Now we delete all entries that were not assigned to the output matrix.
-  # Also we make sure that the generated candidates are unique.
-  # This has many branches since we have to handle some exception that may occur.
-  if (iter > 2){
-    
-    # normal case with at least 3 itemsets.
-    cand <- GiveUniqueCol(cand[,1:(iter - 1)])
-  } else {
-    
-    # There are fewer than three itemsets but our matrix has empty columns 
-    if (any(apply(cand, 2, sum) == 0)){
-      cand <- cand[,1, drop = FALSE]
-    } else {
-      
-      # There are fewer than three itemsets and our matrix does not have empty columns.
-      # Also it does only have one row
-      if (ncol(cand) == 1){
-        cand <- cand[,1, drop = FALSE]
-      } else {
-        
-        # The matrix does have at least two rows.
-        cand <- cand[,1:2, drop = FALSE]
-      }
-      
-    }
-  }
+  First_select <- L[,poss_combs[1,], drop = FALSE]
+  Second_select <- L[,poss_combs[2,], drop = FALSE]
+  
+  cand <- First_select | Second_select
+  
+  # Now we have to insure that we only select the created columns that come from the columns that 
+  # hat k - 1 items in common. If we combine two columns that each have K items and they have K - 1
+  # items in common their combination must have exactly K + 1 items. Therefore, delete all columns
+  # from cand that do not have K + 1 items
+  cand <- cand[,colSums(cand) == K + 1, drop = FALSE]
+  
+  # Also delete all the created dublicates.
+  cand <- GiveUniqueCol(cand)
   
   ###################
   # Step 2: Pruning #
@@ -113,11 +71,32 @@ GenCandidates <- function(L){
   select <- rowSums(t(cand * 1) %*% (L * 1) == K) == K + 1
   
   # Return the candidate matrix and exclude the candidates base on the logiv from above.
-  return(cand[, select, drop = FALSE])
+  cand <- cand[, select, drop = FALSE]
+  
+  # Using the matrix functions from above, the matrix was defined as Compressed. but our logic
+  # needs a non-compressed matrix. Therefore, we gonna work on that.
+  
+  cand <- sparseMatrix(i = cand@i,
+                    p = cand@p,
+                    giveCsparse = FALSE,
+                    index1 = FALSE,
+                    dim = c(nrow(cand), ncol(cand)),
+                    dimnames = list(rownames(cand), NULL))
+  
+  return(cand)
 }
 
-# L1 <- readRDS('testdata/optim_GendCandidates_L1.rds')
+# L1 <- L_temp
+# 
+# GenCandidates(L1)
 # 
 # profvis({
-#   GenCandidates(L1)
+#   GenCandidates(L1@data)
 # })
+# 
+# d <- GenCandidates(L1@data)
+# 
+# thisSets <- L1@data
+# 
+# cand <- combn(1:ncol(thisSets), 2)
+# cand <- apply(cand, 2, function(x) { thisSets[, x[1]] | thisSets[, x[2]] })

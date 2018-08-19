@@ -11,12 +11,21 @@ Duplicate <- function(mat){
   
   # If the matrix is not a compressed aparse matrix, make it one! :)  #
   if (class(mat)[1] == "ngTMatrix"){
-    mat <-   cand <- sparseMatrix(i = mat@i,
-                                  j = mat@j,
-                                  giveCsparse = TRUE,
-                                  dim = c(nrow(mat), ncol(mat)),
-                                  index1 = FALSE,
-                                  dimnames = list(rownames(mat), NULL))
+    mat <- sparseMatrix(i = mat@i,
+                        j = mat@j,
+                        giveCsparse = TRUE,
+                        dim = c(nrow(mat), ncol(mat)),
+                        index1 = FALSE,
+                        dimnames = list(rownames(mat), NULL))
+  }
+  
+  if (class(mat)[1] == "lgCMatrix"){
+    mat <- sparseMatrix(i = mat@i,
+                        p = mat@p,
+                        giveCsparse = TRUE,
+                        dim = c(nrow(mat), ncol(mat)),
+                        index1 = FALSE,
+                        dimnames = list(rownames(mat), NULL))
   }
   
   # Check whether correct class supplied since the C routine does only work with matrices of the 
@@ -33,6 +42,7 @@ Duplicate <- function(mat){
     return(duplicated(mat_col))
   } else {
     
+    print( "hi")
     # In this branch the supplied matrix was not of type ngTMatrix and converted 
     # or type ngCMatrix, therefore is not supported. Give Error!
     stop(paste("The class ", class(mat)[1], "is unknown to the Duplicate function"))
