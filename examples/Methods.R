@@ -50,3 +50,28 @@ fitems <- new("FIMatrix", data = frequent_items$sets, support = frequent_items$s
 rulez <- new("Rules", lhs = Rules$lhs, rhs = Rules$rhs, support = Rules$support, confidence = Rules$confidence)
 rules.arules <- apriori(Groceries, parameter = list(supp = 0.01, conf = 0.5));inspect(rules.arules)
 
+
+## Methods ##
+
+#TAMatrix
+length(TSM)
+show(TSM)
+print(TSM)
+summary(TSM)
+plot(TSM)
+
+#FIMatrix
+length(fitems)
+show(fitems)
+print(fitems)
+summary(fitems)
+plot(fitems)
+hist(fitems)
+
+#Rules
+length(rulez)
+show(rulez)
+print(rulez)
+summary(rulez)
+plot(rulez)
+
