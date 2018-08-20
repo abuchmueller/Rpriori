@@ -7,7 +7,8 @@
 DetRules_K(rules)
 }
 \arguments{
-\item{rules}{List containing rhs, lhs, support, confidence, ID as well as the original frequent items of the rules.}
+\item{rules}{Object of class Rules from Project_Apriori containing the current rules with 
+minimal support and confidence.}
 }
 \description{
 This function take the frequent transactions as input and generates rules of length len. It uses the Apriori-gen for more efficient generation

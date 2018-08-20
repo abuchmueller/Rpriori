@@ -4,7 +4,7 @@ Title: Implementaion of the Apriori Algorithm
 Description: In this package a full implementation of the Apriori-Algorithm in R is provided
 Author: Tim Toebrock <timtoebrock@gmail.com>
 Maintainer: Tim Toebrock<timtoebrock@gmail.com>
-Depends: R (>= 3.5.1),
+Depends: R (>= 3.4.0),
         arules (>= 1.6), 
          Matrix (>= 1.2)
 Imports: arules (>= 1.6), 
@@ -27,4 +27,5 @@ Collate:
     'GiveUniqueCol.R'
     'allClasses.R'
     'allMethods.R'
+    'allSubsetMethods.R'
     'makeTransactionMatrix.R'

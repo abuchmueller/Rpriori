@@ -17,17 +17,17 @@ ExtractRules <- function(rules, maxNumConsequent = NULL){
   # that exist and combine them to vectors of strings where each string does reperesent one column
   # in the form {It1, It2, ..., Itn}. For the lhs this is the base itemset and for the rhs 
   # these are the consequents.
-  lhs_rules <- apply(rules$lhs,2, function(col){
+  lhs_rules <- apply(rules@lhs,2, function(col){
     paste("{", paste(names(col)[col], collapse = ", "), "}", sep = "")
   }) 
   
-  rhs_rules <- apply(rules$rhs,2, function(col){
+  rhs_rules <- apply(rules@rhs,2, function(col){
     paste("{", paste(names(col)[col], collapse = ", "), "}", sep = "")
   }) 
   
   # The colsums of the rhs do represent the number of items in each. We need this information 
   # to select only the rules that have fewer Items than maxNumConsequent.
-  num_consequent <- colSums(rules$rhs)
+  num_consequent <- colSums(rules@rhs)
   
   # Initialize the output dataset. This is a data.frame with variables lhs, REPLACE, rhs, 
   # support and confidence. The name REPLACE is only temporary and since this columns is always
@@ -35,8 +35,10 @@ ExtractRules <- function(rules, maxNumConsequent = NULL){
   out_data <- data.frame('lhs' = lhs_rules,
                          'REPLACE' = rep("=>", length(lhs_rules)),
                          rhs = rhs_rules,
-                         Support = rules$supp,
-                         Confidence = rules$conf)
+                         Support = rules@support,
+                         Confidence = rules@confidence,
+                         Lift = rules@lift,
+                         Leverage = rules@leverage)
   
   # Here the temporary "REPLACE" column name is replaced.
   colnames(out_data)[2] <- ""

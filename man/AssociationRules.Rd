@@ -8,13 +8,11 @@ AssociationRules(FrequentItems, Itemsets, minsupport = NULL,
   minconfidence, arefrequent = TRUE)
 }
 \arguments{
-\item{FrequentItems}{If the function is provided with the frequent itemsets they should
-be inserted here. The structure has to be a sparse incident matrix where the rows do represent
-the items and the columns do represent the individual itemsets. Also the paramter arefrequent
-should be set to TRUE.}
+\item{FrequentItems}{Object of class TIMatrix that contains the frequent itemsets with minimal
+support. The support used to calculate them must be the same as specified in minsupport.}
 
-\item{Itemsets}{Sparse incident matrix of the transactions where the rows represent the items
-and the columsn the individual itemsets.}
+\item{Itemsets}{Object of class TAMatrix that does contain the transactions underlying the rule
+Mining.}
 
 \item{minsupport}{Minimal support of the rules.}
 

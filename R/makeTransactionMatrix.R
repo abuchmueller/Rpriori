@@ -17,13 +17,12 @@ makeTransactionMatrix <- function(mat){
     # Input is a transaction from arules
     
     # Get the underlying data matrix from the transaction matrix 
-    mat_out <- as(mat@data, "TsparseMatrix")
+    out_mat <- as(mat@data, "TsparseMatrix")
     
     # Add the rownames (which do represent the different items)
-    rownames(mat_out) <- mat@itemInfo$labels
+    rownames(out_mat) <- mat@itemInfo$labels
     
     # return the  resulting matrix #
-    return(mat_out)
   } 
   
   if (is.matrix(mat)){
@@ -41,6 +40,14 @@ makeTransactionMatrix <- function(mat){
                             giveCsparse = FALSE,
                             dim = c(nrow(mat), ncol(mat)),
                             dimnames = list(rownames(mat), NULL))
-    return(out_mat)
   }
+  
+  
+ # Create Object of class TAMatrix #
+  out <- new('TAMatrix',data  = out_mat, 
+             dim  = c(nrow(out_mat),ncol(out_mat)),
+             items = row.names(out_mat))
+  
+  return(out)
+  
 }

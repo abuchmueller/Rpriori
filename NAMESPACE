@@ -2,7 +2,7 @@
 
 export(AssociationRules)
 export(ExtractRules)
-export(FrequentItemsets)
+export(FindFrequentItemsets)
 export(GenCandidates)
 export(GetSets)
 export(GiveUniqueCol)
