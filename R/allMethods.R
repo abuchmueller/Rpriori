@@ -10,17 +10,17 @@ setMethod("length", "TAMatrix", function(x) {
   x@dim[1]
 })
 
-setMethod("print", "TAMatrix", function(x) {
+setMethod("print", "TAMatrix", function(x, descending = TRUE) {
   
-  #collect all itemnames, print them by their frequency in descending order
-  print(sort(rowSums(x@data), decreasing = TRUE))
+  #collect all itemnames, print them by their frequency in a descending order
+  print(data.frame(frequency = sort(rowSums(x@data), decreasing = descending)))
   
 })
 
 setMethod("show", "TAMatrix", function(object) {
   
   n <- length(object)
-  cat(n, "items. Use the print function to display\n")
+  cat("Found", n, "items. Use the print() to display\n")
   
 })
 
@@ -78,12 +78,12 @@ setMethod("length", "FIMatrix", function(x) {
 setMethod("show", "FIMatrix", function(object) {
   
   n <- length(object)
-  cat(n, "frequent itemsets. Use the print function to display\n")
+  cat("Found", n, "frequent itemsets. Use the print() to display\n")
   
 })
 
 # combines the elements of both lists, i.e., a frequent item and it's corressponding support into a data frame and displays side by side
-setMethod("print", signature(x = "FIMatrix"), function(x) {
+setMethod("print", signature(x = "FIMatrix"), function(x, descending = TRUE) {
   
   n <- x@data@Dim[1]
   output <- data.frame(items = rep(NA, n), support = rep(NA, n))
@@ -93,10 +93,11 @@ setMethod("print", signature(x = "FIMatrix"), function(x) {
     output[i, 2] <- x@support[i]
   }
   
+  #order output by support before returning (default TRUE)
+  output <- output[order(output$support, decreasing = descending), ]
   print(output)
   
 })
-
 
 setMethod("summary", signature(object = "FIMatrix"), function(object) {
   
@@ -116,7 +117,7 @@ setMethod("summary", signature(object = "FIMatrix"), function(object) {
   #probability of observing top 8 items in an itemset
   cat("\n")
   cat("Observed frequency in frequent itemsets:\n")
-  print(round(sort(rowSums(fitems@data), decreasing = T)[1:8] / length(object), 4))
+  print(round(sort(rowSums(object@data), decreasing = T)[1:8] / length(object), 4))
   cat("\n")
   
   #distribution of frequent itemset lengths
@@ -129,10 +130,16 @@ setMethod("summary", signature(object = "FIMatrix"), function(object) {
   print(summary(colSums(object@data)))
   cat("\n")
   
+  #summary statistics on support measure
+  cat("\n")
+  cat("Summary of support measure:\n")
+  print(summary(object@support))
+  cat("\n")
+  
 })
 
 #Plot itemsets against support
-setMethod("plot", signature(x = "FIMatrix"), function(x, pch = 1, col = 1) {
+setMethod("plot", signature(x = "FIMatrix"), function(x, pch = 1, col = "red") {
   
   plot(colSums(x@data), x@support, 
        xlab = "Itemset length", ylab = "Support", 
@@ -155,7 +162,7 @@ setMethod("length", "Rules", function(x) {
 setMethod("show", "Rules", function(object) {
   
   n <- length(object)
-  cat(n, "rules. Use the print function to display\n")
+  cat("Found", n, "rules. Use the print() to display\n")
   
 })
 
@@ -165,4 +172,31 @@ setMethod("print", "Rules", function(x) {
   ExtractRules(x, maxNumConsequent = 1)
 })
 
+setMethod("summary", signature(object = "Rules"), function(object) {
+  
+  n <- length(object)
+  quality <- data.frame(support = object@support, 
+                        confidence = object@confidence,
+                        lift = object@lift,
+                        leverage = object@leverage)
+  
+  cat("Found", n, "rules. Use print to display them\n")
+  cat("\n")
+  
+  #summary statistics on quality measures
+  cat("\n")
+  cat("Summary of quality measures:\n")
+  print(summary(quality))
+  cat("\n")
+  
+})
+
+#Plot support of rules against confidence, use lift as color gradient
+setMethod("plot", "Rules", function(x) {
+  
+  colfunc <- colorRampPalette(c("blue", "red"))
+  plot(x@support, x@confidence, pch = 20, col = colfunc(length(x)))
+  #lacks legend
+  
+})
 
