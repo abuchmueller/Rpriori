@@ -44,9 +44,9 @@ setClass("Rules",
            rhs = "ngTMatrix",
            support = "numeric",
            confidence = "numeric",
-           lift = "ANY",
-           leverage = "ANY",
-           itemsetID = "ANY",
+           lift = "numeric",
+           leverage = "numeric",
+           itemsetID = "numeric",
            FrequentItemsets = "ANY"
          ),
          validity = function(object) {
