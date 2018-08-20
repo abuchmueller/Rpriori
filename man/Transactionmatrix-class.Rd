@@ -3,13 +3,13 @@
 \docType{class}
 \name{TAMatrix}
 \alias{TAMatrix}
-\title{An S4 class to represent an Itemset as a Sparse Matrix}
+\title{An S4 class to represent an itemset as a sparse Matrix}
 \description{
-An S4 class to represent an Itemset as a Sparse Matrix
+An S4 class to represent an itemset as a sparse Matrix
 }
 \section{Slots}{
 
 \describe{
-\item{\code{data}}{Transaction Matrix in sparse representation}
+\item{\code{data}}{Transaction Matrix in binary sparse representation}
 }}
 

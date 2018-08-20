@@ -3,9 +3,9 @@
 \docType{class}
 \name{Rules}
 \alias{Rules}
-\title{An S4 class to represent association rules and additional information}
+\title{An S4 class to represent association rules and metrics}
 \description{
-An S4 class to represent association rules and additional information
+An S4 class to represent association rules and metrics
 }
 \section{Slots}{
 
@@ -17,5 +17,9 @@ An S4 class to represent association rules and additional information
 \item{\code{support}}{Support vector of Rules}
 
 \item{\code{confidence}}{Confidence vector of Rules}
+
+\item{\code{lift}}{Lift vector}
+
+\item{\code{leverage}}{Leverage vector}
 }}
 
