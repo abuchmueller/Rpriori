@@ -1,77 +1,80 @@
-##### This file contains examples for all methods #####
+##### This file contains a demonstration of how   #####
+##### our package works. If ProjectApriori is     #####
+##### properly installed this should run top to   #####
+##### bottom without giving any errors however if #####
+##### you wish, you can create the objects (run   #####
+##### until line 25) and head straigt to the      #####
+##### methods at the bottom (line 57 and below).  #####
 #######################################################
 
-library(devtools)
-library(roxygen2)
-library(testthat)
-library(Rcpp)
 library(ProjectApriori)
-library(profvis)
-library(pryr)
+
+## First create objects of the appropriate classes ## 
 
 data("Groceries")
-#Sparse matrix of itemsets, where rownames are itemnames
+
+#Sparse matrix of itemsets, where rows are items and columns transactions
 TransactionMatrix <- makeTransactionMatrix(Groceries)
-#Sparse matrix of frequent itemsets + supportvector containing support for each itemset
-frequent_items <- FrequentItemsets(TransactionMatrix, 0.01)
-#Object of 'Rule' class (right now it's just 4 lists)
+
+#Sparse matrix of frequent itemsets + support vector containing support for each itemset
+frequent_items <- FindFrequentItemsets(TransactionMatrix, 0.01)
+
+#Object of 'Rule' class
 Rules <- AssociationRules(Itemsets=TransactionMatrix, minsupport = 0.03, 
                           minconfidence = 0.4, arefrequent = FALSE)
-Rules <- AssociationRules(FrequentItems = frequent_items, Itemsets = TransactionMatrix, minsupport = 0.03,
+
+#### from here on you can skip to the methods (line 57) ####
+
+#or (faster since it doesn't have to recalculate frequent itemsets again)
+fRules <- AssociationRules(FrequentItems = frequent_items, Itemsets = TransactionMatrix, minsupport = 0.03,
                           minconfidence = 0.4, arefrequent = TRUE)
 
-##This should use generic print and output the rules nicely (Billo Version)
-print.rules <- function(x) {
-  ExtractRules(x)
-}
 
+
+#for comparison
+aRules <- apriori(Groceries, parameter = list(supp = 0.03, conf = 0.4));inspect(aRules)
+
+
+#Check if classes are implemented correct
 class(TransactionMatrix)
 class(frequent_items)
 class(Rules)
 
-## check if we have methods listed for following classes: TransactionMatrix [currently ngTMatrix], FrequentItems [currently list], Rules [currently list]
+## check if we have methods listed for following classes: 
+#  TAMatrix [our Transactionmatrix class], FIMatrix [our Frequent Itemset class], Rules [our Rules class]
+showMethods("length")
+showMethods("show")
 showMethods("print")
+showMethods("summary")
+showMethods("plot")
+showMethods("hist") # (only for FIMatrix)
 
-#Preview how the output looks currently
-print(TransactionMatrix)
-print(frequent_items)
-print(Rules)
+## or check by class name directly
+showMethods(class = "TAMatrix")
+showMethods(class = "FIMatrix")
+showMethods(class = "Rules")
 
-
-## Classes ##
-# this creates a TAMatrix object from a sparse Matrix from the makeTransactionMatrix function
-TSM <- new("TAMatrix", data  = TransactionMatrix, 
-            dim = TransactionMatrix@Dim, items = TransactionMatrix@Dimnames[[1]])
-
-#Frequent Itemsets
-fitems <- new("FIMatrix", data = frequent_items$sets, support = frequent_items$support)
-
-#Rules
-rulez <- new("Rules", lhs = Rules$lhs, rhs = Rules$rhs, support = Rules$support, confidence = Rules$confidence)
-rules.arules <- apriori(Groceries, parameter = list(supp = 0.01, conf = 0.5));inspect(rules.arules)
-
-
-## Methods ##
+#### Overview over all Methods #####
 
 #TAMatrix
-length(TSM)
-show(TSM)
-print(TSM)
-summary(TSM)
-plot(TSM)
+length(TransactionMatrix)
+show(TransactionMatrix)
+print(TransactionMatrix)
+summary(TransactionMatrix)
+plot(TransactionMatrix)
 
 #FIMatrix
-length(fitems)
-show(fitems)
-print(fitems)
-summary(fitems)
-plot(fitems)
-hist(fitems)
+length(frequent_items)
+show(frequent_items)
+print(frequent_items)
+summary(frequent_items)
+plot(frequent_items)
+hist(frequent_items) #FIMatrix is the only class that has a plot and a seperate hist method
 
 #Rules
-length(rulez)
-show(rulez)
-print(rulez)
-summary(rulez)
-plot(rulez)
+length(Rules)
+show(Rules)
+print(Rules)
+summary(Rules) #Work in progress
+Rules@lift <- runif(length(Rules) , 1, 4); plot(Rules) #Work in progress
 
