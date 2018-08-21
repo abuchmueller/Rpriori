@@ -59,8 +59,14 @@ AssociationRules <- function(FrequentItems, Itemsets, minsupport = NULL, minconf
   # Generate Rules of consequent length 1.
   R1 <- DetRules_1(FrequentItems)
   
-  # Calculate confidence for all candidates of rules with consequent length 1.
-  R1@confidence <- R1@support / DetSupport(R1@lhs, Itemsets, FALSE)
+  # Determine support of lhs and rhs
+  supp_lhs <- DetSupport(R1@lhs, Itemsets, FALSE)
+  supp_rhs <- DetSupport(R1@rhs, Itemsets, TRUE)
+  
+  # Calculate confidence, lift and leverage
+  R1@confidence <- R1@support / supp_lhs
+  R1@lift <- R1@support / (supp_lhs * supp_rhs)
+  R1@leverage <- R1@support - (supp_lhs * supp_rhs)
 
   # Prune out the candidates that do not have minimal confidence.
   rel_its <- R1@confidence >= minconfidence
@@ -90,9 +96,15 @@ AssociationRules <- function(FrequentItems, Itemsets, minsupport = NULL, minconf
       # Determine the rules of length k + 1.
       R_cur <- DetRules_K(get(paste("R", k - 1, sep = "")))
       
-      # Calculate confidence for newly generated rules and save them in the intermediate 
-      # object R_cur.
-      R_cur@confidence <- R_cur@support / DetSupport(R_cur@lhs, Itemsets, FALSE)
+      # Determine support of the lhs and rhs
+      supp_lhs <- DetSupport(R_cur@lhs, Itemsets, FALSE)
+      supp_rhs <- DetSupport(R_cur@rhs, Itemsets, TRUE)
+      
+      # Calculate confidence, lift and leverage.
+      R_cur@confidence <- R1@support / supp_lhs
+      R_cur@lift <- R1@support / (supp_lhs * supp_rhs)
+      R_cur@leverage <- R1@support - (supp_lhs * supp_rhs)
+
       
       # Prune Rules out do not have minconf #
       rel_its <- R_cur@confidence >= minconfidence

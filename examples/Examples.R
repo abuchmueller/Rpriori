@@ -44,6 +44,8 @@ rules_praprio <- AssociationRules(Itemsets =  groc_trans,minsupport = 0.01, minc
 end_time <- Sys.time()
 print(end_time - start_time)
 
+print(rules_praprio)
+
 
 colSums(rules_praprio@rhs)
 
