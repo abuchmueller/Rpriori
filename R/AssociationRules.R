@@ -25,6 +25,13 @@ AssociationRules <- function(FrequentItems, Itemsets, minsupport = NULL, minconf
     # Project_Apriori function Frequent Itemsets
     FrequentItems <- FindFrequentItemsets(Itemsets, minsupport = minsupport)
   }
+  
+  # Test whether the input data sets do have minimal support
+  if (arefrequent){
+    if (any(FrequentItems@support < minsupport)){
+      FrequentItems <- FrequentItems[,FrequentItems@support >= minsupport]
+    }
+  }
 
   # Only frequent itemsets of length >1 are relevant for rules with consequent length > 1.
   # Therefore, I will select only these itemsets from the itemset matrix. 

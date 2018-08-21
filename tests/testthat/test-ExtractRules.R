@@ -9,7 +9,7 @@ test_that("test with consequents of one", {
                confidence =  input$confidence,
                lift = rep(-1, length(input$support)),
                leverage = rep(-1, length(input$support)),
-               itemsetID = input$frequentItems,
+               itemsetID = rep(-1, length(input$support)),
                FrequentItemsets = input$frequentItems)
   
   result <- readRDS(system.file("testdata","ExtractRules_result1.rds", package="ProjectApriori"))
@@ -28,7 +28,7 @@ test_that("test with consequents of two",{
                confidence =  input$confidence,
                lift = rep(-1, length(input$support)),
                leverage = rep(-1, length(input$support)),
-               itemsetID = input$frequentItems,
+               itemsetID = rep(-1, length(input$support)),
                FrequentItemsets = input$frequentItems)
   
   result <- readRDS(system.file("testdata","ExtractRules_result2.rds", package="ProjectApriori"))

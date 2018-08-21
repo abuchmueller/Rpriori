@@ -118,20 +118,14 @@ rownames(fr_tr$sets[rowSums(fr_tr$sets) > 0,]) == rownames(FrequentItemsets(groc
 
 ## Issue: ###
 
+data("Groceries")
+TransactionMatrix <- makeTransactionMatrix(Groceries)
+frequent_items <- FindFrequentItemsets(TransactionMatrix, 0.01)
+Rules <- AssociationRules(Itemsets=TransactionMatrix, minsupport = 0.03, 
+                          minconfidence = 0.4, arefrequent = FALSE)
 
-# data("Groceries")
-# TransactionMatrix <- makeTransactionMatrix(Groceries)
-# 
-# #debugonce(AssociationRules)
-# 
-# Rules <- AssociationRules(Itemsets=TransactionMatrix, minsupport = 0.01,
-#                           minconfidence = 0.5, arefrequent = FALSE)
-# 
-# 
-# ExtractRules(Rules)
-# 
-# rules.arules <- apriori(Groceries, parameter = list(supp = 0.01, conf = 0.5));
-# rules.arules <- inspect(rules.arules)
-# rules.arules <- rules.arules[order(rules.arules$support, rules.arules$confidence, decreasing = TRUE),]
-# rules.arules
-# ExtractRules(Rules)
+fRules <- AssociationRules(FrequentItems = frequent_items, Itemsets = TransactionMatrix, minsupport = 0.03,
+                           minconfidence = 0.4, arefrequent = TRUE)
+
+print(Rules)
+print(fRules)

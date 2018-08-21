@@ -4,8 +4,8 @@
 \alias{AssociationRules}
 \title{Calculate Association rules with minimal support and confidence.}
 \usage{
-AssociationRules(FrequentItems, Itemsets, minsupport = NULL,
-  minconfidence, arefrequent = TRUE)
+AssociationRules(FrequentItems, Itemsets, minsupport = NULL, minconfidence,
+  arefrequent = TRUE)
 }
 \arguments{
 \item{FrequentItems}{Object of class TIMatrix that contains the frequent itemsets with minimal
