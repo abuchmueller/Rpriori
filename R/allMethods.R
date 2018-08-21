@@ -78,7 +78,7 @@ setMethod("length", "FIMatrix", function(x) {
 setMethod("show", "FIMatrix", function(object) {
   
   n <- length(object)
-  cat("Found", n, "frequent itemsets. Use the print() to display\n")
+  cat("Found", n, "frequent itemsets. Use print() to display\n")
   
 })
 
@@ -101,6 +101,8 @@ setMethod("print", signature(x = "FIMatrix"), function(x, descending = TRUE) {
 
 setMethod("summary", signature(object = "FIMatrix"), function(object) {
   
+  n <- length(object)
+  
   #Overview over frequent itemset matrix
   cat("\n")
   cat("Frequent itemsets in binary sparse matrix representation \n with", 
@@ -108,18 +110,36 @@ setMethod("summary", signature(object = "FIMatrix"), function(object) {
       ncol(object@data), "columns (frequent itemsets)")
   cat("\n")
   
-  #top 8 most frequent items
-  cat("\n")
-  cat("Most frequent items: \n" )
-  print(sort(rowSums(object@data), decreasing = T)[1:8])
-  cat("\n")
-  
-  #probability of observing top 8 items in an itemset
-  cat("\n")
-  cat("Observed frequency in frequent itemsets:\n")
-  print(round(sort(rowSums(object@data), decreasing = T)[1:8] / length(object), 4))
-  cat("\n")
-  
+  #avoid unnecessary output when having less than 8 frequent itemsets
+  if (n < 8) {
+    
+    #top n most frequent items
+    cat("\n")
+    cat("Most frequent items: \n" )
+    print(sort(rowSums(object@data), decreasing = T)[1:n])
+    cat("\n")
+    
+    #probability of observing top n items in an itemset
+    cat("\n")
+    cat("Observed frequency in frequent itemsets:\n")
+    print(round(sort(rowSums(object@data), decreasing = T)[1:n] / n, 4))
+    cat("\n")
+    
+  } else {
+    
+    #top 8 most frequent items
+    cat("\n")
+    cat("Most frequent items: \n" )
+    print(sort(rowSums(object@data), decreasing = T)[1:8])
+    cat("\n")
+    
+    #probability of observing top 8 items in an itemset
+    cat("\n")
+    cat("Observed frequency in frequent itemsets:\n")
+    print(round(sort(rowSums(object@data), decreasing = T)[1:8] / n, 4))
+    cat("\n")
+  }
+
   #distribution of frequent itemset lengths
   cat("\n")
   cat("Distribution of itemset length:\n")
@@ -132,7 +152,7 @@ setMethod("summary", signature(object = "FIMatrix"), function(object) {
   
   #summary statistics on support measure
   cat("\n")
-  cat("Summary of support measure:\n")
+  cat("Summary of the support measure:\n")
   print(summary(object@support))
   cat("\n")
   
@@ -154,7 +174,6 @@ setMethod("hist", "FIMatrix", function(x) {
 ## Rules ## 
 ###########
 
-#display the rules in a way that a human can read them easily: if lhs is purchased => rhs is frequently purchased, too (+support & confidence).
 setMethod("length", "Rules", function(x) {
   x@lhs@Dim[2]
 })
@@ -162,14 +181,24 @@ setMethod("length", "Rules", function(x) {
 setMethod("show", "Rules", function(object) {
   
   n <- length(object)
-  cat("Found", n, "rules. Use the print() to display\n")
-  
+  if (n > 0) {
+    cat("Found", n, "rules. Use print() to display\n")
+  } else {
+    cat("Found no rules. Try lowering the support and/or confidence threshold.\n")
+  }
+
 })
 
 #display the rules in a way that a human can read them easily: 
 #if lhs is purchased => rhs is frequently purchased, too (+support & confidence).
 setMethod("print", "Rules", function(x) {
-  ExtractRules(x, maxNumConsequent = 1)
+  
+  if (length(x) == 0) {
+    return("Found no rules. Try lowering the support and/or confidence threshold.")
+  } else {
+    ExtractRules(x, maxNumConsequent = 1)
+  }
+  
 })
 
 setMethod("summary", signature(object = "Rules"), function(object) {
@@ -179,23 +208,32 @@ setMethod("summary", signature(object = "Rules"), function(object) {
                         confidence = object@confidence,
                         lift = object@lift,
                         leverage = object@leverage)
-  
-  cat("Found", n, "rules. Use print to display them\n")
-  cat("\n")
-  
-  #summary statistics on quality measures
-  cat("\n")
-  cat("Summary of quality measures:\n")
-  print(summary(quality))
-  cat("\n")
-  
+  if (n > 0) {
+    
+    cat("Found", n, "rules. Use print() to display\n")
+    cat("\n")
+    
+    #summary statistics on quality measures
+    cat("\n")
+    cat("Summary of quality measures:\n")
+    print(summary(quality))
+    cat("\n")
+    
+  } else {
+    return("Found no rules. Try lowering the support and/or confidence threshold.")
+  }
+
 })
 
-#Plot support of rules against confidence, use lift as color gradient
+#scatter plot of support against confidence, uses lift as color gradient
 setMethod("plot", "Rules", function(x) {
   
-  colfunc <- colorRampPalette(c("blue", "red"))
-  plot(x@support, x@confidence, pch = 20, col = colfunc(length(x)))
+  #color gradient function
+  gradient <- colorRampPalette(c("lightblue", "blue"))
+  
+  plot(x@support, x@confidence, pch = 20, 
+       xlab = "Support", ylab = "Confidence",
+       col = gradient(length(x)))
   #lacks legend
   
 })
