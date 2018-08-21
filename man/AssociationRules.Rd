@@ -5,7 +5,7 @@
 \title{Calculate Association rules with minimal support and confidence.}
 \usage{
 AssociationRules(FrequentItems, Itemsets, minsupport = NULL, minconfidence,
-  arefrequent = TRUE)
+  arefrequent = TRUE, maxConsequentLength = 1)
 }
 \arguments{
 \item{FrequentItems}{Object of class TIMatrix that contains the frequent itemsets with minimal
@@ -19,14 +19,17 @@ Mining.}
 \item{minconfidence}{Minimal confidence of the rules.}
 
 \item{arefrequent}{Are the Frequent itemsets provided?}
+
+\item{maxConsequentLength}{What should be the maximum length of the consequents of the rules?}
 }
 \value{
-list with the rhs and lhs of the rules as sparse incident matrices. Also a vector 
-containing the support and confidence of the inidivual rules is provided. The i'th element of 
-the vector does represent the rule that is defined by the i'th column of the lhs and rhs matrix.
+list with the rhs and lhs of the rules as sparse incident matrices. Also a vector
+  containing the support and confidence of the inidivual rules is provided. The i'th element of
+  the vector does represent the rule that is defined by the i'th column of the lhs and rhs
+  matrix.
 }
 \description{
 This function calculates association rules of consequent length >= 1 based on frequent itemsets.
-If the Frequent itemsets are already calculated than one should provide them in the paramter 
+If the Frequent itemsets are already calculated than one should provide them in the paramter
 FrequentItems and set the paramter arefrequent to TRUE (default).
 }

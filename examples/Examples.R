@@ -33,23 +33,19 @@ data("Groceries")
 groc_trans <- makeTransactionMatrix(Groceries)
 
 
-# 
-# 
 start_time <- Sys.time()
-rules_aprio <- apriori(Groceries,  parameter = list(support = 0.005, confidence = 0.2, minlen=2))
-end_time <- Sys.time()
-print(end_time - start_time)
-# 
-# 
-# 
-# 
-debugonce(AssociationRules)
-
-start_time <- Sys.time()
-rules_praprio <- AssociationRules(Itemsets =  groc_trans,minsupport = 0.1, minconfidence = 0.2, arefrequent = FALSE)
+rules_aprio <- apriori(Groceries,  parameter = list(support = 0.01, confidence = 0.2, minlen=2))
 end_time <- Sys.time()
 print(end_time - start_time)
 
+start_time <- Sys.time()
+rules_praprio <- AssociationRules(Itemsets =  groc_trans,minsupport = 0.01, minconfidence = 0.2,
+                                  arefrequent = FALSE, maxConsequentLength = 1)
+end_time <- Sys.time()
+print(end_time - start_time)
+
+
+colSums(rules_praprio@rhs)
 
 # 
 # profvis({
@@ -126,6 +122,6 @@ Rules <- AssociationRules(Itemsets=TransactionMatrix, minsupport = 0.03,
 
 fRules <- AssociationRules(FrequentItems = frequent_items, Itemsets = TransactionMatrix, minsupport = 0.03,
                            minconfidence = 0.4, arefrequent = TRUE)
-
+fRules
 print(Rules)
 print(fRules)

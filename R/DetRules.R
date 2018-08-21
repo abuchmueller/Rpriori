@@ -18,7 +18,6 @@ DetRules_1 <- function(Items){
   
   # Determine the number in each itemset.
   item_n <- colSums(Items)
-
   
   # Here I save the positions of the items in each itemset.
   pos_items <- apply(Items@data, 2, which)
