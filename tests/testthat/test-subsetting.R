@@ -67,10 +67,12 @@ test_that("Test subsetting of Rules",{
                  lift = c(0.4, 0.5, 0.6, 0.7),
                  leverage = c(0.4, 0.5, 0.6, 0.7),
                  itemsetID = c(0.4, 0.5, 0.6, 0.7),
-                 FrequentItemsets = as(matrix(c(1,0,1,0,0,0,1,0,1,1,1,0),
+                 FrequentItemsets = new("FIMatrix",
+                                        data = as(matrix(c(1,0,1,0,0,0,1,0,1,1,1,0),
                                              nrow = 3,
                                              byrow = TRUE,
-                                             dimnames = list(c('a', 'b', 'c'),NULL)), "ngTMatrix"))
+                                             dimnames = list(c('a', 'b', 'c'),NULL)), "ngTMatrix"),
+                                        support = rep(0.3, 3)))
 
 
   expect_equal(testmat[1,3], new('Rules',
@@ -87,10 +89,10 @@ test_that("Test subsetting of Rules",{
                                  lift = c( 0.6),
                                  leverage = c( 0.6),
                                  itemsetID = c( 0.6),
-                                 FrequentItemsets = as(matrix(c(1,0,1,0,0,0,1,0,1,1,1,0),
-                                                              nrow = 3,
-                                                              byrow = TRUE,
-                                                              dimnames = list(c('a', 'b', 'c'),NULL)),
-                                                       "ngTMatrix")
-                                 ))
+                                 FrequentItemsets = new("FIMatrix",
+                                                        data = as(matrix(c(1,0,1,0,0,0,1,0,1,1,1,0),
+                                                                         nrow = 3,
+                                                                         byrow = TRUE,
+                                                                         dimnames = list(c('a', 'b', 'c'),NULL)), "ngTMatrix"),
+                                                        support = rep(0.3, 3))))
 })

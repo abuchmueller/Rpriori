@@ -47,7 +47,7 @@ setClass("Rules",
            lift = "numeric",
            leverage = "numeric",
            itemsetID = "numeric",
-           FrequentItemsets = "ANY"
+           FrequentItemsets = "FIMatrix"
          ),
          validity = function(object) {
            stopifnot(length(object@rhs)==length(object@lhs)) 

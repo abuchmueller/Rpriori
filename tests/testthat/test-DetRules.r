@@ -21,7 +21,7 @@ test_that("A simple test for rule Generation of consequent_length one", {
                 lift = rep(-1, length(result$support)),
                 leverage = rep(-1, length(result$support)),
                 itemsetID = result$item_id,
-                FrequentItemsets = as(result$frequentItems, "ngTMatrix"))
+                FrequentItemsets = FrequentItems)
   
   expect_equal(DetRules_1(FrequentItems) , result)
 })
@@ -41,7 +41,9 @@ test_that("DetRules_K: Generate only one rule of length 2 from rules of length 1
                lift = rep(-1, length(input$support)),
                leverage = rep(-1, length(input$support)),
                itemsetID = input$item_id,
-               FrequentItemsets = as(input$frequentItems, "ngTMatrix"))
+               FrequentItemsets = new("FIMatrix",
+                                      data = as(input$frequentItems, "ngTMatrix"),
+                                      support = input$support[!duplicated(input$item_id)]))
 
   
   # Create output set #
@@ -55,7 +57,7 @@ test_that("DetRules_K: Generate only one rule of length 2 from rules of length 1
                 lift = rep(-1, length(result$support)),
                 leverage = rep(-1, length(result$support)),
                 itemsetID = result$item_id,
-                FrequentItemsets = as(result$frequentItems, "ngTMatrix"))
+                FrequentItemsets = input@FrequentItemsets)
 
   expect_equal(DetRules_K(input), result)
 })
