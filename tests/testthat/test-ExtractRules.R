@@ -10,7 +10,9 @@ test_that("test with consequents of one", {
                lift = rep(-1, length(input$support)),
                leverage = rep(-1, length(input$support)),
                itemsetID = rep(-1, length(input$support)),
-               FrequentItemsets = input$frequentItems)
+               FrequentItemsets = new("FIMatrix",
+                                      data = as(input$frequentItems,'ngTMatrix'),
+                                      support = c(1,2,3)))
   
   result <- readRDS(system.file("testdata","ExtractRules_result1.rds", package="ProjectApriori"))
   result$Lift <- rep(-1, length(input@confidence))
@@ -29,7 +31,9 @@ test_that("test with consequents of two",{
                lift = rep(-1, length(input$support)),
                leverage = rep(-1, length(input$support)),
                itemsetID = rep(-1, length(input$support)),
-               FrequentItemsets = input$frequentItems)
+               FrequentItemsets = new("FIMatrix",
+                                      data = as(input$frequentItems, "ngTMatrix"),
+                                      support = c(1,2,3)))
   
   result <- readRDS(system.file("testdata","ExtractRules_result2.rds", package="ProjectApriori"))
   result$Lift <- rep(-1, length(input@confidence))

@@ -76,5 +76,5 @@ length(Rules)
 show(Rules)
 print(Rules)
 summary(Rules) #Work in progress
-Rules@lift <- runif(length(Rules) , 1, 4); plot(Rules) #Work in progress
+plot(Rules) #Work in progress
 

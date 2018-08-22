@@ -3,15 +3,16 @@
 #' This function calculate the frequent itemset with a minimal support. 
 #' @name FindFrequentItemsets
 #' @export
-#' @param dataset This should be an sparse incident matrix of the baskets 
-#' where the rows describe the items and the columns describe the individual bastets.
-#'  Naming of the items is important.
+#' @param dataset currently under development
 #' @param minsupport This defines the minimal level of the support the resulting itemsets should have.
 #' @return The is a list that does store the frequent itemsets as a sparse incidence matrix
 #'  as well as the resulting support as a vector.
 
 
 FindFrequentItemsets <- function(dataset, minsupport){
+  
+  # Ensure that a TAMatrix is used as input #
+  dataset <- makeTAMatrix(dataset)
   
   ##################################
   # Calculate candidates of size 1 #

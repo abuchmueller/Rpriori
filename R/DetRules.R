@@ -14,7 +14,7 @@ DetRules_1 <- function(Items){
   # This variable contains a unique number for each frequent input set. It is needed later on to
   # determine based on which frequent itemset a certain rules was created.
   id <- 1:ncol(Items)
-
+  
   
   # Determine the number in each itemset.
   item_n <- colSums(Items)
@@ -82,7 +82,9 @@ DetRules_1 <- function(Items){
                lift = rep(-1, length(Items_support)),
                leverage = rep(-1, length(Items_support)),
                itemsetID = id,
-               FrequentItemsets = Items@data))
+               FrequentItemsets = new("FIMatrix",
+                                      data = Items@data,
+                                      support= Items@support)))
 }
 
 #' Determine all possible association rules with consequent length 1for given frequent transaction.
@@ -174,8 +176,8 @@ DetRules_K <- function(rules){
     # create a new variable for that.
     # the relevant frequent itemsets are the frequent itemset that do have rules
     # for them as shown via itemsetID
-    rel_frequentItems <- rules@FrequentItemsets[,1:ncol(rules@FrequentItemsets) 
-                                             %in% unique(rules@itemsetID), drop = FALSE]
+    rel_frequentItems <- rules@FrequentItemsets[,1:ncol(rules@FrequentItemsets@data) 
+                                             %in% unique(rules@itemsetID)]
     
     # If we have only one rel_frequentItems left we have a special case
     # where we have to apply another logic #
@@ -185,11 +187,11 @@ DetRules_K <- function(rules){
     # Here we have to replicate the different frequent itemssets according to their 
     # appearance in ncols_each that is the number of items in each frequent itemset.
     if (! OnlyOnefrequ){
-      num_items <- apply(rules@FrequentItemsets[,1:ncol(rules@FrequentItemsets) %in%
-                                               unique(rules@itemsetID)], 2, sum)
+      num_items <- apply(rules@FrequentItemsets[,1:ncol(rules@FrequentItemsets@data) %in%
+                                               unique(rules@itemsetID)]@data, 2, sum)
     } else {
-      num_items <- sum(rules@FrequentItemsets[,1:ncol(rules@FrequentItemsets) %in%
-                                             unique(rules@itemsetID)])
+      num_items <- sum(rules@FrequentItemsets[,1:ncol(rules@FrequentItemsets@data) %in%
+                                             unique(rules@itemsetID)]@data)
     }
     
     
@@ -211,9 +213,9 @@ DetRules_K <- function(rules){
     # for each transaction is the same Than this becomes a matrix and we have to
     # change the logic below.
     if(length(unique(num_items)) > 1) {
-      true_elements <- apply(rel_frequentItems, 2, which)
+      true_elements <- apply(rel_frequentItems@data, 2, which)
     } else {
-      true_elements <- lapply(split(rel_frequentItems,seq(ncol(rel_frequentItems))), which)
+      true_elements <- lapply(split(rel_frequentItems@data,seq(ncol(rel_frequentItems@data))), which)
     }
     
     # Replicate this so that it does match the replication throught the GenCandidate process #

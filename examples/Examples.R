@@ -30,7 +30,7 @@ me
 # rm(list = ls())
 # # compute frequent itemsets with apriori
 data("Groceries")
-groc_trans <- makeTransactionMatrix(Groceries)
+
 
 
 start_time <- Sys.time()
@@ -39,7 +39,7 @@ end_time <- Sys.time()
 print(end_time - start_time)
 
 start_time <- Sys.time()
-rules_praprio <- AssociationRules(Itemsets =  groc_trans,minsupport = 0.01, minconfidence = 0.2,
+rules_praprio <- AssociationRules(Itemsets =  Groceries, minsupport = 0.01, minconfidence = 0.2,
                                   arefrequent = FALSE, maxConsequentLength = 1)
 end_time <- Sys.time()
 print(end_time - start_time)
@@ -55,7 +55,7 @@ colSums(rules_praprio@rhs)
 # })
 # # 
 profvis({
-  rules_praprio <- AssociationRules(Itemsets =  groc_trans,minsupport = 0.005, minconfidence = 0.2, arefrequent = FALSE)
+  rules_praprio <- AssociationRules(Itemsets =  Groceries ,minsupport = 0.005, minconfidence = 0.2, arefrequent = FALSE)
 })
 
 
@@ -82,7 +82,6 @@ length(result_praprio$Support)
 # 
 data("Epub")
 
-groc_Epub <- makeTransactionMatrix(Epub)
 apr_Epub <- apriori(Epub, parameter = list(support = 0.01,  target="frequent itemsets"))
 fr_tr <- ExtractFrequentSets(apr_Epub)
 
