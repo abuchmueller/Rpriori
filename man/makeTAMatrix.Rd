@@ -7,7 +7,7 @@
 makeTAMatrix(input)
 }
 \arguments{
-\item{mat}{Object of class matrix, sparse matrix or Formel class transaction (arules
+\item{input}{Object of class matrix, sparse matrix or Formel class transaction (arules
 class).}
 }
 \value{

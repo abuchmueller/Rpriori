@@ -4,17 +4,23 @@
 \alias{makeFIMatrix}
 \title{Take different input and make them a FIMatrix}
 \usage{
-makeFIMatrix(input, support, dataset, minsupport)
+makeFIMatrix(input, support, dataset)
 }
 \arguments{
-\item{mat}{Object of class matrix, sparse matrix or Formel class transaction (arules
-class) containing the frequent itemsets.}
+\item{input}{Object of class matrix, sparse matrix,  transactions (arules
+class) or itemsets containing the frequent itemsets.}
+
+\item{support}{The support values for the provided itemsets. Should have a length corresponding 
+to the columns of the supplied matrix. If no support is provided it has to be recalculated.}
+
+\item{dataset}{Either this has to be provided or support. Please provide the initial datasets
+based on which the frequent itemsets from input with minimal support where calculated.}
 }
 \value{
-The non-sparse matrix
+
 }
 \description{
-Takes a object of class Matrix, ngCMatrix, ngTMatrix or formel class transaction and return a
+Takes a object of class Matrix, ngCMatrix, ngTMatrix, transactions or itemsets  and return a
 corresponding object of class FIMatrix. The rows should represent the itemset and be named.
-The columns should describe
+The columns should describe the itemsets.
 }
