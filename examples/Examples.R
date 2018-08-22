@@ -55,7 +55,7 @@ colSums(rules_praprio@rhs)
 # })
 # # 
 profvis({
-  rules_praprio <- AssociationRules(Itemsets =  groc_trans,minsupport = 0.005, minconfidence = 0.2, arefrequent = FALSE)
+  rules_praprio <- AssociationRules(Itemsets =  Groceries ,minsupport = 0.005, minconfidence = 0.2, arefrequent = FALSE)
 })
 
 

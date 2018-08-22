@@ -27,6 +27,10 @@ AssociationRules <- function(FrequentItems, Itemsets, minsupport = NULL, minconf
     Itemsets <- makeTAMatrix(Itemsets)
   }
   
+  if (!missing(FrequentItems) && class(FrequentItems)[1] != "TAMatrix"){
+    FrequentItems <- makeFIMatrix(FrequentItems)
+  }
+  
 
   # If the frequent itemsets are not provided they have to be calculated here.
   if (! arefrequent){
