@@ -229,12 +229,32 @@ setMethod("summary", signature(object = "Rules"), function(object) {
 setMethod("plot", "Rules", function(x) {
   
   #color gradient function
-  gradient <- colorRampPalette(c("lightblue", "blue"))
+  colfunc <- colorRampPalette(c("lightblue", "blue"))
   
-  plot(x@support, x@confidence, pch = 20, 
-       xlab = "Support", ylab = "Confidence",
-       col = gradient(length(x)))
-  #lacks legend
+  #ordering needed for color gradient
+  plot.df <- data.frame(support = x@support, 
+                        confidence = x@confidence,
+                        lift = x@lift)
+  
+  plot.df <- plot.df[order(plot.df$lift), ]
+  
+  #main scatterplot 
+  layout(matrix(1:2, ncol = 2), width = c(2, 1), height = c(1, 1))
+  plot(plot.df$support, 
+       plot.df$confidence, 
+       xlab = "Support", ylab = "Confidence", 
+       pch = 20, col = colfunc(length(x)))
+  
+  #gradient legend
+  legend.raster <- as.raster(matrix(rev(colfunc(length(x)))), ncol = 1)
+  plot(c(0, 2), 
+       c(0, round(max(x@lift), 2)), 
+       type = "n", axes = F, xlab = "", ylab = "", main = "Lift", adj = 0.225)
+  text(x = 1.5, 
+       y = seq(0, max(x@lift), l = 3), 
+       labels = seq(round(min(x@lift), 2), round(max(x@lift), 2), l = 3))
+  rasterImage(legend.raster, 0, 0, 1, round(max(x@lift), 2))
+
   
 })
 
