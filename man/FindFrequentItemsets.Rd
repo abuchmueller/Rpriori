@@ -7,9 +7,7 @@
 FindFrequentItemsets(dataset, minsupport)
 }
 \arguments{
-\item{dataset}{This should be an sparse incident matrix of the baskets 
-where the rows describe the items and the columns describe the individual bastets.
- Naming of the items is important.}
+\item{dataset}{currently under development}
 
 \item{minsupport}{This defines the minimal level of the support the resulting itemsets should have.}
 }

@@ -20,6 +20,13 @@
 
 AssociationRules <- function(FrequentItems, Itemsets, minsupport = NULL, minconfidence,
                              arefrequent = TRUE, maxConsequentLength = 1){
+  
+  
+  # Check input types of FrequentItems and Itemsets
+  if (class(Itemsets)[1] != "TAMatrix"){
+    Itemsets <- makeTAMatrix(Itemsets)
+  }
+  
 
   # If the frequent itemsets are not provided they have to be calculated here.
   if (! arefrequent){

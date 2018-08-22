@@ -15,6 +15,7 @@ RoxygenNote: 6.1.0
 Suggests: testthat
 Collate: 
     'AssociationRules.R'
+    'CoerceTypes.R'
     'CombineCands.R'
     'DetRules.R'
     'DetSupport.R'
@@ -28,4 +29,3 @@ Collate:
     'allClasses.R'
     'allMethods.R'
     'allSubsetMethods.R'
-    'makeTransactionMatrix.R'
