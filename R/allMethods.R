@@ -78,11 +78,11 @@ setMethod("length", "FIMatrix", function(x) {
 setMethod("show", "FIMatrix", function(object) {
   
   n <- length(object)
-  cat("Found", n, "frequent itemsets. Use print() to display\n")
+  cat("Found", n, "frequent itemset(s). Use print() to display\n")
   
 })
 
-# combines the elements of both lists, i.e., a frequent item and it's corressponding support into a data frame and displays side by side
+# combines the elements of both lists, i.e., a frequent item and it's corressponding support into a data frame
 setMethod("print", signature(x = "FIMatrix"), function(x, descending = TRUE) {
   
   n <- x@data@Dim[1]
@@ -182,7 +182,7 @@ setMethod("show", "Rules", function(object) {
   
   n <- length(object)
   if (n > 0) {
-    cat("Found", n, "rules. Use print() to display\n")
+    cat("Found", n, "rule(s). Use print() to display\n")
   } else {
     cat("Found no rules. Try lowering the support and/or confidence threshold.\n")
   }
@@ -210,7 +210,7 @@ setMethod("summary", signature(object = "Rules"), function(object) {
                         leverage = object@leverage)
   if (n > 0) {
     
-    cat("Found", n, "rules. Use print() to display\n")
+    cat("Found", n, "rule(s). Use print() to display\n")
     cat("\n")
     
     #summary statistics on quality measures
