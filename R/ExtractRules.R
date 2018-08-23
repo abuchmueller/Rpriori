@@ -11,7 +11,7 @@
 #' @return The rules from the left hand and right hand side in the form of {It1, ... ItN} -> {ITK} 
 #' in a data.frame. This data.frame does have columns lhs, rhs, unnamed, support and confidence.
 
-ExtractRules <- function(rules, maxNumConsequent = NULL){
+ExtractRules <- function(rules, maxNumConsequent = NULL, order_by = NULL, decreasing = TRUE){
       
   # For both the lhs and the rhs of the rules we select for each column the itemsets by names
   # that exist and combine them to vectors of strings where each string does reperesent one column
@@ -49,9 +49,64 @@ ExtractRules <- function(rules, maxNumConsequent = NULL){
     out_data <- out_data[num_consequent <= maxNumConsequent,]
   }
   
-  # We sort the outputed rules first by support than by confidence since this does represent
-  # their importance.
-  out_data <- out_data[order(out_data$Support, out_data$Confidence, decreasing = TRUE),]
+  # Here we order the dataframe containing the rules.
+  # if in order_by no variables are given to order by we order the rules first by Support
+  # and then by confidence
+  
+  if (is.null(order_by) || length(order_by) == 0){
+    out_data <- out_data[order(out_data$Support, out_data$Confidence, decreasing = decreasing),]
+  } else {
+    
+    # if the order_by is provided we order the data.frame by the explicitly named columns in 
+    # order_by
+    
+    # make all names columns lower case
+    order_by <- tolower(order_by)
+    
+    # Only take unique elements
+    order_by <- unique(order_by)
+    
+    # Only take elements that are support, confidence, lift or leverage
+    order_by <- order_by[order_by %in% c('support', 'confidence', 'lift', 'leverage')]
+    
+    # If there are any order_by left then order by these columns
+    if (length(oder_by) != 0){
+      
+      # Find the positions of the columns to order by 
+      order_by <- unlist(lapply(order_by, function(x) {
+        return(which(x == tolower(colnames(out_data))))
+      }))
+      
+      if (length(order_by) == 1){
+        out_data <- out_data[order(out_data[,order_by[1], drop = FALSE], decreasing = decreasing),]
+      } else {
+        if (length(order_by) == 2){
+          out_data <- out_data <- out_data[order(out_data[,order_by[1], drop = FALSE],
+                                                 out_data[,order_by[2], drop = FALSE],
+                                                 decreasing = decreasing),]
+        } else {
+          if (length(order_by) == 3){
+            out_data <- out_data <- out_data[order(out_data[,order_by[1], drop = FALSE],
+                                                   out_data[,order_by[2], drop = FALSE],
+                                                   out_data[,order_by[3], drop = FALSE],
+                                                   decreasing = decreasing),]
+          } else {
+            out_data <- out_data <- out_data[order(out_data[,order_by[1], drop = FALSE],
+                                                   out_data[,order_by[2], drop = FALSE],
+                                                   out_data[,order_by[3], drop = FALSE],
+                                                   out_data[,order_by[4], drop = FALSE],
+                                                   decreasing = decreasing),]
+          }
+        }
+      }
+      
+    } else {
+      warning('Please specify to columns to sort the rules by that are support, confidence,
+              lift or leverage')
+    }
+  }
+  
+ 
   
   # Since the data.frame was sorted the rownumbers are messed up and ugly, so they get replace 
   # by a nicer version. Also the row numbers do correspond to the rank of rules (based on first
@@ -61,5 +116,8 @@ ExtractRules <- function(rules, maxNumConsequent = NULL){
   # output the data.frame.
   return(out_data)
 }
+
+
+
 
 

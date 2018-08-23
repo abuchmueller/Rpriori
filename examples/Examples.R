@@ -113,16 +113,6 @@ rownames(fr_tr$sets[rowSums(fr_tr$sets) > 0,]) == rownames(FrequentItemsets(groc
 
 
 
-## Issue: ###
 
-data("Groceries")
-TransactionMatrix <- makeTransactionMatrix(Groceries)
-frequent_items <- FindFrequentItemsets(TransactionMatrix, 0.01)
-Rules <- AssociationRules(Itemsets=TransactionMatrix, minsupport = 0.03, 
-                          minconfidence = 0.4, arefrequent = FALSE)
 
-fRules <- AssociationRules(FrequentItems = frequent_items, Itemsets = TransactionMatrix, minsupport = 0.03,
-                           minconfidence = 0.4, arefrequent = TRUE)
-fRules
-print(Rules)
-print(fRules)
+
