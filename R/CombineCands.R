@@ -35,7 +35,7 @@ CombineFIMatrix <- function(list_input){
                           giveCsparse = FALSE,
                           dim = c(length(items), ncols),
                           dimnames = list(items, NULL)),
-                 support = rep(-1, ncols))
+                 support = rep(0, ncols))
   
   
   # Iterate again over the matrices in the input list and fill the output matrix with 

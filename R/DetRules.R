@@ -78,9 +78,9 @@ DetRules_1 <- function(Items){
                lhs = lhs,
                rhs = rhs,
                support = Items_support,
-               confidence = rep(-1, length(Items_support)),
-               lift = rep(-1, length(Items_support)),
-               leverage = rep(-1, length(Items_support)),
+               confidence = rep(0, length(Items_support)),
+               lift = rep(0, length(Items_support)),
+               leverage = rep(0, length(Items_support)),
                itemsetID = id,
                FrequentItemsets = new("FIMatrix",
                                       data = Items@data,
@@ -165,9 +165,9 @@ DetRules_K <- function(rules){
                lhs = lhs,
                rhs = rhs,
                support = supp,
-               confidence = rep(-1, length(supp)),
-               lift = rep(-1, length(supp)),
-               leverage = rep(-1, length(supp)),
+               confidence = rep(0, length(supp)),
+               lift = rep(0, length(supp)),
+               leverage = rep(0, length(supp)),
                itemsetID = id,
                FrequentItemsets = rules@FrequentItemsets))
   } else {
@@ -245,9 +245,9 @@ DetRules_K <- function(rules){
                lhs = lhs,
                rhs = rhs,
                support = supp,
-               confidence = rep(-1, length(supp)),
-               lift = rep(-1, length(supp)),
-               leverage = rep(-1, length(supp)),
+               confidence = rep(0, length(supp)),
+               lift = rep(0, length(supp)),
+               leverage = rep(0, length(supp)),
                itemsetID = id,
                FrequentItemsets = rules@FrequentItemsets))
   }

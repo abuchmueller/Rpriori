@@ -12,7 +12,7 @@ test_that("test with consequents of one", {
                itemsetID = rep(-1, length(input$support)),
                FrequentItemsets = new("FIMatrix",
                                       data = as(input$frequentItems,'ngTMatrix'),
-                                      support = c(1,2,3)))
+                                      support = rep(0, ncol(input$frequentItems))))
   
   result <- readRDS(system.file("testdata","ExtractRules_result1.rds", package="ProjectApriori"))
   result$Lift <- rep(-1, length(input@confidence))
@@ -33,7 +33,7 @@ test_that("test with consequents of two",{
                itemsetID = rep(-1, length(input$support)),
                FrequentItemsets = new("FIMatrix",
                                       data = as(input$frequentItems, "ngTMatrix"),
-                                      support = c(1,2,3)))
+                                      support = rep(0, ncol(input$frequentItems))))
   
   result <- readRDS(system.file("testdata","ExtractRules_result2.rds", package="ProjectApriori"))
   result$Lift <- rep(-1, length(input@confidence))

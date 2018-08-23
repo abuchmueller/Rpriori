@@ -10,16 +10,22 @@ An S4 class to represent association rules and metrics
 \section{Slots}{
 
 \describe{
-\item{\code{lhs}}{Left-hand side}
+\item{\code{lhs}}{ngTMatrix describing the lhs of the rules}
 
-\item{\code{rhs}}{Right-hande side}
+\item{\code{rhs}}{ngTMatrix describing the rhs of the rules}
 
-\item{\code{support}}{Support vector of Rules}
+\item{\code{support}}{Support of  the Rules}
 
-\item{\code{confidence}}{Confidence vector of Rules}
+\item{\code{confidence}}{Confidence of Rules}
 
-\item{\code{lift}}{Lift vector}
+\item{\code{lift}}{Lift of the rules}
 
-\item{\code{leverage}}{Leverage vector}
+\item{\code{leverage}}{Leverage of the rules}
+
+\item{\code{ItemsetID}}{This represent a vector of unique identifiers for the different frequent
+itemsets. Used for internal computation.}
+
+\item{\code{FrequentItemsets}}{Internally used FIMatrix containing the frequent itemsets based on which
+the rules were created.}
 }}
 

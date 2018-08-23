@@ -72,7 +72,7 @@ test_that("Test subsetting of Rules",{
                                              nrow = 3,
                                              byrow = TRUE,
                                              dimnames = list(c('a', 'b', 'c'),NULL)), "ngTMatrix"),
-                                        support = rep(0.3, 3)))
+                                        support = rep(0.3, 4)))
 
 
   expect_equal(testmat[1,3], new('Rules',
@@ -94,5 +94,5 @@ test_that("Test subsetting of Rules",{
                                                                          nrow = 3,
                                                                          byrow = TRUE,
                                                                          dimnames = list(c('a', 'b', 'c'),NULL)), "ngTMatrix"),
-                                                        support = rep(0.3, 3))))
+                                                        support = rep(0.3, 4))))
 })

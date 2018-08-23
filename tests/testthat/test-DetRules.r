@@ -17,9 +17,9 @@ test_that("A simple test for rule Generation of consequent_length one", {
                 lhs = as(result$lhs, "ngTMatrix"),
                 rhs = as(result$rhs, "ngTMatrix"),
                 support = result$support,
-                confidence = rep(-1, length(result$support)),
-                lift = rep(-1, length(result$support)),
-                leverage = rep(-1, length(result$support)),
+                confidence = rep(0, length(result$support)),
+                lift = rep(0, length(result$support)),
+                leverage = rep(0, length(result$support)),
                 itemsetID = result$item_id,
                 FrequentItemsets = FrequentItems)
   
@@ -37,13 +37,13 @@ test_that("DetRules_K: Generate only one rule of length 2 from rules of length 1
                lhs = as(input$lhs, "ngTMatrix"),
                rhs = as(input$rhs, "ngTMatrix"),
                support = input$support,
-               confidence = rep(-1, length(input$support)),
-               lift = rep(-1, length(input$support)),
-               leverage = rep(-1, length(input$support)),
+               confidence = rep(0, length(input$support)),
+               lift = rep(0, length(input$support)),
+               leverage = rep(0, length(input$support)),
                itemsetID = input$item_id,
                FrequentItemsets = new("FIMatrix",
                                       data = as(input$frequentItems, "ngTMatrix"),
-                                      support = input$support[!duplicated(input$item_id)]))
+                                      support = rep(0, ncol(input$frequentItems))))
 
   
   # Create output set #
@@ -53,9 +53,9 @@ test_that("DetRules_K: Generate only one rule of length 2 from rules of length 1
                 lhs = as(result$lhs, "ngTMatrix"),
                 rhs = as(result$rhs, "ngTMatrix"),
                 support = result$support,
-                confidence = rep(-1, length(result$support)),
-                lift = rep(-1, length(result$support)),
-                leverage = rep(-1, length(result$support)),
+                confidence = rep(0, length(result$support)),
+                lift = rep(0, length(result$support)),
+                leverage = rep(0, length(result$support)),
                 itemsetID = result$item_id,
                 FrequentItemsets = input@FrequentItemsets)
 
