@@ -3,8 +3,8 @@
 
 #' @include allClasses.R
 
-## TAMatrix ##
-##############
+#### TAMatrix ####
+##################
 
 setMethod("length", "TAMatrix", function(x) {
   x@dim[1]
@@ -68,8 +68,8 @@ setMethod("plot", signature(x = "TAMatrix"), function(x) {
   
 })
 
-## FrequentItems ##
-###################
+#### FrequentItems ####
+#######################
 
 setMethod("length", "FIMatrix", function(x) {
   x@data@Dim[2]
@@ -171,8 +171,12 @@ setMethod("hist", "FIMatrix", function(x) {
   hist(colSums(x@data), main = "Histogram of frequent Itemsets", xlab = "Itemset length", col = "lightblue")
 })
 
-## Rules ## 
-###########
+setMethod("support", "FIMatrix", function(x) {
+  return(x@support)
+})
+
+#### Rules ####
+###############
 
 setMethod("length", "Rules", function(x) {
   x@lhs@Dim[2]
@@ -231,11 +235,12 @@ setMethod("plot", "Rules", function(x) {
   #color gradient function
   colfunc <- colorRampPalette(c("lightblue", "blue"))
   
-  #ordering needed for color gradient
+  #needed for ordering
   plot.df <- data.frame(support = x@support, 
                         confidence = x@confidence,
                         lift = x@lift)
   
+  #ordering needed for color gradient
   plot.df <- plot.df[order(plot.df$lift), ]
   
   #main scatterplot 
@@ -256,5 +261,41 @@ setMethod("plot", "Rules", function(x) {
   rasterImage(legend.raster, 0, 0, 1, round(max(x@lift), 2))
 
   
+})
+
+setGeneric("confidence", function(object) {
+  standardGeneric("confidence")
+})
+
+setMethod("confidence", "Rules", function(object) {
+  object@confidence
+})
+
+setGeneric("lift", function(object) {
+  standardGeneric("lift")
+})
+
+setMethod("lift", "Rules", function(object) {
+  object@lift
+})
+
+setGeneric("leverage", function(object) {
+  standardGeneric("leverage")
+})
+
+setMethod("leverage", "Rules", function(object) {
+  object@leverage
+})
+
+setMethod("support", "Rules", function(x) {
+  return(x@support)
+})
+
+setGeneric("extract", function(object) {
+  standardGeneric("extract")
+})
+
+setMethod("extract", "Rules", function(object) {
+  object@FrequentItemsets
 })
 
