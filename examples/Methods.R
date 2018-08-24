@@ -3,8 +3,8 @@
 ##### properly installed this should run top to   #####
 ##### bottom without giving any errors however if #####
 ##### you wish, you can create the objects (run   #####
-##### until line 25) and head straigt to the      #####
-##### methods at the bottom (line 57 and below).  #####
+##### until line 27) and head straigt to the      #####
+##### methods at the bottom (line 59 and below).  #####
 #######################################################
 
 library(ProjectApriori)
@@ -14,25 +14,27 @@ library(ProjectApriori)
 data("Groceries")
 
 #Sparse matrix of itemsets, where rows are items and columns transactions
+#this is now fully optional, FindFrequentItemsets and AssociationRules now do this automatically
 TransactionMatrix <- makeTransactionMatrix(Groceries)
 
 #Sparse matrix of frequent itemsets + support vector containing support for each itemset
-frequent_items <- FindFrequentItemsets(TransactionMatrix, 0.01)
+frequent_items <- FindFrequentItemsets(Groceries, 0.01)
 
 #Object of 'Rule' class
-Rules <- AssociationRules(Itemsets=TransactionMatrix, minsupport = 0.03, 
+Rules <- AssociationRules(Itemsets=Groceries, minsupport = 0.01, 
                           minconfidence = 0.4, arefrequent = FALSE)
 
-#### from here on you can skip to the methods (line 57) ####
+#### from here on you can skip to the methods (line 59) ####
 
-#or (faster since it doesn't have to recalculate frequent itemsets again)
-fRules <- AssociationRules(FrequentItems = frequent_items, Itemsets = TransactionMatrix, minsupport = 0.03,
+# using a frequent itemset matrix instead of a transaction matrix
+# (faster since it doesn't have to recalculate frequent itemsets again)
+fRules <- AssociationRules(FrequentItems = frequent_items, Itemsets = Groceries, minsupport = 0.03,
                           minconfidence = 0.4, arefrequent = TRUE)
 
 
 
 #for comparison
-aRules <- apriori(Groceries, parameter = list(supp = 0.03, conf = 0.4));inspect(aRules)
+aRules <- apriori(Groceries, parameter = list(supp = 0.01, conf = 0.4));inspect(aRules)
 
 
 #Check if classes are implemented correct
@@ -69,12 +71,18 @@ show(frequent_items)
 print(frequent_items)
 summary(frequent_items)
 plot(frequent_items)
-hist(frequent_items) #FIMatrix is the only class that has a plot and a seperate hist method
+hist(frequent_items)
 
 #Rules
 length(Rules)
 show(Rules)
 print(Rules)
-summary(Rules) #Work in progress
-plot(Rules) #Work in progress
+summary(Rules)
+plot(Rules) 
+support(Rules)
+confidence(Rules)
+leverage(Rules)
+lift(Rules)
+extract(Rules)
+
 
