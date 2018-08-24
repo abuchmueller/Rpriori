@@ -111,18 +111,18 @@ setMethod("summary", signature(object = "FIMatrix"), function(object) {
   cat("\n")
   
   #avoid unnecessary output when having less than 8 frequent itemsets
-  if (n < 8) {
+  if (nrow(object@data) < 8) {
     
     #top n most frequent items
     cat("\n")
     cat("Most frequent items: \n" )
-    print(sort(rowSums(object@data), decreasing = T)[1:n])
+    print(sort(rowSums(object@data), decreasing = T)[1:nrow(object@data)])
     cat("\n")
     
     #probability of observing top n items in an itemset
     cat("\n")
     cat("Observed frequency in frequent itemsets:\n")
-    print(round(sort(rowSums(object@data), decreasing = T)[1:n] / n, 4))
+    print(round(sort(rowSums(object@data), decreasing = T)[1:nrow(object@data)] / n, 4))
     cat("\n")
     
   } else {
@@ -265,6 +265,13 @@ setMethod("plot", "Rules", function(x) {
   
 })
 
+#' S4 Generic to extract confidence vector from Rules object
+#' @name confidence
+#' @rdname confidence
+#' @export
+#' @param input Object of Class Rules
+#' @return Vector of confidence values from all frequent itemsets
+
 setGeneric("confidence", function(object) {
   standardGeneric("confidence")
 })
@@ -273,6 +280,13 @@ setMethod("confidence", "Rules", function(object) {
   object@confidence
 })
 
+#' S4 Generic to extract lift vector from Rules object
+#' @name lift
+#' @rdname lift
+#' @export
+#' @param input Object of Class Rules
+#' @return Vector of lift values from all frequent itemsets
+
 setGeneric("lift", function(object) {
   standardGeneric("lift")
 })
@@ -280,6 +294,13 @@ setGeneric("lift", function(object) {
 setMethod("lift", "Rules", function(object) {
   object@lift
 })
+
+#' S4 Generic to extract leverage vector from Rules object
+#' @name leverage
+#' @rdname leverage
+#' @export
+#' @param input Object of Class Rules
+#' @return Vector of leverage values from all frequent itemsets
 
 setGeneric("leverage", function(object) {
   standardGeneric("leverage")
@@ -290,10 +311,17 @@ setMethod("leverage", "Rules", function(object) {
 })
 
 setMethod("support", "Rules", function(x) {
-  return(x@support)
+  x@support
 })
 
-setGeneric("extract", function(object) {
+#' S4 Generic to extract frequent itemsets vector from Rules object
+#' @name extract
+#' @rdname extract
+#' @export
+#' @param input Object of Class Rules
+#' @return Object of Class FIMatrix
+
+setGeneric("extract", valueClass = "FIMatrix", function(object) {
   standardGeneric("extract")
 })
 
