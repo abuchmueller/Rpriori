@@ -4,7 +4,8 @@
 \alias{ExtractRules}
 \title{Extract Rules}
 \usage{
-ExtractRules(rules, maxNumConsequent = NULL)
+ExtractRules(rules, maxNumConsequent = NULL, order_by = NULL,
+  decreasing = TRUE)
 }
 \arguments{
 \item{rules}{A output object from Project_Apriori's Association rules function has to be used
