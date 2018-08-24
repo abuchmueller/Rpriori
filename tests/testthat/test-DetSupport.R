@@ -39,7 +39,7 @@ testthat::test_that("Simple test of DetSupport_row with candidates that have dif
                     TRUE, FALSE, TRUE, TRUE, TRUE),
                     dimnames = list(c('a', 'b', 'c', 'd', 'e'), NULL), nrow = 5),
                     'ngTMatrix'),
-                dim = c(5L, 5L),
+                dim = c(5L, 10L),
                items = c('a', 'b', 'c', 'd', 'e'))
   
   testthat::expect_equal(DetSupport(cand1, trans), 0.3)
@@ -80,7 +80,7 @@ testthat::test_that("Simple test of DetSupport_row with candidates that have dif
                                   TRUE, FALSE, TRUE, TRUE, TRUE),
                                 dimnames = list(c('a', 'b', 'c', 'd', 'e'), NULL), nrow = 5),
                          'ngTMatrix'),
-               dim = c(5L, 5L),
+               dim = c(5L, 10L),
                items = c('a', 'b', 'c', 'd', 'e'))
   
   testthat::expect_equal(DetSupport(cand1, trans), 0.3)
@@ -124,7 +124,7 @@ testthat::test_that("Simple test of DetSupport  with candidates that have differ
                                   TRUE, FALSE, TRUE, TRUE, TRUE),
                                 dimnames = list(c('a', 'b', 'c', 'd', 'e'), NULL), nrow = 5),
                          'ngTMatrix'),
-               dim = c(5L, 5L),
+               dim = c(5L, 10L),
                items = c('a', 'b', 'c', 'd', 'e'))
   
   
@@ -162,7 +162,7 @@ testthat::test_that("Simple test of DetSupport  with candidates that have differ
                                   TRUE, FALSE, TRUE, FALSE, TRUE,
                                   TRUE, FALSE, TRUE, TRUE, TRUE),dimnames = list(c('a', 'b', 'c', 'd', 'e'), NULL), nrow = 5),
                          'ngTMatrix'),
-               dim = c(5L, 5L),
+               dim = c(5L, 10L),
                items = c('a', 'b', 'c', 'd', 'e'))
   
   testthat::expect_equal(DetSupport(cbind(cand1,cand2, cand3, cand4), trans),c(0.5 ,0.8 ,0.1 ,0.8))

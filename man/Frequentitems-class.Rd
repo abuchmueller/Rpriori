@@ -10,8 +10,9 @@ An S4 class to represent frequent itemsets in a sparse Matrix
 \section{Slots}{
 
 \describe{
-\item{\code{data}}{Frequent Itemset Matrix in sparse representation}
+\item{\code{data}}{Frequent Itemset Matrix in sparse representation. Rows are the items and the 
+columns represent the itemsets.}
 
-\item{\code{support}}{Corresponding support}
+\item{\code{support}}{Vector containing the support of all Itemsets}
 }}
 

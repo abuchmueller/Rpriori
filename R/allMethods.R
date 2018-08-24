@@ -195,12 +195,14 @@ setMethod("show", "Rules", function(object) {
 
 #display the rules in a way that a human can read them easily: 
 #if lhs is purchased => rhs is frequently purchased, too (+support & confidence).
-setMethod("print", "Rules", function(x) {
+setMethod("print", "Rules", function(x,maxNumConsequent = 1,
+                                     order_by = NULL, decreasing = TRUE) {
   
   if (length(x) == 0) {
     return("Found no rules. Try lowering the support and/or confidence threshold.")
   } else {
-    ExtractRules(x, maxNumConsequent = 1)
+    ExtractRules(x, maxNumConsequent = maxNumConsequent,
+                 order_by = order_by, decreasing = decreasing)
   }
   
 })

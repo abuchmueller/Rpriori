@@ -86,17 +86,3 @@ GenCandidates <- function(L){
   return(cand)
 }
 
-# L1 <- L_temp
-# 
-# GenCandidates(L1)
-# 
-# profvis({
-#   GenCandidates(L1@data)
-# })
-# 
-# d <- GenCandidates(L1@data)
-# 
-# thisSets <- L1@data
-# 
-# cand <- combn(1:ncol(thisSets), 2)
-# cand <- apply(cand, 2, function(x) { thisSets[, x[1]] | thisSets[, x[2]] })
