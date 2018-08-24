@@ -110,11 +110,6 @@ rownames(fr_tr$sets[rowSums(fr_tr$sets) > 0,]) == rownames(FrequentItemsets(groc
 
 
 
-
-
-
 ## Issue: ###
-
-
 
 

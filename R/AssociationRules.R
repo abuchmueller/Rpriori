@@ -45,6 +45,12 @@ AssociationRules <- function(FrequentItems, Itemsets, minsupport = NULL, minconf
       FrequentItems <- FrequentItems[,FrequentItems@support >= minsupport]
     }
   }
+  
+  # At this point I will save the FrequentItems to a variable and will later on assign them to 
+  # slot in the output rule object. I need that slot during compution of the rules with conequent
+  # length > 1 but they do not represent the Frequent itemsets anymore.
+  FrequentItems_correct <- FrequentItems
+  
 
   # Only frequent itemsets of length >1 are relevant for rules with consequent length > 1.
   # Therefore, I will select only these itemsets from the itemset matrix. 
@@ -93,6 +99,8 @@ AssociationRules <- function(FrequentItems, Itemsets, minsupport = NULL, minconf
   R1@FrequentItemsets <- R1@FrequentItemsets[rel_item,]
   
   if (maxConsequentLength == 1){
+    # Reassign the correct frequent itemsets before output.
+    R1@FrequentItemsets <- FrequentItems_correct
     return(R1)
   } else {
     if (maxConsequentLength < 1){
@@ -147,10 +155,13 @@ AssociationRules <- function(FrequentItems, Itemsets, minsupport = NULL, minconf
       out_list[[i]] <- get(paste("R", i, sep = ""))
     }
     
-    # Return all the relevant ouputs (rhs, lhs, support and confidence) in a list. Additionally
-    # the different rhsides and lhsides have to be compbined to one matrix using the CombineCands
-    # function of this package.
-    return( CombineRules(out_list))  
+    # Combine all the Rule objects containing the rules with consequent length 1, ..., k-1 to one
+    # Rule object containing all rules using the CombineRules function.
+    R <- CombineRules(out_list)
+      
+    # Assign the correct frequent itemsets
+    R@FrequentItemsets <- FrequentItems_correct
+    return(R)  
   }
 }
 
