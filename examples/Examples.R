@@ -16,6 +16,9 @@ debugonce(AssociationRules)
 result <- AssociationRules(Itemsets = input_sets , minsupport = 0.3, minconfidence = 0.4,  arefrequent = FALSE,
                           maxConsequentLength = 10)
 
+print(result, maxNumConsequent = 10)
+
+
 me <- ExtractRules(result, maxNumConsequent = 1)
 arules <- inspect(result_arules)[order(result_arules@quality$support,result_arules@quality$confidence, decreasing = TRUE),]
 length(arules$support)
