@@ -109,38 +109,42 @@ AssociationRules <- function(FrequentItems, Itemsets, minsupport = NULL, minconf
     # Find rules of consequent longer than 1.
     k <- 2 
     
+    # For the creation of rules of length 2 the itemsets have to have at least three items.
+    # I will select these relevant itemsets in the rules object r_cur.
+    rel_Items <- which(colSums(R1@FrequentItemsets) > 2)
+    
+    R_cur <- R1[,rel_Items]
+    
     # Abort the loop if the generated candidates from the last step are empty.
-    while (ncol(get(paste("R", k - 1, sep = ""))) > 0 && k <= maxConsequentLength){
+    while (any(duplicated(R_cur@itemsetID)) && k <= maxConsequentLength){
       
       # Determine the rules of length k + 1.
-      R_cur <- DetRules_K(get(paste("R", k - 1, sep = "")))
+      R_cur <- DetRules_K(R_cur)
       
       # Determine support of the lhs and rhs
       supp_lhs <- DetSupport(R_cur@lhs, Itemsets, FALSE)
       supp_rhs <- DetSupport(R_cur@rhs, Itemsets, TRUE)
       
       # Calculate confidence, lift and leverage.
-      R_cur@confidence <- R1@support / supp_lhs
-      R_cur@lift <- R1@support / (supp_lhs * supp_rhs)
-      R_cur@leverage <- R1@support - (supp_lhs * supp_rhs)
+      R_cur@confidence <- R_cur@support / supp_lhs
+      R_cur@lift <- R_cur@support / (supp_lhs * supp_rhs)
+      R_cur@leverage <- R_cur@support - (supp_lhs * supp_rhs)
 
       
       # Prune Rules out do not have minconf #
       rel_its <- R_cur@confidence >= minconfidence
       R_cur <- R_cur[,rel_its]
       
-      
-      # It might happen that some Items are no longer relevant for the rules in the sense that they 
-      # do not exist anymore. This case is fulfilled if a row in the rhs and lhs does not have any
-      # entry with 1.
-      rel_item <- !(rowSums(R1, lhs = TRUE) == 0  & rowSums(R1, lhs = FALSE) == 0)
-      
-      R_cur <- R_cur[rel_item, ]
-      R_cur@FrequentItemsets <- R_cur@FrequentItemsets[rel_item,, drop = FALSE]
-      
       # Assign the generated rules to the object Rk that is dynamically created based on the value
       # for k.
       assign(paste("R", k, sep = ""), R_cur)
+      
+      # After I saved the R_cur and can now modify for the next iteration.
+      # We can only create rules of length k for itemsets that have at least K + 1 items. 
+      # Therefore, I will select only these itemsets from R_curr.
+      rel_Items <- which(colSums(R_cur@FrequentItemsets) > k + 1)
+      
+      R_cur <- R_cur[,rel_Items]
       
       
       k <- k + 1

@@ -12,9 +12,9 @@ input_sets <- matrix(c(TRUE, TRUE, FALSE, FALSE, FALSE, FALSE,
 
 result_arules <- apriori(t(input_sets), parameter = list(support = 0.3, confidence = 0.4, minlen=2))
 
-input_sets_spares <- makeTransactionMatrix(input_sets)
-
-result <- AssociationRules(Itemsets = input_sets_spares , minsupport = 0.3, minconfidence = 0.4,  arefrequent = FALSE)
+debugonce(AssociationRules)
+result <- AssociationRules(Itemsets = input_sets , minsupport = 0.3, minconfidence = 0.4,  arefrequent = FALSE,
+                          maxConsequentLength = 10)
 
 me <- ExtractRules(result, maxNumConsequent = 1)
 arules <- inspect(result_arules)[order(result_arules@quality$support,result_arules@quality$confidence, decreasing = TRUE),]
