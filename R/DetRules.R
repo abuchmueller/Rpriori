@@ -147,11 +147,7 @@ DetRules_K <- function(rules){
   id <- rep(id, times = ncols_each)
   
   # Create the new output matrices for the lhs, rhs.
-  lhs <- out_mat <- sparseMatrix(i = c(),
-                                 j = c(),
-                                 giveCsparse = FALSE,
-                                 dim = c(nrows, ncols),
-                                 dimnames = list(items(rules), NULL))
+  lhs <- rules@FrequentItemsets[,id, drop = FALSE]@data
   rhs <- out_mat <- sparseMatrix(i = c(),
                                  j = c(),
                                  giveCsparse = FALSE,
@@ -172,59 +168,8 @@ DetRules_K <- function(rules){
                FrequentItemsets = rules@FrequentItemsets))
   } else {
     
-    # In the following we will need the relevant frequent itemsets that's why I will
-    # create a new variable for that.
-    # the relevant frequent itemsets are the frequent itemset that do have rules
-    # for them as shown via itemsetID
-    rel_frequentItems <- rules@FrequentItemsets[,1:ncol(rules@FrequentItemsets@data) 
-                                             %in% unique(rules@itemsetID)]
-    
-    # If we have only one rel_frequentItems left we have a special case
-    # where we have to apply another logic #
-    OnlyOnefrequ <- ncol(rel_frequentItems) == 1
-    
-    # Left hand side value setting
-    # Here we have to replicate the different frequent itemssets according to their 
-    # appearance in ncols_each that is the number of items in each frequent itemset.
-    if (! OnlyOnefrequ){
-      num_items <- apply(rules@FrequentItemsets[,1:ncol(rules@FrequentItemsets@data) %in%
-                                               unique(rules@itemsetID)]@data, 2, sum)
-    } else {
-      num_items <- sum(rules@FrequentItemsets[,1:ncol(rules@FrequentItemsets@data) %in%
-                                             unique(rules@itemsetID)]@data)
-    }
     
     
-    # Once again I will create a vector containing the positions in the matrix that have to
-    # be set true in order to replicate the original itemsets. In col_pos I account for
-    # the fact that the columns are going forward and therefore the position of the
-    # items is higher.
-    if (! OnlyOnefrequ){
-      col_pos <- rep(0:(ncols - 1) * nrows, times =  rep(num_items, times = ncols_each))
-    } else {
-      
-      # only one column as candidate 
-      col_pos <- rep(0:(ncols - 1) * nrows, num_items)
-    }
-    
-    # After I acounted for the columns I have to generate at which position for each column
-    # the item is for the respecitve candidates.
-    # true elements from above is usually a list. But if the number of items in rel_frequent items
-    # for each transaction is the same Than this becomes a matrix and we have to
-    # change the logic below.
-    if(length(unique(num_items)) > 1) {
-      true_elements <- apply(rel_frequentItems@data, 2, which)
-    } else {
-      true_elements <- lapply(split(rel_frequentItems@data,seq(ncol(rel_frequentItems@data))), which)
-    }
-    
-    # Replicate this so that it does match the replication throught the GenCandidate process #
-    true_elements <- unlist(rep(true_elements , times = ncols_each))
-  
-    # Add col_pos to it to account to for forward going columns and
-    # set the correct positions to one on the lhs.
-    # right now lhs does only reflect the replicated Frequent itemsets.
-    lhs[col_pos + true_elements] <- TRUE
     
     
     # Here I go over the generated consequents by the apriori Gen and set the according columns
@@ -252,3 +197,6 @@ DetRules_K <- function(rules){
                FrequentItemsets = rules@FrequentItemsets))
   }
 }
+
+
+

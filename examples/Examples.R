@@ -31,8 +31,6 @@ me
 # # compute frequent itemsets with apriori
 data("Groceries")
 
-
-
 start_time <- Sys.time()
 rules_aprio <- apriori(Groceries,  parameter = list(support = 0.01, confidence = 0.2, minlen=2))
 end_time <- Sys.time()

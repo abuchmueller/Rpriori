@@ -106,11 +106,11 @@ CombineRules <- function(list_input){
                                     giveCsparse = FALSE,
                                     dim = c(length(items), ncols),
                                     dimnames = list(items, NULL)),
-                 support = rep(-1, ncols),
-                 confidence = rep(-1, ncols),
-                 lift = rep(-1, ncols),
-                 leverage = rep(-1, ncols),
-                 itemsetID = rep(-1, ncols),
+                 support = rep(0, ncols),
+                 confidence = rep(0, ncols),
+                 lift = rep(0, ncols),
+                 leverage = rep(0, ncols),
+                 itemsetID = rep(0, ncols),
                  FrequentItemsets = list_input[[1]]@FrequentItemsets)
                 
   
