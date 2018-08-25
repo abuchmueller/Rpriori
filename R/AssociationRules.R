@@ -113,7 +113,7 @@ AssociationRules <- function(FrequentItems, Itemsets, minsupport = NULL, minconf
     # I will select these relevant itemsets in the rules object r_cur.
     rel_Items <- which(colSums(R1@FrequentItemsets) > 2)
     
-    R_cur <- R1[,rel_Items]
+    R_cur <- R1[,R1@itemsetID %in% rel_Items]
     
     # Abort the loop if the generated candidates from the last step are empty.
     while (any(duplicated(R_cur@itemsetID)) && k <= maxConsequentLength){
@@ -144,7 +144,7 @@ AssociationRules <- function(FrequentItems, Itemsets, minsupport = NULL, minconf
       # Therefore, I will select only these itemsets from R_curr.
       rel_Items <- which(colSums(R_cur@FrequentItemsets) > k + 1)
       
-      R_cur <- R_cur[,rel_Items]
+      R_cur <- R_cur[,R_cur@itemsetID %in% rel_Items]
       
       
       k <- k + 1
