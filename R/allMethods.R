@@ -59,13 +59,18 @@ setMethod("summary", signature(object = "TAMatrix"), function(object) {
 #distribution of itemset lengths as a histogram
 setMethod("plot", signature(x = "TAMatrix"), function(x) {
   
-  #determine maximum length of itemsets to obtain optimal number breakpoints
+  if (length(x) <= 0) {
+    stop("Object must contain at least one item")
+  } else {
+
+  #determine maximum length of itemsets to obtain number breakpoints
   max.itemlength <- max(colSums(x@data))
   
   hist(colSums(x@data), 
        breaks = max.itemlength + 1, 
        main = "Distribution of itemset lengths", xlab = "Itemset length", 
        col = "lightblue")
+  }
   
 })
 
@@ -175,9 +180,13 @@ setMethod("summary", signature(object = "FIMatrix"), function(object) {
 #Plot itemsets against support
 setMethod("plot", signature(x = "FIMatrix"), function(x, pch = 1, col = "red") {
   
+  if (length(x) <= 0) {
+    stop("Object must contain at least one itemset")
+  } else {
   plot(colSums(x@data), x@support, 
        xlab = "Itemset length", ylab = "Support", 
        main = "Support distribution by itemset length", pch = pch, col = col)
+  }
   
 })
 
@@ -208,7 +217,15 @@ setMethod("qplot", signature(x = "FIMatrix"), function(x, col = "red", alpha = 0
 
 #Histrogram of itemset frequency
 setMethod("hist", "FIMatrix", function(x) {
-  hist(colSums(x@data), main = "Histogram of frequent Itemsets", xlab = "Itemset length", col = "lightblue")
+  
+  if (length(x) <= 0) {
+    stop("Object must contain at least one itemset")
+  } else {
+  hist(colSums(x@data), 
+       main = "Histogram of frequent Itemsets", 
+       xlab = "Itemset length", 
+       col = "lightblue")
+  }
 })
 
 setGeneric("support", function(object) {
