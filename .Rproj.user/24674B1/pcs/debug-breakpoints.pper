@@ -1,6 +1,21 @@
 {
     "debugBreakpointsState" : {
         "breakpoints" : [
+            {
+                "editor_line_number" : 51,
+                "editor_state" : 1,
+                "function_name" : "toplevel",
+                "function_steps" : "",
+                "id" : 0,
+                "is_package_breakpoint" : false,
+                "is_pending_debug_completion" : false,
+                "line_number" : 51,
+                "needs_updated_steps" : false,
+                "package_name" : "",
+                "path" : "E:/OwnData/OneDrive/Dropbox/Dropbox/Studies/Angewandte Statistik/Semester 2/Project_Apriori/R/allSubsetMethods.R",
+                "state" : 1,
+                "type" : 1
+            }
         ]
     }
 }

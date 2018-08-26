@@ -45,7 +45,40 @@ setMethod("nrow",  signature = signature(x = "TAMatrix"),
 
 
 setMethod("[",  signature = signature(x = "TAMatrix"), 
-          function(x, i = NULL, j = NULL) {
+          function(x, i, j) {
+            
+  # Make some sanity checks on i, j.
+  if(!missing(i)){
+    if (is.logical(i)){
+      if(length(i) > nrow(x)){
+        stop(paste('Logical subscript of length', length(i), "too long for TAMatrix with", nrow(x), "rows"))
+      }
+    } else {
+      if (is.numeric(i)){
+        if (any(! (i %in% 1:nrow(x)))){
+          stop(paste("Subscript is too long. (", paste(i[!i %in% 1:nrow(x)], collapse = ', '),
+                     ") cannot be subsetted from TAMatrix with ", nrow(x), ' rows', sep = ''))
+        }
+      }
+    }
+  }
+            
+  if(!missing(j)){
+    if (is.logical(j)){
+      if(length(j) > ncol(x)){
+        stop(paste('Logical subscript of length', length(j), "too long for TAMatrix with",
+                   ncol(x), "columns"))
+      }
+    } else {
+      if (is.numeric(j)){
+        if (any(! (j %in% 1:ncol(x)))){
+          stop(paste("Subscript is too long. (", paste(j[!j %in% 1:ncol(x)], collapse = ', '),
+                     ") cannot be subsetted from TAMatrix with ", ncol(x), ' columns', sep = ''))
+        }
+      }
+    }
+  }
+            
             
   # If i or j are missing, all rows / columns should be selected.
   if (missing(i)){
@@ -84,7 +117,7 @@ setMethod("[",  signature = signature(x = "TAMatrix"),
   if (is.logical(j)){
     j <- which(j)
   }
-  
+
   return(new('TAMatrix',
          data = x@data[i, j, drop = FALSE],
          dim = c(length(i), length(j)),
@@ -129,6 +162,38 @@ setMethod("nrow",  signature = signature(x = "FIMatrix"),
 
 setMethod("[",  signature = signature(x = "FIMatrix"), 
           function(x, i, j) {
+            
+            # Make some sanity checks on i, j.
+            if(!missing(i)){
+              if (is.logical(i)){
+                if(length(i) > nrow(x)){
+                  stop(paste('Logical subscript of length', length(i), "too long for FIMatrix with", nrow(x), "rows"))
+                }
+              } else {
+                if (is.numeric(i)){
+                  if (any(! (i %in% 1:nrow(x)))){
+                    stop(paste("Subscript is too long. (", paste(i[!i %in% 1:nrow(x)], collapse = ', '),
+                               ") cannot be subsetted from FIMatrix with ", nrow(x), ' rows', sep = ''))
+                  }
+                }
+              }
+            }
+            
+            if(!missing(j)){
+              if (is.logical(j)){
+                if(length(j) > ncol(x)){
+                  stop(paste('Logical subscript of length', length(j), "too long for FIMatrix with",
+                             ncol(x), "columns"))
+                }
+              } else {
+                if (is.numeric(j)){
+                  if (any(! (j %in% 1:ncol(x)))){
+                    stop(paste("Subscript is too long. (", paste(j[!j %in% 1:ncol(x)], collapse = ', '),
+                               ") cannot be subsetted from FIMatrix with ", ncol(x), ' columns', sep = ''))
+                  }
+                }
+              }
+            }
             
             # If the matrix does not have row or columns return an empty matrix
             if (nrow(x@data) == 0 || ncol(x@data) == 0){
@@ -211,6 +276,38 @@ setMethod("nrow",  signature = signature(x = "Rules"),
 
 setMethod("[",  signature = signature(x = "Rules"), 
           function(x, i, j) {
+            
+            # Make some sanity checks on i, j.
+            if(!missing(i)){
+              if (is.logical(i)){
+                if(length(i) > nrow(x)){
+                  stop(paste('Logical subscript of length', length(i), "too long for Rules with", nrow(x), "rows"))
+                }
+              } else {
+                if (is.numeric(i)){
+                  if (any(! (i %in% 1:nrow(x)))){
+                    stop(paste("Subscript is too long. (", paste(i[!i %in% 1:nrow(x)], collapse = ', '),
+                               ") cannot be subsetted from Rules with ", nrow(x), ' rows', sep = ''))
+                  }
+                }
+              }
+            }
+            
+            if(!missing(j)){
+              if (is.logical(j)){
+                if(length(j) > ncol(x)){
+                  stop(paste('Logical subscript of length', length(j), "too long for Rules with",
+                             ncol(x), "columns"))
+                }
+              } else {
+                if (is.numeric(j)){
+                  if (any(! (j %in% 1:ncol(x)))){
+                    stop(paste("Subscript is too long. (", paste(j[!j %in% 1:ncol(x)], collapse = ', '),
+                               ") cannot be subsetted from Rules with ", ncol(x), ' columns', sep = ''))
+                  }
+                }
+              }
+            }
             
             # If the matrix does not have row or columns return an empty matrix
             if (nrow(x@lhs) == 0 || ncol(x@lhs) == 0 || nrow(x@rhs) == 0 || ncol(x@rhs) == 0){

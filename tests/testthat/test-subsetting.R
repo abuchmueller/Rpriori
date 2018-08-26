@@ -33,7 +33,13 @@ test_that("Test subsetting of TAMatrix", {
                                                                           dimnames = list(c('a', 'b','c'),NULL)), "ngTMatrix"),
                                                          dim = c(3L,2L),
                                                          items = c("a", 'b', 'c')) )
-  
+  expect_error(testmat[,c(TRUE, TRUE, TRUE, TRUE, FALSE)],
+               'Logical subscript of length 5 too long for TAMatrix with 4 columns')
+  expect_error(testmat[,c(5, 6)])
+  expect_error(testmat[c(TRUE, TRUE, TRUE, TRUE, FALSE),],
+               'Logical subscript of length 5 too long for TAMatrix with 3 rows')
+  expect_error(testmat[c(5),])
+
 })
 
 test_that("Test subsetting of FIMatrix",{
@@ -50,6 +56,12 @@ test_that("Test subsetting of FIMatrix",{
                                                   byrow = TRUE,
                                                   dimnames = list(c('a'),NULL)), "ngTMatrix"),
                                  support = c( 0.6)))
+  expect_error(testmat[,c(TRUE, TRUE, TRUE, TRUE, FALSE)],
+               'Logical subscript of length 5 too long for FIMatrix with 4 columns')
+  expect_error(testmat[,c(5, 6)])
+  expect_error(testmat[c(TRUE, TRUE, TRUE, TRUE, FALSE),],
+               'Logical subscript of length 5 too long for FIMatrix with 3 rows')
+  expect_error(testmat[c(5),])
 })
 
 test_that("Test subsetting of Rules",{
@@ -95,4 +107,11 @@ test_that("Test subsetting of Rules",{
                                                                          byrow = TRUE,
                                                                          dimnames = list(c('a', 'b', 'c'),NULL)), "ngTMatrix"),
                                                         support = rep(0.3, 4))))
+  expect_error(testmat[,c(TRUE, TRUE, TRUE, TRUE, FALSE)],
+               'Logical subscript of length 5 too long for Rules with 4 columns')
+  expect_error(testmat[,c(5, 6)])
+  expect_error(testmat[c(TRUE, TRUE, TRUE, TRUE, FALSE),],
+               'Logical subscript of length 5 too long for Rules with 3 rows')
+  expect_error(testmat[c(5),])
+  
 })

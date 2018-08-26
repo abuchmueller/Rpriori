@@ -44,7 +44,6 @@ rules_praprio <- AssociationRules(Itemsets =  Groceries, minsupport = 0.01, minc
 end_time <- Sys.time()
 print(end_time - start_time)
 
-
 colSums(rules_praprio@rhs)
 
 # 

@@ -170,8 +170,6 @@ DetRules_K <- function(rules){
     
     
     
-    
-    
     # Here I go over the generated consequents by the apriori Gen and set the according columns
     # in the rhs to the generated consequents
     iter <- 1
