@@ -3,9 +3,9 @@
 \docType{class}
 \name{Rules}
 \alias{Rules}
-\title{An S4 class to represent association rules and metrics}
+\title{S4 class to store association rules and relevant quality metrics}
 \description{
-An S4 class to represent association rules and metrics
+S4 class to store association rules and relevant quality metrics
 }
 \section{Slots}{
 

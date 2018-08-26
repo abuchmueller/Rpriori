@@ -4,12 +4,13 @@
 \alias{AssociationRules}
 \title{Calculate Association rules with minimal support and confidence.}
 \usage{
-AssociationRules(FrequentItems, Itemsets, minsupport = NULL, minconfidence,
-  arefrequent = TRUE, maxConsequentLength = 1)
+AssociationRules(FrequentItems, Itemsets, minsupport, minconfidence,
+  maxConsequentLength = 1)
 }
 \arguments{
 \item{FrequentItems}{Object of class TIMatrix that contains the frequent itemsets with minimal
-support. The support used to calculate them must be the same as specified in minsupport.}
+support. The support used to calculate them must be the same as specified in minsupport. If no
+dataset is provided the frequent Itemsets are calculated based on the Itemsets paramter.}
 
 \item{Itemsets}{Object of class TAMatrix that does contain the transactions underlying the rule
 Mining.}
@@ -17,8 +18,6 @@ Mining.}
 \item{minsupport}{Minimal support of the rules.}
 
 \item{minconfidence}{Minimal confidence of the rules.}
-
-\item{arefrequent}{Are the Frequent itemsets provided?}
 
 \item{maxConsequentLength}{What should be the maximum length of the consequents of the rules?}
 }

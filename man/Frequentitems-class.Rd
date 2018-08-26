@@ -3,9 +3,9 @@
 \docType{class}
 \name{FIMatrix}
 \alias{FIMatrix}
-\title{An S4 class to represent frequent itemsets in a sparse Matrix}
+\title{S4 class to represent frequent itemsets in a sparse Matrix}
 \description{
-An S4 class to represent frequent itemsets in a sparse Matrix
+S4 class to represent frequent itemsets in a sparse Matrix
 }
 \section{Slots}{
 

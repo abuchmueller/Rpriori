@@ -3,9 +3,9 @@
 \docType{class}
 \name{TAMatrix}
 \alias{TAMatrix}
-\title{An S4 class to represent an itemset as a sparse Matrix}
+\title{S4 class to represent transactions in a sparse Matrix}
 \description{
-An S4 class to represent an itemset as a sparse Matrix
+S4 class to represent transactions in a sparse Matrix
 }
 \section{Slots}{
 
