@@ -15,7 +15,7 @@ data("Groceries")
 
 #Sparse matrix of itemsets, where rows are items and columns transactions
 #this is now fully optional, FindFrequentItemsets and AssociationRules now do this automatically
-TransactionMatrix <- makeTransactionMatrix(Groceries)
+TAM <- makeTAMatrix(Groceries)
 
 #Sparse matrix of frequent itemsets + support vector containing support for each itemset
 frequent_items <- FindFrequentItemsets(Groceries, 0.01)
