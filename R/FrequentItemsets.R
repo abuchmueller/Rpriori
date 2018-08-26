@@ -32,6 +32,18 @@ FindFrequentItemsets <- function(dataset, minsupport){
   # Create object of class FIMatrix for the frequent itemsets of length 1
   len_names <- length(L1_names)
   vec_names <- 1:len_names
+  
+  # If L1 is empty return empty FIMatrix #
+  if (len_names == 0){
+    warning(paste("No frequent itemsets found for the support", minsupport, "Returning empty FIMatrix object."))
+    return(new("FIMatrix", 
+              data = sparseMatrix(i = numeric(0),
+                                  j = numeric(0),
+                                  giveCsparse = FALSE,
+                                  dims = c(0, 0)),
+                                  support = numeric(0)))
+  }
+  
   L1 <- new("FIMatrix", 
             data = sparseMatrix(i = vec_names,
                                 j = vec_names,

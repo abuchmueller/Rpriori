@@ -1,4 +1,16 @@
-###
+library(profvis)
+library()
+debugonce(AssociationRules)
+
+profvis({
+result <- AssociationRules(Itemsets = Groceries, minsupport = 0.01, minconfidence = 0.2,  maxConsequentLength = 2)
+})
+
+print(result)
+
+
+
+
 #Optimize GiveUniqueCol
 ## The use case right now takes about 9 seconds and is the majority of the runtime of Gen_candidates. #
 
