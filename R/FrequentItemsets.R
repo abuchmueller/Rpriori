@@ -36,7 +36,7 @@ FindFrequentItemsets <- function(dataset, minsupport){
             data = sparseMatrix(i = vec_names,
                                 j = vec_names,
                                 giveCsparse = FALSE,
-                                dim = c(len_names, len_names),
+                                dims = c(len_names, len_names),
                                 dimnames = list(L1_names, NULL)),
             support = as.numeric(L1))
 

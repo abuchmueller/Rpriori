@@ -33,7 +33,7 @@ CombineFIMatrix <- function(list_input){
                  data = sparseMatrix(i = c(),
                           j = c(),
                           giveCsparse = FALSE,
-                          dim = c(length(items), ncols),
+                          dims = c(length(items), ncols),
                           dimnames = list(items, NULL)),
                  support = rep(0, ncols))
   
@@ -99,12 +99,12 @@ CombineRules <- function(list_input){
                  lhs = sparseMatrix(i = c(),
                                     j = c(),
                                     giveCsparse = FALSE,
-                                    dim = c(length(items), ncols),
+                                    dims = c(length(items), ncols),
                                     dimnames = list(items, NULL)),
                  rhs = sparseMatrix(i = c(),
                                     j = c(),
                                     giveCsparse = FALSE,
-                                    dim = c(length(items), ncols),
+                                    dims = c(length(items), ncols),
                                     dimnames = list(items, NULL)),
                  support = rep(0, ncols),
                  confidence = rep(0, ncols),

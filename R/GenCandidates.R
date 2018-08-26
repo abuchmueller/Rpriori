@@ -80,7 +80,7 @@ GenCandidates <- function(L){
                     p = cand@p,
                     giveCsparse = FALSE,
                     index1 = FALSE,
-                    dim = c(nrow(cand), ncol(cand)),
+                    dims = c(nrow(cand), ncol(cand)),
                     dimnames = list(rownames(cand), NULL))
   
   return(cand)

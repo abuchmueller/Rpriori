@@ -1,11 +1,10 @@
 Package: ProjectApriori
 Version: 1.1
 Title: Implementaion of the Apriori Algorithm
-Description: In this package a full implementation of the Apriori-Algorithm in R is provided
+Description: This packages includes a full implementation of the Apriori algorithm. It does include a compete S4 class structure as well as many convenience functions such as print or plot. 
 Author: Tim Toebrock <timtoebrock@gmail.com>
 Maintainer: Tim Toebrock<timtoebrock@gmail.com>
-Depends: R (>= 3.4.0),
-         Matrix (>= 1.2)
+Depends: R (>= 3.4.0)
 Imports: Matrix (>= 1.2)
 License: GPL-3
 LazyData: true
