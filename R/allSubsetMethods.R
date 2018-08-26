@@ -14,6 +14,8 @@
 # For itemsets the logic for subsetting is the following:
 # for the items only rowise selection (via i) is relevant, for dim and the matrix row and 
 # columnwise selection is relevant.
+setGeneric("items", function(x) 
+  standardGeneric("items") )
 
 setMethod("items",  signature = signature(x = "TAMatrix"), 
           function(x){

@@ -171,6 +171,9 @@ setMethod("hist", "FIMatrix", function(x) {
   hist(colSums(x@data), main = "Histogram of frequent Itemsets", xlab = "Itemset length", col = "lightblue")
 })
 
+setGeneric("support", function(x) 
+  standardGeneric("support") )
+
 setMethod("support", "FIMatrix", function(x) {
   return(x@support)
 })
@@ -309,6 +312,7 @@ setGeneric("leverage", function(object) {
 setMethod("leverage", "Rules", function(object) {
   object@leverage
 })
+
 
 setMethod("support", "Rules", function(x) {
   x@support

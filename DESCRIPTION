@@ -5,10 +5,8 @@ Description: In this package a full implementation of the Apriori-Algorithm in R
 Author: Tim Toebrock <timtoebrock@gmail.com>
 Maintainer: Tim Toebrock<timtoebrock@gmail.com>
 Depends: R (>= 3.4.0),
-        arules (>= 1.6), 
          Matrix (>= 1.2)
-Imports: arules (>= 1.6), 
-         Matrix (>= 1.2)
+Imports: Matrix (>= 1.2)
 License: GPL-3
 LazyData: true
 RoxygenNote: 6.1.0

@@ -32,7 +32,6 @@ me
 # ##################################
 # rm(list = ls())
 # # compute frequent itemsets with apriori
-data("Groceries")
 
 start_time <- Sys.time()
 rules_aprio <- apriori(Groceries,  parameter = list(support = 0.01, confidence = 0.2, minlen=2))
@@ -44,8 +43,6 @@ rules_praprio <- AssociationRules(Itemsets =  Groceries, minsupport = 0.01, minc
                                   arefrequent = FALSE, maxConsequentLength = 1)
 end_time <- Sys.time()
 print(end_time - start_time)
-
-print(rules_praprio)
 
 
 colSums(rules_praprio@rhs)
