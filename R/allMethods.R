@@ -1,7 +1,8 @@
-#### This file stores printing all methods for our classes (TAMatrix, FIMatrix & Rules) ####
-#############################################################################################
+#### This file stores generics and methods for our classes ####
+###############################################################
 
 #' @include allClasses.R
+#' @import ggplot2
 
 #### TAMatrix ####
 ##################
@@ -65,6 +66,19 @@ setMethod("plot", signature(x = "TAMatrix"), function(x) {
        breaks = max.itemlength + 1, 
        main = "Distribution of itemset lengths", xlab = "Itemset length", 
        col = "lightblue")
+  
+})
+
+#ggplot2 implementation
+setMethod("qplot", signature(x = "TAMatrix"), function(x) {
+  
+  #dataframe needed for ggplot
+  df <- data.frame(itemset_length = colSums(x@data))
+  
+  ggplot(df, aes(df$itemset_length)) + 
+    geom_bar() +
+    labs(title = "Histogram of itemset lengths", x = "Itemset length") +
+    theme(plot.title = element_text(hjust = 0.5))
   
 })
 
@@ -167,15 +181,42 @@ setMethod("plot", signature(x = "FIMatrix"), function(x, pch = 1, col = "red") {
   
 })
 
+##ggplot2 implementation
+setMethod("qplot", signature(x = "FIMatrix"), function(x, col = "red", alpha = 0.1, type = c("hist", "scatter")) {
+  
+  if (missing(type)) {
+    stop("type missing: Please supply a type by specifiying either 'scatter' or 'hist'")
+  }
+  
+  #set up data frame for ggplot
+  df <- data.frame(data = colSums(x@data), support = x@support)
+  
+  if (type == "scatter") {
+
+    ggplot(df, aes(data, support)) + 
+      geom_point(col = col, alpha = alpha) +
+      labs(x = "Itemset length", y = "support")
+  } else {
+    
+    ggplot(df, aes(df$data)) + 
+      geom_bar() +
+      labs(title = "Histogram of itemset lengths", x = "Itemset length") +
+      theme(plot.title = element_text(hjust = 0.5))
+  }
+  
+})
+
+#Histrogram of itemset frequency
 setMethod("hist", "FIMatrix", function(x) {
   hist(colSums(x@data), main = "Histogram of frequent Itemsets", xlab = "Itemset length", col = "lightblue")
 })
 
-setGeneric("support", function(x) 
-  standardGeneric("support") )
+setGeneric("support", function(object) {
+  standardGeneric("support")
+})
 
-setMethod("support", "FIMatrix", function(x) {
-  return(x@support)
+setMethod("support", "FIMatrix", function(object) {
+  return(object@support)
 })
 
 #### Rules ####
@@ -273,6 +314,21 @@ setMethod("plot", "Rules", function(x) {
 
 })
 
+#ggplot2 implementation
+setMethod("qplot", "Rules", function(x) {
+  
+  quality.df <- data.frame(support = x@support, 
+                           confidence = x@confidence,
+                           lift = x@lift,
+                           leverage = x@leverage)
+  
+  ggplot(quality.df, aes(x=support, y=confidence, color=lift)) + 
+    geom_point() + 
+    scale_color_gradient(low="lightblue", high="blue")
+  
+})
+
+
 #' S4 Generic to extract confidence vector from Rules object
 #' @name confidence
 #' @rdname confidence
@@ -318,9 +374,8 @@ setMethod("leverage", "Rules", function(object) {
   object@leverage
 })
 
-
-setMethod("support", "Rules", function(x) {
-  x@support
+setMethod("support", "Rules", function(object) {
+  object@support
 })
 
 #' S4 Generic to extract frequent itemsets vector from Rules object
