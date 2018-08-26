@@ -87,7 +87,6 @@ test_that("Test for coercion to FIMatrix",{
                            dimnames = list( c("Bread", "Milk", "Diaper", "Beer"),NULL))
   
   Frequent_items_support <- c(0.8, 0.8, 0.8, 0.6, 0.6, 0.6, 0.6, 0.6)
-  minsupport <- 
     
     result <- new('FIMatrix',
                   data = as(Frequent_items, 'ngTMatrix'),

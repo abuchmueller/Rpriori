@@ -178,6 +178,49 @@ setMethod("support", "FIMatrix", function(x) {
   return(x@support)
 })
 
+
+#### Prune generic / methods ####
+
+#' S4 Generic for pruning FIMatrix, Rules objects
+#' 
+#' With this function one can delete all itemsets from an FIMatrix that do not have minimal support
+#' or confidence and all rules from an Rules object that do not have minimal support, confidence,
+#' lift or leverage.
+#' @name prune
+#' @rdname prune
+#' @export  
+#' @param input Object of class FIMatrix or 
+#' @param Support Minimal support the pruned FIMatrix or Rules should have.
+#' @param Confidence Minimal confidence the pruned rule should have.
+#' @param Lift Minimal Lift the pruned rule should have.
+#' @param Leverage Minimal Leverage the pruned rule should have.
+
+setGeneric("prune", function(object, ...) {
+  standardGeneric("prune")
+})
+
+setMethod("prune", "FIMatrix", function(object, Support) {
+  
+  # Error checking
+  # Support should be numeric and within (0,1)
+  if((!missing(Support)) && is.numeric(Support)){
+    if (Support > 1 || Support < 0){
+      stop("Supportort should be within (0,1). Pruning aborted.")
+    }
+  } else {
+    if (!missing(Support)){
+      stop('The Supportort specified in Support should be numeric!. Pruning aborted.')
+    }
+  }
+  
+  if (!missing(Support)){
+    res <- object[,support(object) >= Support]
+    return(res)
+  } else {
+    return(object) 
+  }
+})
+
 #### Rules ####
 ###############
 
@@ -337,4 +380,76 @@ setGeneric("extract", valueClass = "FIMatrix", function(object) {
 setMethod("extract", "Rules", function(object) {
   object@FrequentItemsets
 })
+
+setMethod("prune", "Rules", function(object, Support, Confidence, Lift, Leverage,
+                                     inv_Lift = FALSE, inv_lev = FALSE) {
+  
+  # Error checking
+  # Support should be numeric and within (0,1)
+  if((!missing(Support)) && is.numeric(Support)){
+    if (Support > 1 || Support < 0){
+      stop("Supportort should be within (0,1). Pruning aborted.")
+    }
+  } else {
+    if(!missing(Support)){
+      stop('The Supportort specified in Support should be numeric!. Pruning aborted.')
+    }
+  }
+  
+  # Confidenceidence should be numeric and within (0,1)
+  if((!missing(Confidence)) && is.numeric(Confidence)){
+    if (Confidence > 1 || Confidence < 0){
+      stop("Confidenceidence should be within (0,1). Pruning aborted.")
+    }
+  } else {
+    if(!missing(Confidence)){
+      stop('The Confidenceidence specified in Support should be numeric!. Pruning aborted.')
+    }
+  }
+  
+  # Lift should be numeric
+  if ((!missing(Lift)) && !is.numeric(Lift)){
+    stop("Lift should be numeric. Pruning aborted")
+  }
+  
+  # Leverage should be numeric
+  if ((!missing(Leverage)) &&!is.numeric(Leverage)){
+    stop("Leverage should be numeric. Pruning aborted")
+  }
+  
+  # If non of the paramters is specified all colums / itemsets should be returned.
+  select <- rep(TRUE, ncol(object))
+  
+  # 
+  if(!missing(Support)){
+    select <- select & support(object) >= Support
+  }
+  if(!missing(Confidence)){
+    select <- select & confidence(object) >= Confidence
+  }
+  if(!missing(Lift)){
+    if(!inv_Lift){
+      select <- select & lift(object) >= Lift
+    } else {
+      select <- select & lift(object) <= Lift
+    }
+    
+    
+  }
+  if(!missing(Leverage)){
+    if(!inv_lev){
+      select <- select & leverage(object) >= Leverage
+    } else {
+      select <- select & leverage(object) <= Leverage
+    }
+  }
+  
+  res <- object[,select]
+  
+  return(res)
+})
+
+
+
+
 
