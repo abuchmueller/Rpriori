@@ -12,7 +12,7 @@ test_that("Test for coercion to TAMatrix", {
                        dimnames = list( c("Bread", "Milk", "Diaper", "Beer", "Eggs", "Coke")))
   
   # transaction object from arules
-  input_transactions <- as(t(input_sets),"transactions")
+  #input_transactions <- as(t(input_sets),"transactions")
   
   # data frame
   input_sets_dataframe <- as.data.frame(input_sets)
@@ -42,8 +42,8 @@ test_that("Test for coercion to TAMatrix", {
   expect_equal(dat, result)
   
   # from class transactions
-  dat_transaction <- makeTAMatrix(input_transactions)
-  expect_equal(dat_transaction, result)
+  #dat_transaction <- makeTAMatrix(input_transactions)
+  #expect_equal(dat_transaction, result)
   
   # from dataframe
   res_dataframe <- makeTAMatrix(input_sets_dataframe)
@@ -97,8 +97,9 @@ test_that("Test for coercion to FIMatrix",{
   # itemsets class from arules
   Frequent_items_itemsets <- readRDS(system.file("testdata","coerce_types_apriori_output.rds",
                                                  package="ProjectApriori"))
+  
   # transactions object from arules
-  Frequent_items_transactions <- as(t(Frequent_items),"transactions")
+  #Frequent_items_transactions <- as(t(Frequent_items),"transactions")
   
   # data frame
   Frequent_items_dataframe <- as.data.frame(Frequent_items)
@@ -123,10 +124,10 @@ test_that("Test for coercion to FIMatrix",{
                             support = NULL, dataset = dataset), result)
   
   # Test for transaction class
-  expect_equal(makeFIMatrix(Frequent_items_transactions,
-                            support = Frequent_items_support), result)
-  expect_equal(makeFIMatrix(Frequent_items_transactions,
-                            support = NULL, dataset = dataset), result)
+  # expect_equal(makeFIMatrix(Frequent_items_transactions,
+  #                           support = Frequent_items_support), result)
+  # expect_equal(makeFIMatrix(Frequent_items_transactions,
+  #                           support = NULL, dataset = dataset), result)
   
   # Test for data.frame
   expect_equal(makeFIMatrix(Frequent_items_dataframe,

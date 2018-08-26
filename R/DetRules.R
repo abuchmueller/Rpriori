@@ -38,13 +38,13 @@ DetRules_1 <- function(Items){
     lhs <- out_mat <- sparseMatrix(i = c(),
                                    j = c(),
                                    giveCsparse = FALSE,
-                                   dim = c(nrow(Items), ncols),
+                                   dims = c(nrow(Items), ncols),
                                    dimnames = list(items(Items), NULL))
     
     rhs <- out_mat <- sparseMatrix(i = c(),
                                    j = c(),
                                    giveCsparse = FALSE,
-                                   dim = c(nrow(Items), ncols),
+                                   dims = c(nrow(Items), ncols),
                                    dimnames = list(items(Items), NULL))
     
     # The lhs side first rep the input columns by the number of items in each. To avoid the
@@ -151,7 +151,7 @@ DetRules_K <- function(rules){
   rhs <- out_mat <- sparseMatrix(i = c(),
                                  j = c(),
                                  giveCsparse = FALSE,
-                                 dim = c(nrows, ncols),
+                                 dims = c(nrows, ncols),
                                  dimnames = list(items(rules), NULL))
   
   # If lhs and rhs are empty than we did not create any new candidates

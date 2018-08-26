@@ -64,7 +64,7 @@ makeTAMatrix.matrix <- function(input){
   out_mat <- sparseMatrix(i = i,
                           j = j,
                           giveCsparse = FALSE,
-                          dim = c(nrow(input), ncol(input)),
+                          dims = c(nrow(input), ncol(input)),
                           dimnames = list(rownames(input), NULL))
   return(outputTAMatrix(out_mat))
 }
@@ -85,7 +85,7 @@ makeTAMatrix.ngCMatrix <- function(input){
                           p = input@p,
                           index1 = FALSE,
                           giveCsparse = FALSE,
-                          dim = c(nrow(input), ncol(input)),
+                          dims = c(nrow(input), ncol(input)),
                           dimnames = list(rownames(input), NULL))
   
   # From here on same procedure as input would be matrix.
@@ -107,7 +107,7 @@ makeTAMatrix.lgTMatrix <- function(input){
                           j = input@j,
                           index1 = FALSE,
                           giveCsparse = FALSE,
-                          dim = c(nrow(input), ncol(input)),
+                          dims = c(nrow(input), ncol(input)),
                           dimnames = list(rownames(input), NULL))
   
   # From here on same procedure as input would be matrix.
@@ -120,7 +120,7 @@ makeTAMatrix.lgCMatrix <- function(input){
                           p = input@p,
                           index1 = FALSE,
                           giveCsparse = FALSE,
-                          dim = c(nrow(input), ncol(input)),
+                          dims = c(nrow(input), ncol(input)),
                           dimnames = list(rownames(input), NULL))
   
   # From here on same procedure as input would be matrix.
@@ -192,7 +192,7 @@ makeFIMatrix.itemsets <- function(input, support, dataset){
                           p = input@items@data@p,
                           index1 = FALSE,
                           giveCsparse = FALSE,
-                          dim = c(nrow(input@items@data), ncol(input@items@data)),
+                          dims = c(nrow(input@items@data), ncol(input@items@data)),
                           dimnames = list(input@items@itemInfo$labels, NULL))
   
   # Only select the items (rows) that have at least one occurence
@@ -230,7 +230,7 @@ makeFIMatrix.matrix <- function(input, support, dataset){
   out_mat <- sparseMatrix(i = i,
                           j = j,
                           giveCsparse = FALSE,
-                          dim = c(nrow(input), ncol(input)),
+                          dims = c(nrow(input), ncol(input)),
                           dimnames = list(rownames(input), NULL))
   
   # Determine support 
@@ -257,7 +257,7 @@ makeFIMatrix.ngCMatrix <- function(input, support, dataset){
                           p = input@p,
                           index1 = FALSE,
                           giveCsparse = FALSE,
-                          dim = c(nrow(input), ncol(input)),
+                          dims = c(nrow(input), ncol(input)),
                           dimnames = list(rownames(input), NULL))
   
   # Determine support 
@@ -290,7 +290,7 @@ makeFIMatrix.lgTMatrix <- function(input, support, dataset){
                           j = input@j,
                           index1 = FALSE,
                           giveCsparse = FALSE,
-                          dim = c(nrow(input), ncol(input)),
+                          dims = c(nrow(input), ncol(input)),
                           dimnames = list(rownames(input), NULL))
   # Determine support 
   out_support <- calcsupportFIMatrix(input, support, dataset)
@@ -308,7 +308,7 @@ makeFIMatrix.lgCMatrix <- function(input, support, dataset){
                           p = input@p,
                           index1 = FALSE,
                           giveCsparse = FALSE,
-                          dim = c(nrow(input), ncol(input)),
+                          dims = c(nrow(input), ncol(input)),
                           dimnames = list(rownames(input), NULL))
   # Determine support 
   out_support <- calcsupportFIMatrix(input, support, dataset)

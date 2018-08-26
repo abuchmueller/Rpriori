@@ -14,7 +14,7 @@ Duplicate <- function(mat){
     mat <- sparseMatrix(i = mat@i,
                         j = mat@j,
                         giveCsparse = TRUE,
-                        dim = c(nrow(mat), ncol(mat)),
+                        dims = c(nrow(mat), ncol(mat)),
                         index1 = FALSE,
                         dimnames = list(rownames(mat), NULL))
   }
@@ -23,7 +23,7 @@ Duplicate <- function(mat){
     mat <- sparseMatrix(i = mat@i,
                         p = mat@p,
                         giveCsparse = TRUE,
-                        dim = c(nrow(mat), ncol(mat)),
+                        dims = c(nrow(mat), ncol(mat)),
                         index1 = FALSE,
                         dimnames = list(rownames(mat), NULL))
   }

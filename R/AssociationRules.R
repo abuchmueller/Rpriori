@@ -6,20 +6,20 @@
 #' @name AssociationRules
 #' @export
 #' @param FrequentItems Object of class TIMatrix that contains the frequent itemsets with minimal
-#'   support. The support used to calculate them must be the same as specified in minsupport.
+#'   support. The support used to calculate them must be the same as specified in minsupport. If no
+#'   dataset is provided the frequent Itemsets are calculated based on the Itemsets paramter.
 #' @param Itemsets Object of class TAMatrix that does contain the transactions underlying the rule
 #'   Mining.
 #' @param minconfidence Minimal confidence of the rules.
 #' @param minsupport Minimal support of the rules.
 #' @param maxConsequentLength What should be the maximum length of the consequents of the rules?
-#' @param arefrequent Are the Frequent itemsets provided?
 #' @return list with the rhs and lhs of the rules as sparse incident matrices. Also a vector
 #'   containing the support and confidence of the inidivual rules is provided. The i'th element of
 #'   the vector does represent the rule that is defined by the i'th column of the lhs and rhs
 #'   matrix.
 
-AssociationRules <- function(FrequentItems, Itemsets, minsupport = NULL, minconfidence,
-                             arefrequent = TRUE, maxConsequentLength = 1){
+AssociationRules <- function(FrequentItems, Itemsets, minsupport, minconfidence,
+                             maxConsequentLength = 1){
   
   
   # Check input types of FrequentItems and Itemsets
@@ -33,14 +33,14 @@ AssociationRules <- function(FrequentItems, Itemsets, minsupport = NULL, minconf
   
 
   # If the frequent itemsets are not provided they have to be calculated here.
-  if (! arefrequent){
+  if (missing(FrequentItems)){
     # Calculate the frequent itemsets with minimal support minsupport with the help of the 
     # Project_Apriori function Frequent Itemsets
     FrequentItems <- FindFrequentItemsets(Itemsets, minsupport = minsupport)
   }
   
   # Test whether the input data sets do have minimal support
-  if (arefrequent){
+  if (!missing(FrequentItems)){
     if (any(FrequentItems@support < minsupport)){
       FrequentItems <- FrequentItems[,FrequentItems@support >= minsupport]
     }
