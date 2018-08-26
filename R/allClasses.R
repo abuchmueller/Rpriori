@@ -1,7 +1,7 @@
-#### This file stores all classes (Itemsets, FrequentItems & Rules) ####
-########################################################################
+#### This file stores all classes ####
+######################################
 
-#' An S4 class to represent an itemset as a sparse Matrix
+#' S4 class to represent transactions in a sparse Matrix
 #' @name TAMatrix
 #' @rdname Transactionmatrix-class
 #' @slot data Transaction Matrix in binary sparse representation
@@ -11,7 +11,9 @@ setClass("TAMatrix",
            data  = "ngTMatrix", 
            dim  = "integer",
            items = "character"
-         ),validity = function(object) {
+         ),
+        
+        validity = function(object) {
            
            # There should be a column and row dimension of the data.
            if (length(object@dim) != 2){
@@ -38,7 +40,7 @@ setClass("TAMatrix",
 )
 
 
-#' An S4 class to represent frequent itemsets in a sparse Matrix
+#' S4 class to represent frequent itemsets in a sparse Matrix
 #' @name FIMatrix
 #' @rdname Frequentitems-class
 #' @slot data Frequent Itemset Matrix in sparse representation. Rows are the items and the 
@@ -48,7 +50,9 @@ setClass("TAMatrix",
 setClass("FIMatrix", 
          representation(
            data = "ngTMatrix",
-           support = "numeric"),
+           support = "numeric"
+          ),
+         
          validity = function(object) {
            
            # here validity checking for the FIMatrix class is done.
@@ -68,7 +72,7 @@ setClass("FIMatrix",
 )
 
 
-#' An S4 class to represent association rules and metrics
+#' S4 class to store association rules and relevant quality metrics
 #' @name Rules
 #' @rdname Rules-class  
 #' @slot lhs ngTMatrix describing the lhs of the rules
@@ -93,6 +97,7 @@ setClass("Rules",
            itemsetID = "numeric",
            FrequentItemsets = "FIMatrix"
          ),
+         
          validity = function(object) {
            
            # here validity checking for the rules class is done.
