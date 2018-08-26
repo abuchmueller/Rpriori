@@ -110,3 +110,5 @@ rownames(fr_tr$sets[rowSums(fr_tr$sets) > 0,]) == rownames(FrequentItemsets(groc
 ## Issue: ###
 
 
+
+result <- AssociationRules(Itemsets = Groceries, minsupport = 0.3, minconfidence = 0.4, maxConsequentLength = 10)

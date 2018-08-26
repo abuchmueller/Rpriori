@@ -3,7 +3,7 @@ library()
 debugonce(AssociationRules)
 
 profvis({
-result <- AssociationRules(Itemsets = Groceries, minsupport = 0.01, minconfidence = 0.2,  maxConsequentLength = 2)
+result <- AssociationRules(Itemsets = Groceries, minsupport = 0.01, minconfidence = 0.2,  maxConsequentLength = 1)
 })
 
 print(result)

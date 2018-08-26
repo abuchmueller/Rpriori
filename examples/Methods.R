@@ -22,14 +22,14 @@ frequent_items <- FindFrequentItemsets(Groceries, 0.01)
 
 #Object of 'Rule' class
 Rules <- AssociationRules(Itemsets=Groceries, minsupport = 0.01, 
-                          minconfidence = 0.4, arefrequent = FALSE)
+                          minconfidence = 0.4)
 
 #### from here on you can skip to the methods (line 59) ####
 
 # using a frequent itemset matrix instead of a transaction matrix
 # (faster since it doesn't have to recalculate frequent itemsets again)
 fRules <- AssociationRules(FrequentItems = frequent_items, Itemsets = Groceries, minsupport = 0.03,
-                          minconfidence = 0.4, arefrequent = TRUE)
+                          minconfidence = 0.4)
 
 
 
