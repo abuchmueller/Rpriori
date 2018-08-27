@@ -148,7 +148,7 @@ makeTAMatrix.default <- function(input){
 #' to the columns of the supplied matrix. If no support is provided it has to be recalculated.
 #' @param dataset Either this has to be provided or support. Please provide the initial datasets
 #' based on which the frequent itemsets from input with minimal support where calculated.
-#' @return 
+#' @return Object of class FIMatrix representing the input object.
 #' 
 setGeneric('makeFIMatrix', function(input, support, dataset) UseMethod('makeFIMatrix'))
 

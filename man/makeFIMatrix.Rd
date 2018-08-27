@@ -17,7 +17,7 @@ to the columns of the supplied matrix. If no support is provided it has to be re
 based on which the frequent itemsets from input with minimal support where calculated.}
 }
 \value{
-
+Object of class FIMatrix representing the input object.
 }
 \description{
 Takes a object of class Matrix, ngCMatrix, ngTMatrix, transactions or itemsets  and return a

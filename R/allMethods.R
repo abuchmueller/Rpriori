@@ -2,8 +2,6 @@
 # ------------------- All methods for the classes. ---------------------------- #
 # ----------------------------------------------------------------------------- #
 
-#' @import methods
-#' @include allClasses.R
 
 # ----------------------------------------------------------------------------- #
 # ------------------ All methods for class TAMATRIX --------------------------- #
@@ -18,6 +16,11 @@
 #' @aliases length-TAMatrix length,TAMatrix-method
 #' @return Number of  items within the TAMatrix
 #' @export 
+#' @importFrom grDevices as.raster colorRampPalette
+#' @importFrom graphics layout rasterImage text
+#' @import methods
+#' @include allClasses.R
+
 
 setMethod("length", "TAMatrix", function(x) {
   x@dim[1]
@@ -102,7 +105,15 @@ setMethod("summary", signature(object = "TAMatrix"), function(object) {
   
 })
 
-#distribution of itemset lengths as a histogram
+#' Plot an TAMatrix object.
+#' 
+#' The plot function for TA Matrix does give a histgram of the itemset length.
+#' @name plot-TAMatrix
+#' @rdname plot-TAMatrix
+#' @export  
+#' @param x Object of class TAMatrix
+#' @aliases plot-TAMatrix plot,TAMatrix-method
+#' @return histogram of the length of the itemsets within the TA Matrix.
 setMethod("plot", signature(x = "TAMatrix"), function(x) {
   
   if (length(x) <= 0) {
@@ -897,7 +908,7 @@ setMethod("plot", "Rules", function(x) {
     plot.df <- plot.df[order(plot.df$lift), ]
     
     #main scatterplot 
-    layout(matrix(1:2, ncol = 2), width = c(2, 1), height = c(1, 1))
+    layout(matrix(1:2, ncol = 2), widths = c(2, 1), heights = c(1, 1))
     plot(plot.df$support, 
          plot.df$confidence, 
          xlab = "Support", ylab = "Confidence", 
@@ -1218,15 +1229,14 @@ setMethod("nrow",  signature = signature(x = "Rules"),
 #' An Rules does contain the matrix of itemsets as well as the a vectors that contains the support,
 #' confidence, lift and leverage for all rules.Therefore, both are logically connected and 
 #' when a Rules is subsetted column- wise the other vectors are subsetted as well.
-#' @name subset-Rules
-#' @rdname subset-Rules
+#' @name [
 #' @export  
+#' @aliases Rules
 #' @param x Object of class Rules
 #' @param i Either the rows represented by their row number or a logical vector of length number of 
 #' row of Rules.
 #' @param j Either the columns represented by their columns numbers or logical vector of length 
 #' number of columns in Rules
-#' @aliases subset-Rules subset,Rules-method
 #' @return subsetted Rules object.
 setMethod("[",  signature = signature(x = "Rules"), 
           function(x, i, j) {

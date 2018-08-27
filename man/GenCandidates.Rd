@@ -13,6 +13,7 @@ GenCandidates(L)
 The candidates of length k + 1 as a sparse incident matrix. rownames are kept.
 }
 \description{
-Takes in a incident matrix of transaction, where the rows do describe the potential items
- and each colomn does represent the itemsets.
+Take an sparce, incident matrix with itemsets of length k and generates the candidates of length
+k + 1 based on the apriori Candidate Generation. In the matrix the rows should be the items and 
+the columns should be the itemssets that represent the candidates.
 }
