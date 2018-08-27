@@ -2,16 +2,16 @@
 % Please edit documentation in R/allMethods.R
 \name{confidence}
 \alias{confidence}
-\title{S4 Generic to extract confidence vector from Rules object}
+\title{Extract confidence from object}
 \usage{
 confidence(object)
 }
 \arguments{
-\item{input}{Object of Class Rules}
+\item{object}{Object of Class Rules}
 }
 \value{
-Vector of confidence values from all frequent itemsets
+Vector of confidence values from all entities of the objects.
 }
 \description{
-S4 Generic to extract confidence vector from Rules object
+Extract confidence from object
 }

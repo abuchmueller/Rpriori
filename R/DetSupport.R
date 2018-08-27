@@ -9,7 +9,8 @@
 #' @param Transaction This should be all the transaction from which the occurence (support)
 #'  of the candidate should be checked. It has to be a incident matrix 
 #' with named rows that do represent the different items.
-#' @param Itemsetsize If all candidate
+#' @param same_item_num If all itemsets in cand do have the same number of items one should set this
+#' argument to TRUE. This reduces the run-time of the algorithm.
 #' @return The support of the candidates wihtin the transactions
 #'  as a vector of floating-point value.
 #' @import Matrix

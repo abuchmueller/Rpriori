@@ -2,16 +2,16 @@
 % Please edit documentation in R/allMethods.R
 \name{lift}
 \alias{lift}
-\title{S4 Generic to extract lift vector from Rules object}
+\title{Extract lift from object}
 \usage{
 lift(object)
 }
 \arguments{
-\item{input}{Object of Class Rules}
+\item{object}{Object of Class Rules}
 }
 \value{
-Vector of lift values from all frequent itemsets
+Vector of lift values from all entities of the objects.
 }
 \description{
-S4 Generic to extract lift vector from Rules object
+Extract lift from object
 }

@@ -2,16 +2,16 @@
 % Please edit documentation in R/allMethods.R
 \name{leverage}
 \alias{leverage}
-\title{S4 Generic to extract leverage vector from Rules object}
+\title{Extract leverage from object}
 \usage{
 leverage(object)
 }
 \arguments{
-\item{input}{Object of Class Rules}
+\item{object}{Object of Class Rules}
 }
 \value{
-Vector of leverage values from all frequent itemsets
+Vector of leverage values from all entities of the objects.
 }
 \description{
-S4 Generic to extract leverage vector from Rules object
+Extract leverage from object
 }

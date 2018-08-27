@@ -2,9 +2,11 @@
 ######################################
 
 #' S4 class to represent transactions in a sparse Matrix
-#' @name TAMatrix
-#' @rdname Transactionmatrix-class
+#' @name TAMatrix-class
+#' @rdname TAMatrix-class
 #' @slot data Transaction Matrix in binary sparse representation
+#' @slot dim A vector of size 2 containing the number of rows and the number of columns.
+#' @slot items A vector containing the row names / item names of the items.
 #' @exportClass TAMatrix
 setClass("TAMatrix",
         representation(
@@ -41,8 +43,8 @@ setClass("TAMatrix",
 
 
 #' S4 class to represent frequent itemsets in a sparse Matrix
-#' @name FIMatrix
-#' @rdname Frequentitems-class
+#' @name FIMatrix-class
+#' @rdname FIMatrix-class
 #' @slot data Frequent Itemset Matrix in sparse representation. Rows are the items and the 
 #' columns represent the itemsets.
 #' @slot support Vector containing the support of all Itemsets
@@ -73,7 +75,7 @@ setClass("FIMatrix",
 
 
 #' S4 class to store association rules and relevant quality metrics
-#' @name Rules
+#' @name Rules-class
 #' @rdname Rules-class  
 #' @slot lhs ngTMatrix describing the lhs of the rules
 #' @slot rhs ngTMatrix describing the rhs of the rules
@@ -81,7 +83,7 @@ setClass("FIMatrix",
 #' @slot confidence Confidence of Rules
 #' @slot lift Lift of the rules
 #' @slot leverage Leverage of the rules
-#' @slot ItemsetID This represent a vector of unique identifiers for the different frequent
+#' @slot itemsetID This represent a vector of unique identifiers for the different frequent
 #'  itemsets. Used for internal computation.
 #' @slot FrequentItemsets Internally used FIMatrix containing the frequent itemsets based on which
 #' the rules were created.

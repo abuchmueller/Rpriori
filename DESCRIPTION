@@ -5,7 +5,8 @@ Description: This packages includes a full implementation of the Apriori algorit
 Author: Tim Toebrock <timtoebrock@gmail.com>
 Maintainer: Tim Toebrock<timtoebrock@gmail.com>
 Depends: R (>= 3.4.0)
-Imports: Matrix (>= 1.2)
+Imports: Matrix (>= 1.2),
+        methods
 License: GPL-3
 LazyData: true
 RoxygenNote: 6.1.0
@@ -25,4 +26,4 @@ Collate:
     'GiveUniqueCol.R'
     'allClasses.R'
     'allMethods.R'
-    'allSubsetMethods.R'
+    'data.R'
