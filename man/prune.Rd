@@ -2,23 +2,17 @@
 % Please edit documentation in R/allMethods.R
 \name{prune}
 \alias{prune}
-\title{S4 Generic for pruning FIMatrix, Rules objects}
+\title{Pruning objects by metric.}
 \usage{
 prune(object, ...)
 }
 \arguments{
-\item{input}{Object of class FIMatrix or}
-
-\item{Support}{Minimal support the pruned FIMatrix or Rules should have.}
-
-\item{Confidence}{Minimal confidence the pruned rule should have.}
-
-\item{Lift}{Minimal Lift the pruned rule should have.}
-
-\item{Leverage}{Minimal Leverage the pruned rule should have.}
+\item{object}{Objected to be pruned.}
+}
+\value{
+Pruned object of same class as input.
 }
 \description{
-With this function one can delete all itemsets from an FIMatrix that do not have minimal support
-or confidence and all rules from an Rules object that do not have minimal support, confidence,
-lift or leverage.
+With thes function one can eliminate parts of an object that do not fulfill certain threshholds.
+Currently this function is implemented for the Classes FIMarix and Rules.
 }

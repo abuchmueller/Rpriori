@@ -1,15 +1,21 @@
-#### This file stores generics and methods for our classes ####
-###############################################################
+# ----------------------------------------------------------------------------- #
+# ------------------- All methods for the classes. ---------------------------- #
+# ----------------------------------------------------------------------------- #
 
 #' @include allClasses.R
-#' @import ggplot2
+#' @import methods
+#' 
 
-#### TAMatrix ####
-##################
+
+# ----------------------------------------------------------------------------- #
+# ------------------ All methods for class TAMATRIX --------------------------- #
+# ----------------------------------------------------------------------------- #
+
 
 setMethod("length", "TAMatrix", function(x) {
   x@dim[1]
 })
+
 
 setMethod("print", "TAMatrix", function(x, descending = TRUE) {
   
@@ -18,12 +24,14 @@ setMethod("print", "TAMatrix", function(x, descending = TRUE) {
   
 })
 
+
 setMethod("show", "TAMatrix", function(object) {
   
   n <- length(object)
   cat("Found", n, "items. Use the print() to display\n")
   
 })
+
 
 setMethod("summary", signature(object = "TAMatrix"), function(object) {
   
@@ -74,26 +82,160 @@ setMethod("plot", signature(x = "TAMatrix"), function(x) {
   
 })
 
-#ggplot2 implementation
-setMethod("qplot", signature(x = "TAMatrix"), function(x) {
-  
-  #dataframe needed for ggplot
-  df <- data.frame(itemset_length = colSums(x@data))
-  
-  ggplot(df, aes(df$itemset_length)) + 
-    geom_bar() +
-    labs(title = "Histogram of itemset lengths", x = "Itemset length") +
-    theme(plot.title = element_text(hjust = 0.5))
-  
-})
 
-#### FrequentItems ####
-#######################
+
+
+# #ggplot2 implementation
+# setMethod("qplot", signature(x = "TAMatrix"), function(x) {
+#   
+#   #dataframe needed for ggplot
+#   df <- data.frame(itemset_length = colSums(x@data))
+#   
+#   ggplot(df, aes(df$itemset_length)) + 
+#     geom_bar() +
+#     labs(title = "Histogram of itemset lengths", x = "Itemset length") +
+#     theme(plot.title = element_text(hjust = 0.5))
+#   
+# })
+
+setGeneric("items", function(x) 
+  standardGeneric("items") )
+
+setMethod("items",  signature = signature(x = "TAMatrix"), 
+          function(x){
+            return(rownames(x@data))
+          })
+
+
+setMethod("colSums",  signature = signature(x = "TAMatrix"), 
+          function(x){
+            return(colSums(x@data))
+          })
+
+setMethod("rowSums",  signature = signature(x = "TAMatrix"), 
+          function(x){
+            return(rowSums(x@data))
+          })
+
+setMethod("ncol",  signature = signature(x = "TAMatrix"), 
+          function(x){
+            return(ncol(x@data))
+          })
+
+setMethod("nrow",  signature = signature(x = "TAMatrix"), 
+          function(x){
+            return(nrow(x@data))
+          })
+
+
+
+setMethod("[",  signature = signature(x = "TAMatrix"), 
+          function(x, i, j) {
+            
+            # Make some sanity checks on i, j.
+            if(!missing(i)){
+              if (is.logical(i)){
+                if(length(i) > nrow(x)){
+                  stop(paste('Logical subscript of length', length(i), "too long for TAMatrix with", nrow(x), "rows"))
+                }
+              } else {
+                if (is.numeric(i)){
+                  if (any(! (i %in% 1:nrow(x)))){
+                    stop(paste("Subscript is too long. (", paste(i[!i %in% 1:nrow(x)], collapse = ', '),
+                               ") cannot be subsetted from TAMatrix with ", nrow(x), ' rows', sep = ''))
+                  }
+                }
+              }
+            }
+            
+            if(!missing(j)){
+              if (is.logical(j)){
+                if(length(j) > ncol(x)){
+                  stop(paste('Logical subscript of length', length(j), "too long for TAMatrix with",
+                             ncol(x), "columns"))
+                }
+              } else {
+                if (is.numeric(j)){
+                  if (any(! (j %in% 1:ncol(x)))){
+                    stop(paste("Subscript is too long. (", paste(j[!j %in% 1:ncol(x)], collapse = ', '),
+                               ") cannot be subsetted from TAMatrix with ", ncol(x), ' columns', sep = ''))
+                  }
+                }
+              }
+            }
+            
+            
+            # If i or j are missing, all rows / columns should be selected.
+            if (missing(i)){
+              
+              if (is.logical(j)){
+                j <- which(j)
+              }
+              
+              return(new('TAMatrix',
+                         data = x@data[, j, drop = FALSE],
+                         dim = c(nrow(x@data), length(j)),
+                         items = x@items))
+            }
+            
+            if (missing(j)){
+              
+              if (is.logical(i)){
+                i <- which(i)
+              }
+              
+              return(new('TAMatrix',
+                         data = x@data[i, , drop = FALSE],
+                         dim = c(length(i), ncol(x@data)),
+                         items = x@items[i, drop = FALSE]))
+            }
+            
+            if (missing(i) && missing(j)){
+              return(x)
+            }
+            
+            # If i or j is logical than make it to an integer of the true positions
+            if (is.logical(i)){
+              i <- which(i)
+            }
+            
+            if (is.logical(j)){
+              j <- which(j)
+            }
+            
+            return(new('TAMatrix',
+                       data = x@data[i, j, drop = FALSE],
+                       dim = c(length(i), length(j)),
+                       items = x@items[i, drop = FALSE]))
+          })
+
+# ----------------------------------------------------------------------------- #
+# ------------------ All methods for class FIMatrix --------------------------- #
+# ----------------------------------------------------------------------------- #
+
+#' Determine the number of items in a FIMatrix
+#' 
+#' The length function for the FIMatrix returns the number of frequent items
+#' @name length-FIMatrix
+#' @rdname length-FIMatrix
+#' @param x Object of class FIMatrix
+#' @aliases length-FIMatrix length,FIMatrix-method
+#' @return Number of frequent itemsets within the FIMatrix
+#' @export 
 
 setMethod("length", "FIMatrix", function(x) {
   x@data@Dim[2]
 })
 
+#' Definition of show method for FIMatrix
+#' 
+#' The show function gives the number of frequent itemsets in the FIMatrix
+#' @name show-FIMatrix
+#' @rdname show-FIMatrix
+#' @export  
+#' @param object Object of class FIMatrix
+#' @aliases show-FIMatrix show,FIMatrix-method
+#' @return Short message stating the number of frequent itemsets.
 setMethod("show", "FIMatrix", function(object) {
   
   n <- length(object)
@@ -118,6 +260,16 @@ setMethod("print", signature(x = "FIMatrix"), function(x, descending = TRUE) {
   
 })
 
+#' Summary for FI-matrices.
+#' 
+#' The sumamary function gives general information about the frequent itemsets. 
+#' @name summary-FIMatrix
+#' @rdname summary-FIMatrix
+#' @export  
+#' @param object Object of class FIMatrix
+#' @aliases summary-FIMatrix summary,FIMatrix-method
+#' @return Summary information about the FImatrix
+#' 
 setMethod("summary", signature(object = "FIMatrix"), function(object) {
   
   n <- length(object)
@@ -177,7 +329,18 @@ setMethod("summary", signature(object = "FIMatrix"), function(object) {
   
 })
 
-#Plot itemsets against support
+
+#' Plot an FI-matrices.
+#' 
+#' The plot function gives a scatter plot with the support on the y-axis and the itemset-length on
+#' the x-axis
+#' @name plot-FIMatrix
+#' @rdname plot-FIMatrix
+#' @export  
+#' @param object Object of class FIMatrix
+#' @aliases plot-FIMatrix plot,FIMatrix-method
+#' @return Scatter plot of Itemsize vs support.
+#' 
 setMethod("plot", signature(x = "FIMatrix"), function(x, pch = 1, col = "red") {
   
   if (length(x) <= 0) {
@@ -190,32 +353,42 @@ setMethod("plot", signature(x = "FIMatrix"), function(x, pch = 1, col = "red") {
   
 })
 
+
 ##ggplot2 implementation
-setMethod("qplot", signature(x = "FIMatrix"), function(x, col = "red", alpha = 0.1, type = c("hist", "scatter")) {
-  
-  if (missing(type)) {
-    stop("type missing: Please supply a type by specifiying either 'scatter' or 'hist'")
-  }
-  
-  #set up data frame for ggplot
-  df <- data.frame(data = colSums(x@data), support = x@support)
-  
-  if (type == "scatter") {
+# setMethod("qplot", signature(x = "FIMatrix"), function(x, col = "red", alpha = 0.1, type = c("hist", "scatter")) {
+#   
+#   if (missing(type)) {
+#     stop("type missing: Please supply a type by specifiying either 'scatter' or 'hist'")
+#   }
+#   
+#   #set up data frame for ggplot
+#   df <- data.frame(data = colSums(x@data), support = x@support)
+#   
+#   if (type == "scatter") {
+# 
+#     ggplot(df, aes(data, support)) + 
+#       geom_point(col = col, alpha = alpha) +
+#       labs(x = "Itemset length", y = "support")
+#   } else {
+#     
+#     ggplot(df, aes(df$data)) + 
+#       geom_bar() +
+#       labs(title = "Histogram of itemset lengths", x = "Itemset length") +
+#       theme(plot.title = element_text(hjust = 0.5))
+#   }
+#   
+# })
 
-    ggplot(df, aes(data, support)) + 
-      geom_point(col = col, alpha = alpha) +
-      labs(x = "Itemset length", y = "support")
-  } else {
-    
-    ggplot(df, aes(df$data)) + 
-      geom_bar() +
-      labs(title = "Histogram of itemset lengths", x = "Itemset length") +
-      theme(plot.title = element_text(hjust = 0.5))
-  }
-  
-})
-
-#Histrogram of itemset frequency
+#' Plot an Histogram of itemset length for an FI-matrices.
+#' 
+#' The hist function gives a histogram of the lengths of the itemsets.
+#' @name hist-FIMatrix
+#' @rdname hist-FIMatrix
+#' @export  
+#' @param object Object of class FIMatrix
+#' @aliases hist-FIMatrix hist,FIMatrix-method
+#' @return Histogram of Itemsize in FIMatrix.
+#' 
 setMethod("hist", "FIMatrix", function(x) {
   
   if (length(x) <= 0) {
@@ -228,35 +401,56 @@ setMethod("hist", "FIMatrix", function(x) {
   }
 })
 
+#' Extracing the support of objects
+#' 
+#' Returns the support of the input objects
+#' @name support
+#' @rdname support
+#' @export  
+#' @param support Object to extract the support from
+#' @return A numeric vector containing the support values.
 setGeneric("support", function(object) {
   standardGeneric("support")
 })
 
+#' Extract the support of itemsets in class FIMatrix
+#' @name support-FIMatrix
+#' @rdname support-FIMatrix
+#' @export  
+#' @param object Object of class FIMatrix
+#' @aliases support-FIMatrix support,FIMatrix-method
+#' @return A numeric vector containing the support values of the itemsets in the FIMatrix.
+#' 
 setMethod("support", "FIMatrix", function(object) {
   return(object@support)
 })
 
 
-#### Prune generic / methods ####
-
-#' S4 Generic for pruning FIMatrix, Rules objects
+#' Pruning objects by metric.
 #' 
-#' With this function one can delete all itemsets from an FIMatrix that do not have minimal support
-#' or confidence and all rules from an Rules object that do not have minimal support, confidence,
-#' lift or leverage.
+#' With thes function one can eliminate parts of an object that do not fulfill certain threshholds.
+#' Currently this function is implemented for the Classes FIMarix and Rules.
 #' @name prune
 #' @rdname prune
 #' @export  
-#' @param input Object of class FIMatrix or 
-#' @param Support Minimal support the pruned FIMatrix or Rules should have.
-#' @param Confidence Minimal confidence the pruned rule should have.
-#' @param Lift Minimal Lift the pruned rule should have.
-#' @param Leverage Minimal Leverage the pruned rule should have.
-
+#' @param object Objected to be pruned.
+#' @return Pruned object of same class as input.
 setGeneric("prune", function(object, ...) {
   standardGeneric("prune")
 })
 
+
+#' Prune method for objects of class FIMatrix
+#' 
+#' With this function one can delete all itemsets from an FIMatrix that do not have minimal support.
+#' @name prune-FIMatrix
+#' @rdname prune-FIMatrix
+#' @export  
+#' @param object Object of class FIMatrix
+#' @aliases prune-FIMatrix prune,FIMatrix-method
+#' @param Support Minimal support the pruned FIMatrix or Rules should have.
+#' @return Pruned object of class FIMatrix
+#' 
 setMethod("prune", "FIMatrix", function(object, Support) {
   
   # Error checking
@@ -279,8 +473,120 @@ setMethod("prune", "FIMatrix", function(object, Support) {
   }
 })
 
-#### Rules ####
-###############
+
+setMethod("items",  signature = signature(x = "FIMatrix"), 
+          function(x){
+            return(rownames(x@data))
+          })
+
+setMethod("colSums",  signature = signature(x = "FIMatrix"), 
+          function(x){
+            return(colSums(x@data))
+          })
+
+setMethod("rowSums",  signature = signature(x = "FIMatrix"), 
+          function(x){
+            return(rowSums(x@data))
+          })
+
+setMethod("colSums",  signature = signature(x = "FIMatrix"), 
+          function(x){
+            return(colSums(x@data))
+          })
+
+setMethod("ncol",  signature = signature(x = "FIMatrix"), 
+          function(x){
+            return(ncol(x@data))
+          })
+
+setMethod("nrow",  signature = signature(x = "FIMatrix"), 
+          function(x){
+            return(nrow(x@data))
+          })
+
+
+
+setMethod("[",  signature = signature(x = "FIMatrix"), 
+          function(x, i, j) {
+            
+            # Make some sanity checks on i, j.
+            if(!missing(i)){
+              if (is.logical(i)){
+                if(length(i) > nrow(x)){
+                  stop(paste('Logical subscript of length', length(i), "too long for FIMatrix with", nrow(x), "rows"))
+                }
+              } else {
+                if (is.numeric(i)){
+                  if (any(! (i %in% 1:nrow(x)))){
+                    stop(paste("Subscript is too long. (", paste(i[!i %in% 1:nrow(x)], collapse = ', '),
+                               ") cannot be subsetted from FIMatrix with ", nrow(x), ' rows', sep = ''))
+                  }
+                }
+              }
+            }
+            
+            if(!missing(j)){
+              if (is.logical(j)){
+                if(length(j) > ncol(x)){
+                  stop(paste('Logical subscript of length', length(j), "too long for FIMatrix with",
+                             ncol(x), "columns"))
+                }
+              } else {
+                if (is.numeric(j)){
+                  if (any(! (j %in% 1:ncol(x)))){
+                    stop(paste("Subscript is too long. (", paste(j[!j %in% 1:ncol(x)], collapse = ', '),
+                               ") cannot be subsetted from FIMatrix with ", ncol(x), ' columns', sep = ''))
+                  }
+                }
+              }
+            }
+            
+            # If the matrix does not have row or columns return an empty matrix
+            if (nrow(x@data) == 0 || ncol(x@data) == 0){
+              return(new('FIMatrix',
+                         data = x@data[0, 0, drop = FALSE],
+                         support = x@support[0, drop = FALSE]))
+            }
+            
+            # If i is missing use all rows of the input 
+            if (missing(i)){
+              i <- 1:nrow(x@data)
+            }
+            
+            # If j is missing use all columns of the input 
+            if (missing(j)){
+              j <- 1:ncol(x@data)
+            }
+            
+            # if i, j is logical replace it by the positions of the true values
+            if (is.logical(i)){
+              i <- which(i)
+              i <- as.numeric(i)
+            }
+            
+            if (is.logical(j)){
+              j <- which(j)
+              j <- as.numeric(j)
+            }
+            
+            if (length(i) == 0 || length(j) == 0){
+              return(new('FIMatrix',
+                         data = x@data[0, 0, drop = FALSE],
+                         support = x@support[0, drop = FALSE]))
+            }
+            
+            
+            return(new('FIMatrix',
+                       data = x@data[i, j, drop = FALSE],
+                       support = x@support[j, drop = FALSE]))
+            
+          })
+
+
+
+# ----------------------------------------------------------------------------- #
+# -------------------- All methods for class Rules ---------------------------- #
+# ----------------------------------------------------------------------------- #
 
 setMethod("length", "Rules", function(x) {
   x@lhs@Dim[2]
@@ -374,19 +680,19 @@ setMethod("plot", "Rules", function(x) {
 
 })
 
-#ggplot2 implementation
-setMethod("qplot", "Rules", function(x) {
-  
-  quality.df <- data.frame(support = x@support, 
-                           confidence = x@confidence,
-                           lift = x@lift,
-                           leverage = x@leverage)
-  
-  ggplot(quality.df, aes(x=support, y=confidence, color=lift)) + 
-    geom_point() + 
-    scale_color_gradient(low="lightblue", high="blue")
-  
-})
+# #ggplot2 implementation
+# setMethod("qplot", "Rules", function(x) {
+#   
+#   quality.df <- data.frame(support = x@support, 
+#                            confidence = x@confidence,
+#                            lift = x@lift,
+#                            leverage = x@leverage)
+#   
+#   ggplot(quality.df, aes(x=support, y=confidence, color=lift)) + 
+#     geom_point() + 
+#     scale_color_gradient(low="lightblue", high="blue")
+#   
+# })
 
 
 #' S4 Generic to extract confidence vector from Rules object
@@ -452,6 +758,23 @@ setGeneric("extract", valueClass = "FIMatrix", function(object) {
 setMethod("extract", "Rules", function(object) {
   object@FrequentItemsets
 })
+
+#' Prune method for objects of class Rules
+#' 
+#' With this function one can delete all itemsets from an Rules that do not have minimal support,
+#' confidence lift or leverage.
+#' @name prune-Rules
+#' @rdname prune-Rules
+#' @export  
+#' @aliases prune-Rules prune,Rules-method
+#' @param object Object of class Rules
+#' @param Support Minimal support the output rules should have.
+#' @param Confidence Minimal confidence the output rules should have.
+#' @param Lift Minimal Lift the output rules should have.
+#' @param Leverage Minimal Leverage the output rules should have.
+#' @param inv_Lift Pruning based on minimal or maximal lift?
+#' @param inv_Leverage Pruning based on minimal or maximal leverage?
+#' @return Pruned object of class Rules
 
 setMethod("prune", "Rules", function(object, Support, Confidence, Lift, Leverage,
                                      inv_Lift = FALSE, inv_lev = FALSE) {
@@ -521,6 +844,131 @@ setMethod("prune", "Rules", function(object, Support, Confidence, Lift, Leverage
   return(res)
 })
 
+
+setMethod("rowSums",  signature = signature(x = "Rules"), 
+          function(x, lhs = TRUE){
+            if (lhs){
+              return(rowSums(x@lhs))
+            } else {
+              return(rowSums(x@rhs))
+            }
+          })
+
+setMethod("colSums",  signature = signature(x = "Rules"), 
+          function(x, lhs = TRUE){
+            if (lhs){
+              return(colSums(x@lhs))
+            } else {
+              return(colSums(x@rhs))
+            }
+          })
+
+setMethod("items",  signature = signature(x = "Rules"), 
+          function(x){
+            return(rownames(x@lhs))
+          })
+
+setMethod("ncol",  signature = signature(x = "Rules"), 
+          function(x){
+            return(ncol(x@lhs))
+          })
+
+setMethod("nrow",  signature = signature(x = "Rules"), 
+          function(x){
+            return(nrow(x@lhs))
+          })
+
+setMethod("[",  signature = signature(x = "Rules"), 
+          function(x, i, j) {
+            
+            # Make some sanity checks on i, j.
+            if(!missing(i)){
+              if (is.logical(i)){
+                if(length(i) > nrow(x)){
+                  stop(paste('Logical subscript of length', length(i), "too long for Rules with", nrow(x), "rows"))
+                }
+              } else {
+                if (is.numeric(i)){
+                  if (any(! (i %in% 1:nrow(x)))){
+                    stop(paste("Subscript is too long. (", paste(i[!i %in% 1:nrow(x)], collapse = ', '),
+                               ") cannot be subsetted from Rules with ", nrow(x), ' rows', sep = ''))
+                  }
+                }
+              }
+            }
+            
+            if(!missing(j)){
+              if (is.logical(j)){
+                if(length(j) > ncol(x)){
+                  stop(paste('Logical subscript of length', length(j), "too long for Rules with",
+                             ncol(x), "columns"))
+                }
+              } else {
+                if (is.numeric(j)){
+                  if (any(! (j %in% 1:ncol(x)))){
+                    stop(paste("Subscript is too long. (", paste(j[!j %in% 1:ncol(x)], collapse = ', '),
+                               ") cannot be subsetted from Rules with ", ncol(x), ' columns', sep = ''))
+                  }
+                }
+              }
+            }
+            
+            # If the matrix does not have row or columns return an empty matrix
+            if (nrow(x@lhs) == 0 || ncol(x@lhs) == 0 || nrow(x@rhs) == 0 || ncol(x@rhs) == 0){
+              return(new('Rules',
+                         lhs = x@lhs[0,0,drop = FALSE],
+                         rhs = x@rhs[0,0,drop = FALSE],
+                         support = x@support[0, drop = FALSE],
+                         confidence = x@confidence[0, drop = FALSE],
+                         lift = x@lift[0, drop = FALSE],
+                         leverage = x@leverage[0, drop = FALSE],
+                         itemsetID = x@itemsetID[0, drop = FALSE],
+                         FrequentItemsets = x@FrequentItemsets))
+            }
+            
+            # If i is missing use all rows of the input 
+            if (missing(i)){
+              i <- 1:nrow(x@lhs)
+            }
+            
+            # If j is missing use all columns of the input 
+            if (missing(j)){
+              j <- 1:ncol(x@lhs)
+            }
+            
+            # if i, j is logical replace it by the positions of the true values
+            if (is.logical(i)){
+              i <- which(i)
+              i <- as.numeric(i)
+            }
+            
+            if (is.logical(j)){
+              j <- which(j)
+              j <- as.numeric(j)
+            }
+            
+            if (length(i) == 0 || length(j) == 0){
+              return(new('Rules',
+                         lhs = x@lhs[0,0,drop = FALSE],
+                         rhs = x@rhs[0,0,drop = FALSE],
+                         support = x@support[0, drop = FALSE],
+                         confidence = x@confidence[0, drop = FALSE],
+                         lift = x@lift[0, drop = FALSE],
+                         leverage = x@leverage[0, drop = FALSE],
+                         itemsetID = x@itemsetID[0, drop = FALSE],
+                         FrequentItemsets = x@FrequentItemsets))
+            }
+            return(new('Rules',
+                       lhs = x@lhs[i,j,drop = FALSE],
+                       rhs = x@rhs[i,j,drop = FALSE],
+                       support = x@support[j, drop = FALSE],
+                       confidence = x@confidence[j, drop = FALSE],
+                       lift = x@lift[j, drop = FALSE],
+                       leverage = x@leverage[j, drop = FALSE],
+                       itemsetID = x@itemsetID[j, drop = FALSE],
+                       FrequentItemsets = x@FrequentItemsets)) 
+            
+          })
 
 
 

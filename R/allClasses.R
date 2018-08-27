@@ -2,8 +2,8 @@
 ######################################
 
 #' S4 class to represent transactions in a sparse Matrix
-#' @name TAMatrix
-#' @rdname Transactionmatrix-class
+#' @name TAMatrix-class
+#' @rdname TAMatrix-class
 #' @slot data Transaction Matrix in binary sparse representation
 #' @exportClass TAMatrix
 setClass("TAMatrix",
@@ -41,8 +41,8 @@ setClass("TAMatrix",
 
 
 #' S4 class to represent frequent itemsets in a sparse Matrix
-#' @name FIMatrix
-#' @rdname Frequentitems-class
+#' @name FIMatrix-class
+#' @rdname FIMatrix-class
 #' @slot data Frequent Itemset Matrix in sparse representation. Rows are the items and the 
 #' columns represent the itemsets.
 #' @slot support Vector containing the support of all Itemsets
@@ -73,7 +73,7 @@ setClass("FIMatrix",
 
 
 #' S4 class to store association rules and relevant quality metrics
-#' @name Rules
+#' @name Rules-class
 #' @rdname Rules-class  
 #' @slot lhs ngTMatrix describing the lhs of the rules
 #' @slot rhs ngTMatrix describing the rhs of the rules
