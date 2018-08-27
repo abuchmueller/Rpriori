@@ -10,6 +10,10 @@
 }
 \arguments{
 \item{x}{Object of class FIMatrix}
+
+\item{pch}{Size of points that is given to plot function.}
+
+\item{col}{colour that is given to plot function.}
 }
 \value{
 Scatter plot of Itemsize vs support.

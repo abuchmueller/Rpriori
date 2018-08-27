@@ -22,7 +22,7 @@
 
 \item{inv_Lift}{Pruning based on minimal or maximal lift?}
 
-\item{inv_Leverage}{Pruning based on minimal or maximal leverage?}
+\item{inv_lev}{Pruning based on minimal or maximal leverage?}
 }
 \value{
 Pruned object of class Rules

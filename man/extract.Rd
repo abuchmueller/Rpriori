@@ -2,16 +2,16 @@
 % Please edit documentation in R/allMethods.R
 \name{extract}
 \alias{extract}
-\title{S4 Generic to extract frequent itemsets vector from Rules object}
+\title{Extract FIMatrix object from class}
 \usage{
 extract(object)
 }
 \arguments{
-\item{input}{Object of Class Rules}
+\item{object}{Object of Class Rules}
 }
 \value{
 Object of Class FIMatrix
 }
 \description{
-S4 Generic to extract frequent itemsets vector from Rules object
+Extract FIMatrix object from class
 }

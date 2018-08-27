@@ -8,6 +8,8 @@ prune(object, ...)
 }
 \arguments{
 \item{object}{Objected to be pruned.}
+
+\item{...}{metrics to prune by}
 }
 \value{
 Pruned object of same class as input.

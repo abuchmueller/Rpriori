@@ -15,5 +15,5 @@
 Short message stating the number of frequent itemsets.
 }
 \description{
-The show function gives the number of frequent itemsets in the FIMatrix
+The show function prints out the number of frequent itemsets in the FIMatrix
 }

@@ -18,7 +18,7 @@ row of FIMAtrix.}
 number of columns in FIMatrix}
 }
 \value{
-number of rows / items in the FIMatrix
+subsetted FIMatrix
 }
 \description{
 An FImatrix does contain the matrix of itemsets as well as the a vector that contains the support
