@@ -337,7 +337,7 @@ setMethod("summary", signature(object = "FIMatrix"), function(object) {
 #' @name plot-FIMatrix
 #' @rdname plot-FIMatrix
 #' @export  
-#' @param object Object of class FIMatrix
+#' @param x Object of class FIMatrix
 #' @aliases plot-FIMatrix plot,FIMatrix-method
 #' @return Scatter plot of Itemsize vs support.
 #' 
@@ -385,7 +385,7 @@ setMethod("plot", signature(x = "FIMatrix"), function(x, pch = 1, col = "red") {
 #' @name hist-FIMatrix
 #' @rdname hist-FIMatrix
 #' @export  
-#' @param object Object of class FIMatrix
+#' @param x Object of class FIMatrix
 #' @aliases hist-FIMatrix hist,FIMatrix-method
 #' @return Histogram of Itemsize in FIMatrix.
 #' 
@@ -407,7 +407,7 @@ setMethod("hist", "FIMatrix", function(x) {
 #' @name support
 #' @rdname support
 #' @export  
-#' @param support Object to extract the support from
+#' @param object Object to extract the support from
 #' @return A numeric vector containing the support values.
 setGeneric("support", function(object) {
   standardGeneric("support")
@@ -473,32 +473,76 @@ setMethod("prune", "FIMatrix", function(object, Support) {
   }
 })
 
-
+#' Export the item names for a FIMatrix.
+#' @name items-FIMatrix
+#' @rdname items-FIMatrix
+#' @export  
+#' @param x Object of class FIMatrix
+#' @aliases items-FIMatrix items,FIMatrix-method
+#' @return Names of all items in FIMatrix.
+#' 
 setMethod("items",  signature = signature(x = "FIMatrix"), 
           function(x){
             return(rownames(x@data))
           })
 
+#' Give the colSums for the underlying matrix within an FIMatrix.
+#' 
+#' In the matrix underlying the FIMatrix the rows represent the items and the columns to represent 
+#' the itemsets. Here the sums of all columns should be calculated that are the number of items
+#' for each itesmet.
+#' @name colSums-FIMatrix
+#' @rdname colSums-FIMatrix
+#' @export  
+#' @param x Object of class FIMatrix
+#' @aliases colSums-FIMatrix colSums,FIMatrix-method
+#' @return numeric vector containing the sum of each column of the FIMatrix
+#' 
 setMethod("colSums",  signature = signature(x = "FIMatrix"), 
           function(x){
             return(colSums(x@data))
           })
 
+#' Give the row Sums for the underlying matrix within an FIMatrix.
+#' 
+#' In the matrix underlying the FIMatrix the rows represent the items and the columns to represent 
+#' the itemsets. Here the sums of each row should be calculated that are the number of occurences
+#' of each item.
+#' @name rowSums-FIMatrix
+#' @rdname rowSums-FIMatrix
+#' @export  
+#' @param x Object of class FIMatrix
+#' @aliases rowSums-FIMatrix rowSums,FIMatrix-method
+#' @return numeric vector containing the sum of each row of the FIMatrix
+#' 
 setMethod("rowSums",  signature = signature(x = "FIMatrix"), 
           function(x){
             return(rowSums(x@data))
           })
 
-setMethod("colSums",  signature = signature(x = "FIMatrix"), 
-          function(x){
-            return(colSums(x@data))
-          })
-
+#' Give the number of columns of underlying matrix in an FIMatrix. 
+#' 
+#' This number does represent the number of itemsets within that FIMatrix
+#' @name ncol-FIMatrix
+#' @rdname ncol-FIMatrix
+#' @export  
+#' @param x Object of class FIMatrix
+#' @aliases ncol-FIMatrix ncol,FIMatrix-method
+#' @return number of columns / itemsets in the FIMatrix
+#' 
 setMethod("ncol",  signature = signature(x = "FIMatrix"), 
           function(x){
             return(ncol(x@data))
           })
-
+#' Give the number of rows of underlying matrix in an FIMatrix. 
+#' 
+#' This number does represent the number of items within that FIMatrix
+#' @name nrow-FIMatrix
+#' @rdname nrow-FIMatrix
+#' @export  
+#' @param x Object of class FIMatrix
+#' @aliases nrow-FIMatrix nrow,FIMatrix-method
+#' @return number of rows / items in the FIMatrix
 setMethod("nrow",  signature = signature(x = "FIMatrix"), 
           function(x){
             return(nrow(x@data))
@@ -506,6 +550,21 @@ setMethod("nrow",  signature = signature(x = "FIMatrix"),
 
 
 
+#' Subsetting of an FIMatrix
+#' 
+#' An FImatrix does contain the matrix of itemsets as well as the a vector that contains the support
+#' for each itemset. Therefore, both are logically connected and when a FIMatrix is subsetted column-
+#' wise the supported vector is subsetted as well.
+#' @name subset-FIMatrix
+#' @rdname subset-FIMatrix
+#' @export  
+#' @param x Object of class FIMatrix
+#' @param i Either the rows represented by their row number or a logical vector of length number of 
+#' row of FIMAtrix.
+#' @param j Either the columns represented by their columns numbers or logical vector of length 
+#' number of columns in FIMatrix
+#' @aliases subset-FIMatrix subset,FIMatrix-method
+#' @return number of rows / items in the FIMatrix
 setMethod("[",  signature = signature(x = "FIMatrix"), 
           function(x, i, j) {
             

@@ -8,6 +8,10 @@
 #' here.
 #' @param maxNumConsequent The maximum length of consequents that the rules of the ouput should 
 #' have. In Default all rules are shown.
+#' @param order_by Specifiy up to four metrics out of support, confidence, lift, leverage by which
+#' the given rules should be sorted. The first one used first and son on. 
+#' @param decreasing Should the rules start with the smallest or highest values of the specified
+#' metrics?
 #' @return The rules from the left hand and right hand side in the form of {It1, ... ItN} -> {ITK} 
 #' in a data.frame. This data.frame does have columns lhs, rhs, unnamed, support and confidence.
 
@@ -70,7 +74,7 @@ ExtractRules <- function(rules, maxNumConsequent = NULL, order_by = NULL, decrea
     order_by <- order_by[order_by %in% c('support', 'confidence', 'lift', 'leverage')]
     
     # If there are any order_by left then order by these columns
-    if (length(oder_by) != 0){
+    if (length(order_by) != 0){
       
       # Find the positions of the columns to order by 
       order_by <- unlist(lapply(order_by, function(x) {

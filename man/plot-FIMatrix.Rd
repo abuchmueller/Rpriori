@@ -9,7 +9,7 @@
 \S4method{plot}{FIMatrix}(x, pch = 1, col = "red")
 }
 \arguments{
-\item{object}{Object of class FIMatrix}
+\item{x}{Object of class FIMatrix}
 }
 \value{
 Scatter plot of Itemsize vs support.

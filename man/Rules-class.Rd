@@ -22,7 +22,7 @@ S4 class to store association rules and relevant quality metrics
 
 \item{\code{leverage}}{Leverage of the rules}
 
-\item{\code{ItemsetID}}{This represent a vector of unique identifiers for the different frequent
+\item{\code{itemsetID}}{This represent a vector of unique identifiers for the different frequent
 itemsets. Used for internal computation.}
 
 \item{\code{FrequentItemsets}}{Internally used FIMatrix containing the frequent itemsets based on which

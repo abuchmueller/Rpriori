@@ -9,7 +9,7 @@
 \S4method{hist}{FIMatrix}(x)
 }
 \arguments{
-\item{object}{Object of class FIMatrix}
+\item{x}{Object of class FIMatrix}
 }
 \value{
 Histogram of Itemsize in FIMatrix.

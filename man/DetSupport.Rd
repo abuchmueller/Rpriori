@@ -17,7 +17,8 @@ Also it has to have rownames that are a subset of the rownames of Transaction.}
  of the candidate should be checked. It has to be a incident matrix 
 with named rows that do represent the different items.}
 
-\item{Itemsetsize}{If all candidate}
+\item{same_item_num}{If all itemsets in cand do have the same number of items one should set this
+argument to TRUE. This reduces the run-time of the algorithm.}
 }
 \value{
 The support of the candidates wihtin the transactions

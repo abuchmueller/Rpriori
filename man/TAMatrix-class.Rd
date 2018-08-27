@@ -11,5 +11,9 @@ S4 class to represent transactions in a sparse Matrix
 
 \describe{
 \item{\code{data}}{Transaction Matrix in binary sparse representation}
+
+\item{\code{dim}}{A vector of size 2 containing the number of rows and the number of columns.}
+
+\item{\code{items}}{A vector containing the row names / item names of the items.}
 }}
 

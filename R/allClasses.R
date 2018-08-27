@@ -5,6 +5,8 @@
 #' @name TAMatrix-class
 #' @rdname TAMatrix-class
 #' @slot data Transaction Matrix in binary sparse representation
+#' @slot dim A vector of size 2 containing the number of rows and the number of columns.
+#' @slot items A vector containing the row names / item names of the items.
 #' @exportClass TAMatrix
 setClass("TAMatrix",
         representation(
@@ -81,7 +83,7 @@ setClass("FIMatrix",
 #' @slot confidence Confidence of Rules
 #' @slot lift Lift of the rules
 #' @slot leverage Leverage of the rules
-#' @slot ItemsetID This represent a vector of unique identifiers for the different frequent
+#' @slot itemsetID This represent a vector of unique identifiers for the different frequent
 #'  itemsets. Used for internal computation.
 #' @slot FrequentItemsets Internally used FIMatrix containing the frequent itemsets based on which
 #' the rules were created.

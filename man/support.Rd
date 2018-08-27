@@ -7,7 +7,7 @@
 support(object)
 }
 \arguments{
-\item{support}{Object to extract the support from}
+\item{object}{Object to extract the support from}
 }
 \value{
 A numeric vector containing the support values.

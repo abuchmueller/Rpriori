@@ -13,6 +13,12 @@ here.}
 
 \item{maxNumConsequent}{The maximum length of consequents that the rules of the ouput should 
 have. In Default all rules are shown.}
+
+\item{order_by}{Specifiy up to four metrics out of support, confidence, lift, leverage by which
+the given rules should be sorted. The first one used first and son on.}
+
+\item{decreasing}{Should the rules start with the smallest or highest values of the specified
+metrics?}
 }
 \value{
 The rules from the left hand and right hand side in the form of {It1, ... ItN} -> {ITK} 
