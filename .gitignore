@@ -1,7 +1,6 @@
 .Rhistory
-.Rproj.user/*
 .RData
+.Rproj.user
 src/*
 !src/ptree.c
-.Rproj.user
 .DS_Store
