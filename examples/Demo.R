@@ -1,5 +1,5 @@
 ##### This file contains a demonstration of how   #####
-##### our package works. If ProjectApriori is     #####
+##### our package works. If Rpriori is            #####
 ##### properly installed this should run top to   #####
 ##### bottom without giving any errors however if #####
 ##### you wish, you can create the objects (run   #####
@@ -18,7 +18,7 @@ data("Groceries")
 TAM <- makeTAMatrix(Groceries)
 
 #Sparse matrix of frequent itemsets + support vector containing support for each itemset
-frequent_items <- FindFrequentItemsets(Groceries, 0.01)
+Frequent <- FindFrequentItemsets(Groceries, 0.01)
 
 #Object of 'Rule' class
 Rules <- AssociationRules(Groceries, minsupport = 0.01) 
@@ -27,13 +27,13 @@ Rules <- AssociationRules(Groceries, minsupport = 0.01)
 
 # using a frequent itemset matrix instead of a transaction matrix
 # (faster since it doesn't have to recalculate frequent itemsets again)
-fRules <- AssociationRules(FrequentItems = frequent_items, Itemsets = Groceries, minsupport = 0.03,
+fRules <- AssociationRules(Groceries, Frequent, minsupport = 0.03,
                           minconfidence = 0.4)
 
 
 
 #for comparison
-aRules <- apriori(Groceries, parameter = list(supp = 0.01, conf = 0.4));inspect(aRules)
+aRules <- apriori(Groceries, parameter = list(supp = 0.03, conf = 0.4));inspect(aRules)
 
 
 #Check if classes are implemented correct
@@ -42,13 +42,13 @@ class(frequent_items)
 class(Rules)
 
 ## check if we have methods listed for following classes: 
-#  TAMatrix [our Transactionmatrix class], FIMatrix [our Frequent Itemset class], Rules [our Rules class]
+#  TAMatrix [our Transactionmatrix class], FIMatrix [our frequent itemmatrix class], Rules [our Rules class]
 showMethods("length")
 showMethods("show")
 showMethods("print")
 showMethods("summary")
 showMethods("plot")
-showMethods("hist") # (only for FIMatrix)
+showMethods("hist") # (only FIMatrix)
 
 ## or check by class name directly
 showMethods(class = "TAMatrix")
