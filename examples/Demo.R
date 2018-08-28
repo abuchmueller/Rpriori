@@ -21,7 +21,7 @@ TAM <- makeTAMatrix(Groceries)
 frequent_items <- FindFrequentItemsets(Groceries, 0.01)
 
 #Object of 'Rule' class
-Rules <- AssociationRules(Itemsets=Groceries, minsupport = 0.01, minconfidence = 0) 
+Rules <- AssociationRules(Groceries, minsupport = 0.01) 
 
 #### from here on you can skip to the methods (line 59) ####
 

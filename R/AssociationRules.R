@@ -5,7 +5,7 @@
 #' FrequentItems and set the paramter arefrequent to TRUE (default).
 #' @name AssociationRules
 #' @export
-#' @param FrequentItems Object of class TIMatrix that contains the frequent itemsets with minimal
+#' @param FrequentItems Object of class FIMatrix that contains the frequent itemsets with minimal
 #'   support. The support used to calculate them must be the same as specified in minsupport. If no
 #'   dataset is provided the frequent Itemsets are calculated based on the Itemsets paramter.
 #' @param Itemsets Object of class TAMatrix that does contain the transactions underlying the rule
@@ -18,7 +18,7 @@
 #'   the vector does represent the rule that is defined by the i'th column of the lhs and rhs
 #'   matrix.
 
-AssociationRules <- function(FrequentItems, Itemsets, minsupport, minconfidence,
+AssociationRules <- function(Itemsets, FrequentItems, minsupport, minconfidence = 0,
                              maxConsequentLength = 1){
   
   
