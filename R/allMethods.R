@@ -17,7 +17,7 @@
 #' @return Number of  items within the TAMatrix
 #' @export 
 #' @importFrom grDevices as.raster colorRampPalette
-#' @importFrom graphics layout rasterImage text
+#' @importFrom graphics layout rasterImage text axis
 #' @import methods
 #' @include allClasses.R
 
@@ -234,22 +234,34 @@ setMethod("nrow",  signature = signature(x = "TAMatrix"),
             return(nrow(x@data))
           })
 
+#' Subsetting  of TAMatrix, FIMatrix and Rules class. 
+#' @name select
+#' @rdname select
+#' @export  
+#' @param x Object to subset
+#' @param i Either rows represented by their row number or logical vector of length
+#' number of rows
+#' @param j Either columns represented by their column number or logical vector of length
+#' number of columns
+#' @return A character vector containing the names of the items
+setGeneric("select", function(x, i,j) 
+  standardGeneric("select") )
 
 #' Subsetting of an TAMatrix
 #' 
 #' An TAMatrix does contain the matrix of all transactions as well as the dimensions of that 
 #' matrix and the names of all items. Therefore, all these parts are logically connected and have
 #' to be changed when the matrix is subsetted. 
-#' @name subset-TAMatrix
-#' @rdname subset-TAMatrix
+#' @name select-TAMatrix
+#' @rdname select-TAMatrix
 #' @param x Object of class TAMatrix
 #' @param i Either the rows represented by their row number or a logical vector of length number of 
 #' row of TAMatrix.
 #' @param j Either the columns represented by their columns numbers or logical vector of length 
 #' number of columns in TAMatrix
-#' @aliases subset-TAMatrix subset,TAMatrix-method
+#' @aliases select-TAMatrix select,TAMatrix-method
 #' @return subsetted TAMatrix
-setMethod("[",  signature = signature(x = "TAMatrix"), 
+setMethod("select",  signature = signature(x = "TAMatrix"), 
           function(x, i, j) {
             
             # Make some sanity checks on i, j.
@@ -328,6 +340,7 @@ setMethod("[",  signature = signature(x = "TAMatrix"),
                        dim = c(length(i), length(j)),
                        items = x@items[i, drop = FALSE]))
           })
+
 
 # ----------------------------------------------------------------------------- #
 # ------------------ All methods for class FIMatrix --------------------------- #
@@ -601,7 +614,7 @@ setMethod("prune", "FIMatrix", function(object, Support) {
   }
   
   if (!missing(Support)){
-    res <- object[,support(object) >= Support]
+    res <- select(object,support(object) >= Support)
     return(res)
   } else {
     return(object) 
@@ -690,17 +703,17 @@ setMethod("nrow",  signature = signature(x = "FIMatrix"),
 #' An FImatrix does contain the matrix of itemsets as well as the a vector that contains the support
 #' for each itemset. Therefore, both are logically connected and when a FIMatrix is subsetted column-
 #' wise the supported vector is subsetted as well.
-#' @name subset-FIMatrix
-#' @rdname subset-FIMatrix
+#' @name select-FIMatrix
+#' @rdname select-FIMatrix
 #' @export  
 #' @param x Object of class FIMatrix
 #' @param i Either the rows represented by their row number or a logical vector of length number of 
 #' row of FIMAtrix.
 #' @param j Either the columns represented by their columns numbers or logical vector of length 
 #' number of columns in FIMatrix
-#' @aliases subset-FIMatrix subset,FIMatrix-method
+#' @aliases select-FIMatrix select,FIMatrix-method
 #' @return subsetted FIMatrix
-setMethod("[",  signature = signature(x = "FIMatrix"), 
+setMethod("select",  signature = signature(x = "FIMatrix"), 
           function(x, i, j) {
             
             # Make some sanity checks on i, j.
@@ -1101,33 +1114,33 @@ setMethod("prune", "Rules", function(object, Support, Confidence, Lift, Leverage
   }
   
   # If non of the paramters is specified all colums / itemsets should be returned.
-  select <- rep(TRUE, ncol(object))
+  selection <- rep(TRUE, ncol(object))
   
   # 
   if(!missing(Support)){
-    select <- select & support(object) >= Support
+    selection <- selection & support(object) >= Support
   }
   if(!missing(Confidence)){
-    select <- select & confidence(object) >= Confidence
+    selection <- selection & confidence(object) >= Confidence
   }
   if(!missing(Lift)){
     if(!inv_Lift){
-      select <- select & lift(object) >= Lift
+      selection <- selection & lift(object) >= Lift
     } else {
-      select <- select & lift(object) <= Lift
+      selection <- selection & lift(object) <= Lift
     }
     
     
   }
   if(!missing(Leverage)){
     if(!inv_lev){
-      select <- select & leverage(object) >= Leverage
+      selection <- selection & leverage(object) >= Leverage
     } else {
-      select <- select & leverage(object) <= Leverage
+      selection <- selection & leverage(object) <= Leverage
     }
   }
   
-  res <- object[,select]
+  res <- select(object,, selection)
   
   return(res)
 })
@@ -1230,16 +1243,17 @@ setMethod("nrow",  signature = signature(x = "Rules"),
 #' An Rules does contain the matrix of itemsets as well as the a vectors that contains the support,
 #' confidence, lift and leverage for all rules.Therefore, both are logically connected and 
 #' when a Rules is subsetted column- wise the other vectors are subsetted as well.
-#' @name [
+#' @name select-Rules
+#' @rdname select-Rules
 #' @export  
-#' @aliases Rules
 #' @param x Object of class Rules
 #' @param i Either the rows represented by their row number or a logical vector of length number of 
 #' row of Rules.
 #' @param j Either the columns represented by their columns numbers or logical vector of length 
 #' number of columns in Rules
+#' @aliases select-Rules select,Rules-method
 #' @return subsetted Rules object.
-setMethod("[",  signature = signature(x = "Rules"), 
+setMethod("select",  signature = signature(x = "Rules"), 
           function(x, i, j) {
             
             # Make some sanity checks on i, j.

@@ -39,8 +39,7 @@ end_time <- Sys.time()
 print(end_time - start_time)
 
 start_time <- Sys.time()
-rules_praprio <- AssociationRules(Itemsets =  Groceries, minsupport = 0.01, minconfidence = 0.2,
-                                  arefrequent = FALSE, maxConsequentLength = 1)
+rules_praprio <- AssociationRules(Itemsets =  Groceries, minsupport = 0.01, minconfidence = 0.2, maxConsequentLength = 1)
 end_time <- Sys.time()
 print(end_time - start_time)
 

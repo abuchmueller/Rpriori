@@ -35,13 +35,13 @@ DetRules_1 <- function(Items){
     # One rule is defined by column i of lhs and columns i of rhs where the items in rhs do 
     # describe the base items and the items in lhs the consequent.
     ncols <- sum(item_n)
-    lhs <- out_mat <- sparseMatrix(i = c(),
+    lhs <- sparseMatrix(i = c(),
                                    j = c(),
                                    giveCsparse = FALSE,
                                    dims = c(nrow(Items), ncols),
                                    dimnames = list(items(Items), NULL))
     
-    rhs <- out_mat <- sparseMatrix(i = c(),
+    rhs <- sparseMatrix(i = c(),
                                    j = c(),
                                    giveCsparse = FALSE,
                                    dims = c(nrow(Items), ncols),
@@ -104,11 +104,11 @@ DetRules_K <- function(rules){
   if (!any(duplicated_cand)){
     
     # We cannot create any rules here. Give list of empty elements back.
-    return(rules[0,0])
+    return(select(rules,0,0))
   } 
 
   # Only use the itemsets that have at least 2 items #
-  rules <- rules[,duplicated_cand]
+  rules <- select(rules,,duplicated_cand)
 
 
   # For each frequent Itemset I have to create the possible m_item consquents based on its rules
@@ -147,8 +147,8 @@ DetRules_K <- function(rules){
   id <- rep(id, times = ncols_each)
   
   # Create the new output matrices for the lhs, rhs.
-  lhs <- rules@FrequentItemsets[,id, drop = FALSE]@data
-  rhs <- out_mat <- sparseMatrix(i = c(),
+  lhs <- select(rules@FrequentItemsets,,id)@data
+  rhs <- sparseMatrix(i = c(),
                                  j = c(),
                                  giveCsparse = FALSE,
                                  dims = c(nrows, ncols),
