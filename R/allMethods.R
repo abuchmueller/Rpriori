@@ -481,7 +481,8 @@ setMethod("plot", signature(x = "FIMatrix"), function(x, pch = 1, col = "red") {
   } else {
   plot(colSums(x@data), x@support, 
        xlab = "Itemset length", ylab = "Support", 
-       main = "Support distribution by itemset length", pch = pch, col = col)
+       main = "Support distribution by itemset length", pch = pch, col = col, xaxt = "n")
+    axis(1, at = seq(1, max(colSums(x@data)), by = 1), las=0)
   }
   
 })
@@ -530,7 +531,8 @@ setMethod("hist", "FIMatrix", function(x) {
   hist(colSums(x@data), 
        main = "Histogram of frequent Itemsets", 
        xlab = "Itemset length", 
-       col = "lightblue")
+       col = "lightblue", xaxt = "n")
+    axis(1, at = seq(1, max(colSums(x@data)), by = 1), las=0)
   }
 })
 
