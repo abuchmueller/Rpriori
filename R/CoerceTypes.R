@@ -20,22 +20,11 @@ outputTAMatrix <- function(out_mat){
   return(out)
 }
 
+
 makeTAMatrix.TAMatrix <- function(input){
   return(input)
 }
   
-makeTAMatrix.transactions <- function(input){
-  
-  # Input is of class transaction from arules
-  
-  # Get the underlying data matrix from the transaction matrix 
-  out_mat <- as(input@data, "TsparseMatrix")
-  
-  # Add the rownames (which do represent the different items)
-  rownames(out_mat) <- input@itemInfo$labels
-  
-  return(outputTAMatrix(out_mat))
-}
 
 makeTAMatrix.transactions <- function(input){
   
@@ -49,6 +38,21 @@ makeTAMatrix.transactions <- function(input){
   
   return(outputTAMatrix(out_mat))
 }
+
+
+makeTAMatrix.transactions <- function(input){
+  
+  # Input is of class transaction from arules
+  
+  # Get the underlying data matrix from the transaction matrix 
+  out_mat <- as(input@data, "TsparseMatrix")
+  
+  # Add the rownames (which do represent the different items)
+  rownames(out_mat) <- input@itemInfo$labels
+  
+  return(outputTAMatrix(out_mat))
+}
+
 
 makeTAMatrix.matrix <- function(input){
   
@@ -69,6 +73,7 @@ makeTAMatrix.matrix <- function(input){
   return(outputTAMatrix(out_mat))
 }
 
+
 makeTAMatrix.data.frame <- function(input){
   
   # Input is a data.frame
@@ -77,6 +82,7 @@ makeTAMatrix.data.frame <- function(input){
   # From here on same procedure as input would be matrix.
   return(makeTAMatrix.matrix(input))
 }
+
 
 makeTAMatrix.ngCMatrix <- function(input){
   
@@ -92,6 +98,7 @@ makeTAMatrix.ngCMatrix <- function(input){
   return(makeTAMatrix.matrix(input))
 }
 
+
 makeTAMatrix.ngTMatrix <- function(input){
   
   # Input is already in correct sparse matrix format.
@@ -100,6 +107,7 @@ makeTAMatrix.ngTMatrix <- function(input){
   # From here on same procedure as input would be matrix.
   return(makeTAMatrix.matrix(input))
 }
+
 
 makeTAMatrix.lgTMatrix <- function(input){
   
@@ -114,6 +122,7 @@ makeTAMatrix.lgTMatrix <- function(input){
   return(makeTAMatrix.matrix(input))
 }
 
+
 makeTAMatrix.lgCMatrix <- function(input){
   
   out_mat <- sparseMatrix(i = input@i,
@@ -127,9 +136,12 @@ makeTAMatrix.lgCMatrix <- function(input){
   return(makeTAMatrix.matrix(input))
 }
 
+
 makeTAMatrix.default <- function(input){
   print(paste("Object of class", class(input)[1], "cannot be coerced to TAMatrix. "))
 }
+
+
 
 
 
