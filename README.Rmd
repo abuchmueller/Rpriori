@@ -4,12 +4,13 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, echo = FALSE}
+```{r include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "README-"
+  fig.path = "figures/"
 )
+library(arules)
 library(ProjectApriori)
 ```
 
@@ -26,28 +27,28 @@ You can install ProjectApriori from github with:
 devtools::install_github("TimToebrock/Project_Apriori")
 ```
 
-## Example
+## Example: Creating association rules
 
 This is a basic example which shows you how to create association rules with Rpriori using the "Groceries" dataset:
 
-```{r example, warning=FALSE}
-data("Groceries")
-Rules <- AssociationRules(Itemsets=Groceries, minsupport = 0.01, minconfidence = 0)
+```{r example, message=FALSE, warning=FALSE}
+data("Groceries", package = "ProjectApriori")
+Rules <- AssociationRules(Groceries, minsupport = 0.01)
 show(Rules)
 ```
 
-To create rules you need to specifiy an transactions databse and a minimum support threshold but you can also set a minimum confidence
-threshold.
+To create rules you need to specifiy an transactions database and a minimum support threshold. 
+You can additionally set a minimum confidence threshold.
 
-## Inspecting the data
+## Example: Inspecting the data
 
-To get summary statistics on the rules simply call summary()
+To get summary statistics on the rules simply call `summary()`
 ```{r}
 summary(Rules)
 ```
 
 
-If you want to take a look at the underlying data used in rule creation there are multiple ways. One way is:
+If you want to take a look at the underlying data used in rule creation there are multiple ways. One way is to use the `extract` function:
 ```{r}
 Frequent <- extract(Rules)
 summary(Frequent)
@@ -55,14 +56,55 @@ summary(Frequent)
 This extracts the frequent itemsets used to calculate association rules. You can also create a frequent itemmatrix directly:
 ```{r}
 Frequent2 <- FindFrequentItemsets(Groceries, 0.01)
+Frequent2
 ```
+Since frequent item-set generation takes a lot longer than rule creation, it might be better to create a frequent item matrix first, and then use `AssociationRules` to calculate rules.
 
+```{r}
+fRules <- AssociationRules(Groceries, Frequent, minsupport = 0.03, minconfidence = 0.4)
+```
+In this case `AssociationRules` won't need to recalculate the frequent item-sets if you do not lower the support threshold.
 
-
-If you want to take a look at the transactionsmatrix used to calculate the frequent items you need to create an object first:
+If you want to take a look at the transactions matrix used to calculate the frequent items you need to create a TAMatrix object first:
 ```{r}
 Transactions <- makeTAMatrix(Groceries)
 summary(Transactions)
 ```
 
+## Example: Visualizing the data
+
+All classes come with baseplotting methods.
+
+###Rules plot
+```{r}
+plot(Rules)
+```
+
+###Frequent item plot
+```{r}
+plot(Frequent)
+```
+
+###Frequent item Histogram
+```{r}
+hist(Frequent)
+```
+
+
+
+###Itemmatrix plot
+```{r}
+plot(Transactions)
+```
+
+## Example: Using convenience functions like `support`
+
+There are a set of convenience functions to access certain slots easily.
+```{r}
+support(Frequent)[1:5]
+support(Rules)[1:5]
+confidence(Rules)[1:5]
+lift(Rules)[1:5]
+leverage(Rules)[1:5]
+```
 
