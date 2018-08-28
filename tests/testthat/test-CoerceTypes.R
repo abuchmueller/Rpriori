@@ -41,10 +41,6 @@ test_that("Test for coercion to TAMatrix", {
   dat <- makeTAMatrix(input_sets)
   expect_equal(dat, result)
   
-  # from class transactions
-  #dat_transaction <- makeTAMatrix(input_transactions)
-  #expect_equal(dat_transaction, result)
-  
   # from dataframe
   res_dataframe <- makeTAMatrix(input_sets_dataframe)
   expect_equal(res_dataframe, result)
@@ -93,10 +89,6 @@ test_that("Test for coercion to FIMatrix",{
                   support = Frequent_items_support)
   
   
-  # itemsets class from arules
-  Frequent_items_itemsets <- readRDS(system.file("testdata","coerce_types_apriori_output.rds",
-                                                 package="ProjectApriori"))
-  
   # transactions object from arules
   #Frequent_items_transactions <- as(t(Frequent_items),"transactions")
   
@@ -115,18 +107,6 @@ test_that("Test for coercion to FIMatrix",{
   # pattern, sparse, compressed matrix 
   Frequent_items_ngCMatrix <-as(Frequent_items, "ngCMatrix")
   
-  
-  # Tests for itemset class
-  expect_equal(makeFIMatrix(Frequent_items_itemsets,
-                            support = Frequent_items_support), result)
-  expect_equal(makeFIMatrix(Frequent_items_itemsets,
-                            support = NULL, dataset = dataset), result)
-  
-  # Test for transaction class
-  # expect_equal(makeFIMatrix(Frequent_items_transactions,
-  #                           support = Frequent_items_support), result)
-  # expect_equal(makeFIMatrix(Frequent_items_transactions,
-  #                           support = NULL, dataset = dataset), result)
   
   # Test for data.frame
   expect_equal(makeFIMatrix(Frequent_items_dataframe,

@@ -3,15 +3,13 @@ context("Test DetRules 1 and k")
 
 test_that("A simple test for rule Generation of consequent_length one", {
   
-  FrequentItems <- readRDS(system.file("testdata","DetRules_1_FrequentItemets.rds", package="ProjectApriori"))
+  FrequentItems <- ProjectApriori:::DetRules_1_FrequentItemets
   
   FrequentItems <- new("FIMatrix",
                        data = as(FrequentItems, "ngTMatrix"),
-                       support = readRDS(system.file("testdata",
-                                                     "DetRules_1_FrequentItems_support.rds",
-                                                     package="ProjectApriori")))
+                       support = ProjectApriori:::DetRules_1_FrequentItems_support)
   
-  result <- readRDS(system.file("testdata","DetRules_1_R1.rds", package="ProjectApriori"))
+  result <- ProjectApriori:::DetRules_1_R1
   
   result <- new("Rules",
                 lhs = as(result$lhs, "ngTMatrix"),
@@ -31,7 +29,7 @@ test_that("DetRules_K: Generate only one rule of length 2 from rules of length 1
   
   # Example for rules of length 2 where only one rules is created (Special Case)
   # Create input set #
-  input <- readRDS(system.file("testdata","test_Detrules1.rds", package="ProjectApriori"))
+  input <- ProjectApriori:::test_Detrules1 
   
   input <- new("Rules",
                lhs = as(input$lhs, "ngTMatrix"),
@@ -47,7 +45,7 @@ test_that("DetRules_K: Generate only one rule of length 2 from rules of length 1
 
   
   # Create output set #
-  result <- readRDS(system.file("testdata","test_Detrules2.rds",package="ProjectApriori"))
+  result <- ProjectApriori:::test_Detrules2
   
   result <- new("Rules",
                 lhs = as(result$lhs, "ngTMatrix"),

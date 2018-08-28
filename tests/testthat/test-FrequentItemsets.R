@@ -2,16 +2,16 @@ context("Test Frequent Itemset")
 
 test_that("Simple test ", {
 
-  dataset <-  readRDS(system.file('testdata',"FrequentItemsets_Itemsets.rds", package="ProjectApriori"))
+  FrequentItemsets_Itemsets <-  ProjectApriori:::FrequentItemsets_Itemsets
   dataset <- new('TAMatrix',
-                 data = as(dataset, 'ngTMatrix'),
-                 dim = c(nrow(dataset), ncol(dataset)),
-                 items = row.names(dataset))
+                 data = as(FrequentItemsets_Itemsets, 'ngTMatrix'),
+                 dim = c(nrow(FrequentItemsets_Itemsets), ncol(FrequentItemsets_Itemsets)),
+                 items = row.names(FrequentItemsets_Itemsets))
   
-  result <- readRDS(system.file('testdata',"FrequentItemsets_FrequentItems.rds", package="ProjectApriori"))
+  FrequentItemsets_FrequentItems <- ProjectApriori:::FrequentItemsets_FrequentItems
   result <- new("FIMatrix",
-                data = as(result$sets, "ngTMatrix"),
-                support = result$support)
+                data = as(FrequentItemsets_FrequentItems$sets, "ngTMatrix"),
+                support = FrequentItemsets_FrequentItems$support)
 
   expect_equal(FindFrequentItemsets(dataset, minsupport = 0.3), result)
 })

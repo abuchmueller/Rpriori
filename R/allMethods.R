@@ -242,7 +242,6 @@ setMethod("nrow",  signature = signature(x = "TAMatrix"),
 #' to be changed when the matrix is subsetted. 
 #' @name subset-TAMatrix
 #' @rdname subset-TAMatrix
-#' @export  
 #' @param x Object of class TAMatrix
 #' @param i Either the rows represented by their row number or a logical vector of length number of 
 #' row of TAMatrix.

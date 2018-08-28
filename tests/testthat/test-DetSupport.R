@@ -2,7 +2,7 @@ context("Test DetSupport")
 
 testthat::test_that("Empty input, Empty output",{
  
-  cand <- readRDS(system.file("testdata","Test_GiveUniquecols_L3.rds", package="ProjectApriori"))  
+  cand <- ProjectApriori:::Test_GiveUniquecols_L3   
   
   testthat::expect_equal(DetSupport(cand, NULL), c(0)[0])
 })
