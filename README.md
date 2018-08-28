@@ -3,7 +3,7 @@
 ProjectApriori
 ==============
 
-The goal of ProjectApriori is to ...
+The goal of ProjectApriori is to create association rules of type X=&gt;Y by using the apriori algorithm.
 
 Installation
 ------------
@@ -15,29 +15,41 @@ You can install ProjectApriori from github with:
 devtools::install_github("TimToebrock/Project_Apriori")
 ```
 
-Example
--------
+Example: Creating association rules
+-----------------------------------
 
 This is a basic example which shows you how to create association rules with Rpriori using the "Groceries" dataset:
 
 ``` r
-data("Groceries")
-Rules <- AssociationRules(Itemsets=Groceries, minsupport = 0.01, minconfidence = 0) 
-#> Loading required package: arules
-#> Loading required package: Matrix
-#> 
-#> Attaching package: 'arules'
-#> The following objects are masked from 'package:base':
-#> 
-#>     abbreviate, write
+data("Groceries", package = "ProjectApriori")
+Rules <- AssociationRules(Groceries, minsupport = 0.01)
+show(Rules)
+#> Found 522 rule(s). Use print() to display
 ```
 
-To create rules you need to specifiy an transactions databse and a minimum support threshold but you can also set a minimum confidence threshold.
+To create rules you need to specifiy an transactions database and a minimum support threshold. You can additionally set a minimum confidence threshold.
 
-Inspecting the data
--------------------
+Example: Inspecting the data
+----------------------------
 
-There are multiple ways to inspect the data used to create the rules:
+To get summary statistics on the rules simply call `summary()`
+
+``` r
+summary(Rules)
+#> Found 522 rule(s). Use print() to display
+#> 
+#> 
+#> Summary of quality measures:
+#>     support          confidence          lift           leverage        
+#>  Min.   :0.01007   Min.   :0.0394   Min.   :0.7899   Min.   :-0.004495  
+#>  1st Qu.:0.01149   1st Qu.:0.1141   1st Qu.:1.3238   1st Qu.: 0.003568  
+#>  Median :0.01388   Median :0.1869   Median :1.5863   Median : 0.005414  
+#>  Mean   :0.01718   Mean   :0.2154   Mean   :1.6518   Mean   : 0.005863  
+#>  3rd Qu.:0.01973   3rd Qu.:0.2907   3rd Qu.:1.8753   3rd Qu.: 0.007444  
+#>  Max.   :0.07483   Max.   :0.5862   Max.   :3.3723   Max.   : 0.026291
+```
+
+If you want to take a look at the underlying data used in rule creation there are multiple ways. One way is to use the `extract` function:
 
 ``` r
 Frequent <- extract(Rules)
@@ -73,4 +85,103 @@ summary(Frequent)
 #> Summary of the support measure:
 #>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 #> 0.01007 0.01190 0.01627 0.02507 0.02603 0.25552
+```
+
+This extracts the frequent itemsets used to calculate association rules. You can also create a frequent itemmatrix directly:
+
+``` r
+Frequent2 <- FindFrequentItemsets(Groceries, 0.01)
+Frequent2
+#> Found 333 frequent itemset(s). Use print() to display
+```
+
+Since frequent item-set generation takes a lot longer than rule creation, it might be better to create a frequent item matrix first, and then use `AssociationRules` to calculate rules.
+
+``` r
+fRules <- AssociationRules(Groceries, Frequent, minsupport = 0.03, minconfidence = 0.4)
+```
+
+In this case `AssociationRules` won't need to recalculate the frequent item-sets if you do not lower the support threshold.
+
+If you want to take a look at the transactions matrix used to calculate the frequent items you need to create a TAMatrix object first:
+
+``` r
+Transactions <- makeTAMatrix(Groceries)
+summary(Transactions)
+#> 
+#> Transaction database in binary sparse matrix representation 
+#>  with 169 rows (items) and 
+#>  9835 columns (itemsets/transactions) and 
+#>  a density of 0.0261 (sparsity: 0.9739)
+#> 
+#> Most frequent items: 
+#>       whole milk other vegetables       rolls/buns             soda 
+#>             2513             1903             1809             1715 
+#>           yogurt    bottled water  root vegetables   tropical fruit 
+#>             1372             1087             1072             1032 
+#> 
+#> Distribution of itemset length:
+#> 
+#>    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15 
+#> 2159 1643 1299 1005  855  645  545  438  350  246  182  117   78   77   55 
+#>   16   17   18   19   20   21   22   23   24   26   27   28   29   32 
+#>   46   29   14   14    9   11    4    6    1    1    1    1    3    1 
+#> 
+#>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#>   1.000   2.000   3.000   4.409   6.000  32.000
+```
+
+Example: Visualizing the data
+-----------------------------
+
+All classes come with baseplotting methods.
+
+### Rules plot
+
+``` r
+plot(Rules)
+```
+
+![](README-unnamed-chunk-7-1.png)
+
+### Frequent item plot
+
+``` r
+plot(Frequent)
+```
+
+![](README-unnamed-chunk-8-1.png)
+
+### Frequent item Histogram
+
+``` r
+hist(Frequent)
+```
+
+![](README-unnamed-chunk-9-1.png)
+
+### Itemmatrix plot
+
+``` r
+plot(Transactions)
+```
+
+![](README-unnamed-chunk-10-1.png)
+
+Example: Using convenience functions like `support`
+---------------------------------------------------
+
+There are a set of convenience functions to access certain slots easily.
+
+``` r
+support(Frequent)[1:5]
+#> [1] 0.05897306 0.09395018 0.02602949 0.02582613 0.04290798
+support(Rules)[1:5]
+#> [1] 0.01006609 0.01006609 0.01016777 0.01016777 0.01647178
+confidence(Rules)[1:5]
+#> [1] 0.10714286 0.17068966 0.09328358 0.17241379 0.08512874
+lift(Rules)[1:5]
+#> [1] 1.816810 1.816810 1.581800 1.581800 1.443519
+leverage(Rules)[1:5]
+#> [1] 0.004525561 0.004525561 0.003739795 0.003739795 0.005060933
 ```
