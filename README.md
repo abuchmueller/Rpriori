@@ -20,19 +20,19 @@ devtools::install_github("TimToebrock/Rpriori")
 Example: Creating association rules
 -----------------------------------
 
-This is a basic example which shows you how to create association rules with Rpriori using the "Groceries" dataset:
+This is a basic example which shows you how to create association rules with Rpriori using the `Groceries` dataset:
 
 ``` r
-data("Groceries", package = "Rpriori")
+data("Groceries")
 Rules <- AssociationRules(Groceries, minsupport = 0.01)
 show(Rules)
 #> Found 522 rule(s). Use print() to display
 ```
 
-To create rules you need to specifiy an transactions database and a minimum support threshold. You can additionally set a minimum confidence threshold.
+To create rules you need to supply `AssociationRules()` with a transactions database and a minimum support threshold. You can additionally set a minimum confidence threshold.
 
-Example: Inspecting the data
-----------------------------
+Example: Inspecting data
+------------------------
 
 To get summary statistics on the rules simply call `summary()`
 
@@ -97,7 +97,7 @@ Frequent2
 #> Found 333 frequent itemset(s). Use print() to display
 ```
 
-Since frequent item-set generation takes a lot longer than rule creation, it might be better to create a frequent item matrix first, and then use `AssociationRules` to calculate rules.
+Since frequent item-set generation takes a lot longer than rule creation, it might be better to create a frequent item matrix first, and then use `AssociationRules()` to calculate rules.
 
 ``` r
 fRules <- AssociationRules(Groceries, Frequent, minsupport = 0.03, minconfidence = 0.4)
@@ -105,7 +105,7 @@ fRules <- AssociationRules(Groceries, Frequent, minsupport = 0.03, minconfidence
 
 In this case `AssociationRules` won't need to recalculate the frequent item-sets if you do not lower the support threshold.
 
-If you want to take a look at the transactions matrix used to calculate the frequent items you need to create a TAMatrix object first:
+If you want to take a look at the transactions matrix used to calculate the frequent items you need to create a `TAMatrix` object first:
 
 ``` r
 Transactions <- makeTAMatrix(Groceries)
@@ -133,20 +133,26 @@ summary(Transactions)
 #>   1.000   2.000   3.000   4.409   6.000  32.000
 ```
 
-Example: Visualizing the data
------------------------------
+Example: Visualizing data with `plot()` or `qplot()`
+----------------------------------------------------
 
-All classes come with baseplotting methods.
+All classes come with base plotting and `ggplot2` methods. Both `plot()` and `qplot()` only need to be supplied a valid object to work, however `qplot()` is more flexible and can sometimes be supplied with additional arguments like `col`or `alpha`.
 
-### Rules plot
+### Plotting transactions
 
 ``` r
-plot(Rules)
+plot(Transactions)
 ```
 
 ![](figures/unnamed-chunk-7-1.png)
 
-### Frequent item plot
+``` r
+qplot(Transactions)
+```
+
+![](figures/unnamed-chunk-7-2.png)
+
+### Plotting frequent items
 
 ``` r
 plot(Frequent)
@@ -154,7 +160,13 @@ plot(Frequent)
 
 ![](figures/unnamed-chunk-8-1.png)
 
-### Frequent item Histogram
+``` r
+qplot(Frequent, type = "scatter", col = "red", alpha = 0.1)
+```
+
+![](figures/unnamed-chunk-8-2.png)
+
+### Plotting frequent items (as a histogram)
 
 ``` r
 hist(Frequent)
@@ -162,13 +174,25 @@ hist(Frequent)
 
 ![](figures/unnamed-chunk-9-1.png)
 
-### Itemmatrix plot
+``` r
+qplot(Frequent, type = "hist")
+```
+
+![](figures/unnamed-chunk-9-2.png)
+
+### Plotting rules
 
 ``` r
-plot(Transactions)
+plot(Rules)
 ```
 
 ![](figures/unnamed-chunk-10-1.png)
+
+``` r
+qplot(Rules)
+```
+
+![](figures/unnamed-chunk-10-2.png)
 
 Example: Using convenience functions like `support`
 ---------------------------------------------------

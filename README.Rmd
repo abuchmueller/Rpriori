@@ -30,18 +30,18 @@ devtools::install_github("TimToebrock/Rpriori")
 
 ## Example: Creating association rules
 
-This is a basic example which shows you how to create association rules with Rpriori using the "Groceries" dataset:
+This is a basic example which shows you how to create association rules with Rpriori using the `Groceries` dataset:
 
 ```{r example, message=FALSE, warning=FALSE}
-data("Groceries", package = "Rpriori")
+data("Groceries")
 Rules <- AssociationRules(Groceries, minsupport = 0.01)
 show(Rules)
 ```
 
-To create rules you need to specifiy an transactions database and a minimum support threshold. 
+To create rules you need to supply `AssociationRules()` with a transactions database and a minimum support threshold. 
 You can additionally set a minimum confidence threshold.
 
-## Example: Inspecting the data
+## Example: Inspecting data
 
 To get summary statistics on the rules simply call `summary()`
 ```{r}
@@ -58,41 +58,45 @@ This extracts the frequent itemsets used to calculate association rules. You can
 Frequent2 <- FindFrequentItemsets(Groceries, 0.01)
 Frequent2
 ```
-Since frequent item-set generation takes a lot longer than rule creation, it might be better to create a frequent item matrix first, and then use `AssociationRules` to calculate rules.
+Since frequent item-set generation takes a lot longer than rule creation, it might be better to create a frequent item matrix first, and then use `AssociationRules()` to calculate rules.
 
 ```{r}
 fRules <- AssociationRules(Groceries, Frequent, minsupport = 0.03, minconfidence = 0.4)
 ```
 In this case `AssociationRules` won't need to recalculate the frequent item-sets if you do not lower the support threshold.
 
-If you want to take a look at the transactions matrix used to calculate the frequent items you need to create a TAMatrix object first:
+If you want to take a look at the transactions matrix used to calculate the frequent items you need to create a `TAMatrix` object first:
 ```{r}
 Transactions <- makeTAMatrix(Groceries)
 summary(Transactions)
 ```
 
-## Example: Visualizing the data
+## Example: Visualizing data with `plot()` or `qplot()`
 
-All classes come with baseplotting methods.
+All classes come with base plotting and `ggplot2` methods. Both `plot()` and `qplot()` only need to be supplied a valid object to work, however `qplot()` is more flexible and can sometimes be supplied with additional arguments like `col`or `alpha`.
 
-###Rules plot
-```{r}
-plot(Rules)
-```
-
-###Frequent item plot
-```{r}
-plot(Frequent)
-```
-
-###Frequent item Histogram
-```{r}
-hist(Frequent)
-```
-
-###Itemmatrix plot
+###Plotting transactions
 ```{r}
 plot(Transactions)
+qplot(Transactions)
+```
+
+###Plotting frequent items
+```{r}
+plot(Frequent)
+qplot(Frequent, type = "scatter", col = "red", alpha = 0.1)
+```
+
+###Plotting frequent items (as a histogram)
+```{r}
+hist(Frequent)
+qplot(Frequent, type = "hist")
+```
+
+###Plotting rules
+```{r}
+plot(Rules)
+qplot(Rules)
 ```
 
 ## Example: Using convenience functions like `support`
