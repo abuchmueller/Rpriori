@@ -7,7 +7,7 @@
 ##### methods at the bottom (line 59 and below).  #####
 #######################################################
 
-library(ProjectApriori)
+library(Rpriori)
 
 data("Groceries")
 
@@ -19,7 +19,7 @@ TAM <- makeTAMatrix(Groceries)
 Frequent <- FindFrequentItemsets(Groceries, 0.01)
 
 #Object of 'Rule' class
-Rules <- AssociationRules(Groceries, minsupport = 0.01) 
+Rules <- AssociationRules(Groceries, minsupport = 0.01)
 
 #### from here on you can skip to the methods (line 59) ####
 

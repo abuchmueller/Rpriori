@@ -12,7 +12,7 @@
 \item{x}{Object of class Rules}
 }
 \value{
-Scatter plot of support versus confidence, lift as a color gradient..
+Scatter plot of support versus confidence with lift as a color gradient
 }
 \description{
 The plot function gives a scatter plot with the support on the x-axis, the confidence on the y-axis

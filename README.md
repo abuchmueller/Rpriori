@@ -1,20 +1,20 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-[![Build Status](https://travis-ci.org/TimToebrock/Project_Apriori.svg?branch=master)](https://travis-ci.org/TimToebrock/Project_Apriori)
+[![Build Status](https://travis-ci.org/TimToebrock/Rpriori.svg?branch=master)](https://travis-ci.org/TimToebrock/Rpriori)
 
-ProjectApriori
-==============
+Rpriori
+=======
 
-The goal of ProjectApriori is to create association rules of type X=&gt;Y by using the apriori algorithm.
+The goal of Rpriori is to create association rules of type X=&gt;Y by using the Apriori algorithm.
 
 Installation
 ------------
 
-You can install ProjectApriori from github with:
+You can install Rpriori from github with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("TimToebrock/Project_Apriori")
+devtools::install_github("TimToebrock/Rpriori")
 ```
 
 Example: Creating association rules
@@ -23,7 +23,7 @@ Example: Creating association rules
 This is a basic example which shows you how to create association rules with Rpriori using the "Groceries" dataset:
 
 ``` r
-data("Groceries", package = "ProjectApriori")
+data("Groceries", package = "Rpriori")
 Rules <- AssociationRules(Groceries, minsupport = 0.01)
 show(Rules)
 #> Found 522 rule(s). Use print() to display
