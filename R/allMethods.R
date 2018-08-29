@@ -133,7 +133,7 @@ setMethod("plot", signature(x = "TAMatrix"), function(x) {
 #' @param ... Further information that should be passed down to plot function
 #' @return Plot
 #' @export
-#' @importFrom ggplot2 aes element_text geom_bar geom_point ggplot labs scale_color_gradient theme
+#' @importFrom ggplot2 aes element_text geom_bar geom_point ggplot labs scale_color_gradient theme scale_x_continuous
 setGeneric("qplot", function(x,... )
   
   standardGeneric("qplot") )
@@ -516,23 +516,27 @@ setMethod("plot", signature(x = "FIMatrix"), function(x, pch = 1, col = "red") {
 setMethod("qplot", signature(x = "FIMatrix"), function(x, col = "red", alpha = 0.1, type = c("hist", "scatter")) {
 
   if (missing(type)) {
-    stop("type missing: Please supply the type of plot you want by setting type = 'scatter' or 'hist'")
+    type == "scatter"
   }
 
   #set up data frame for ggplot
+  type = type
   df <- data.frame(data = colSums(x@data), support = x@support)
 
   if (type == "scatter") {
 
     ggplot(df, aes(data, support)) +
       geom_point(col = col, alpha = alpha) +
-      labs(x = "Itemset length", y = "support")
-  } else {
+      labs(x = "Itemset length", y = "support") +
+      scale_x_continuous(breaks = seq(1, max(colSums(x@data)), by = 1))
+  } else if (type == "hist") {
 
     ggplot(df, aes(df$data)) +
       geom_bar() +
       labs(title = "Histogram of itemset lengths", x = "Itemset length") +
       theme(plot.title = element_text(hjust = 0.5))
+  } else {
+    stop("Please supply a valid 'type' argument 'hist' or 'scatter' ")
   }
 
 })
