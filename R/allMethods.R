@@ -502,21 +502,21 @@ setMethod("plot", signature(x = "FIMatrix"), function(x, pch = 1, col = "red") {
 
 #' Plot an FI-matrices with ggplot
 #' 
-#' The qplot function gives a scatter plot with the support on the y-axis and the itemset-length on
-#' the x-axis
+#' The qplot function can do a scatter plot with the support on the y-axis and the itemset-length on
+#' the x-axis or a histogram of itemset lengths
 #' @name qplot-FIMatrix
 #' @rdname qplot-FIMatrix
 #' @param x Object of class FIMatrix
-#' @param col colour that is given to plot function.
-#' @param alpha Alpha value value that is given to qplot
-#' @param type should it be a scatter plot or a histogram?
+#' @param col colour of data points (only scatter plot) per default "red"
+#' @param alpha alpha value for scatter plot
+#' @param type character string "hist" or "scatter" depending on wether you want a histogram or scatter plot
 #' @aliases qplot-FIMatrix qplot,FIMatrix-method
-#' @return Scatter plot of Itemsize vs support.
+#' @return Scatter plot of itemset length against support or histogram of itemset lengths
 #' @export
 setMethod("qplot", signature(x = "FIMatrix"), function(x, col = "red", alpha = 0.1, type = c("hist", "scatter")) {
 
   if (missing(type)) {
-    stop("type missing: Please supply a type by specifiying either 'scatter' or 'hist'")
+    stop("type missing: Please supply the type of plot you want by setting type = 'scatter' or 'hist'")
   }
 
   #set up data frame for ggplot
@@ -904,7 +904,7 @@ setMethod("summary", signature(object = "Rules"), function(object) {
 #' @export  
 #' @param x Object of class Rules
 #' @aliases plot-Rules plot,Rules-method
-#' @return Scatter plot of support versus confidence, lift as a color gradient..
+#' @return Scatter plot of support versus confidence with lift as a color gradient
 #' 
 setMethod("plot", "Rules", function(x) {
   

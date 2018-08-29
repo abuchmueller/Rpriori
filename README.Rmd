@@ -4,13 +4,12 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r include=FALSE}
+```{r echo=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "figures/"
 )
-library(arules)
 library(ProjectApriori)
 ```
 [![Build Status](https://travis-ci.org/TimToebrock/Project_Apriori.svg?branch=master)](https://travis-ci.org/TimToebrock/Project_Apriori)
@@ -48,7 +47,6 @@ To get summary statistics on the rules simply call `summary()`
 ```{r}
 summary(Rules)
 ```
-
 
 If you want to take a look at the underlying data used in rule creation there are multiple ways. One way is to use the `extract` function:
 ```{r}
@@ -91,8 +89,6 @@ plot(Frequent)
 ```{r}
 hist(Frequent)
 ```
-
-
 
 ###Itemmatrix plot
 ```{r}
