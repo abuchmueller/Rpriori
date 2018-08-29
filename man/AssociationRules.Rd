@@ -8,27 +8,38 @@ AssociationRules(Itemsets, minsupport, minconfidence = 0, FrequentItems,
   maxConsequentLength = 1)
 }
 \arguments{
-\item{Itemsets}{Object of class TAMatrix that does contain the transactions underlying the rule
-Mining.}
+\item{Itemsets}{Object of class TAMatrix, matrix, sparse matrix, data.frame or transactions that
+contain the trainsaction for which the rules should be calculated.}
 
-\item{minsupport}{Minimal support of the rules.}
+\item{minsupport}{Minimal support level the rules should have.}
 
-\item{minconfidence}{Minimal confidence of the rules.}
+\item{minconfidence}{Minimal confidence level the rules should have.}
 
-\item{FrequentItems}{Object of class FIMatrix that contains the frequent itemsets with minimal
-support. The support used to calculate them must be the same as specified in minsupport. If no
-dataset is provided the frequent Itemsets are calculated based on the Itemsets paramter.}
+\item{FrequentItems}{Precalculated frequent itemsets as an sparse matrix, matrix, data.frame, 
+FIMatrix or itemsets class object.}
 
-\item{maxConsequentLength}{What should be the maximum length of the consequents of the rules?}
+\item{maxConsequentLength}{Maximal length of the consequents for the generated rules.}
 }
 \value{
-list with the rhs and lhs of the rules as sparse incident matrices. Also a vector
-  containing the support and confidence of the inidivual rules is provided. The i'th element of
-  the vector does represent the rule that is defined by the i'th column of the lhs and rhs
-  matrix.
+Object of class Rules containing the calculated rules as well as information on their
+quality.
 }
 \description{
-This function calculates association rules of consequent length >= 1 based on frequent itemsets.
-If the Frequent itemsets are already calculated than one should provide them in the paramter
-FrequentItems and set the paramter arefrequent to TRUE (default).
+AssocationRules() computes association rules with minimal support and confidence based on a 
+set of transactions. Additionally, one can precalculate the frequent item-sets externally and
+provide them via the FrequentItems parameter. Per default only consequent of length 1 are 
+calculated. This can be changed with the parameter maxConsquentLength.
+}
+\examples{
+\donttest{
+# Calculate the frequent itemsets with minimal support 0.03 
+# and confidence 0.4 based on the dataset Groceries
+Groceries_Rules <- AssociationRules(Itemsets = Groceries, minsupport = 0.03, minconfidence = 0.4)
+
+# print the rules
+print(Groceries_Rules)
+
+# plot the rules
+plot(Groceries_Rules)
+}
 }
