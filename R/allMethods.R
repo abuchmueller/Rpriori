@@ -20,8 +20,6 @@
 #' @importFrom graphics layout rasterImage text axis
 #' @import methods
 #' @include allClasses.R
-
-
 setMethod("length", "TAMatrix", function(x) {
   x@dim[1]
 })
@@ -72,8 +70,6 @@ setMethod("show", "TAMatrix", function(object) {
 #' @param object Object of class TAMatrix
 #' @aliases summary-TAMatrix summary,TAMatrix-method
 #' @return Summary information about the TAMatrix
-#' 
-
 setMethod("summary", signature(object = "TAMatrix"), function(object) {
   
   #matrix density
@@ -181,7 +177,6 @@ setGeneric("items", function(x)
 #' @param x Object of class TAMatrix
 #' @aliases items-TAMatrix items,TAMatrix-method
 #' @return Names of all items in TAMatrix.
-#' 
 setMethod("items",  signature = signature(x = "TAMatrix"), 
           function(x){
             return(rownames(x@data))
@@ -199,7 +194,6 @@ setMethod("items",  signature = signature(x = "TAMatrix"),
 #' @param x Object of class TAMatrix
 #' @aliases colSums-TAMatrix colSums,TAMatrix-method
 #' @return numeric vector containing the sum of each column of the TAMatrix
-#' 
 setMethod("colSums",  signature = signature(x = "TAMatrix"), 
           function(x){
             return(colSums(x@data))
@@ -216,7 +210,6 @@ setMethod("colSums",  signature = signature(x = "TAMatrix"),
 #' @param x Object of class TAMatrix
 #' @aliases rowSums-TAMatrix rowSums,TAMatrix-method
 #' @return numeric vector containing the sum of each row of the TAMatrix
-#' 
 setMethod("rowSums",  signature = signature(x = "TAMatrix"), 
           function(x){
             return(rowSums(x@data))
@@ -231,7 +224,6 @@ setMethod("rowSums",  signature = signature(x = "TAMatrix"),
 #' @param x Object of class TAMatrix
 #' @aliases ncol-TAMatrix ncol,TAMatrix-method
 #' @return number of columns / itemsets in the TAMatrix
-#' 
 setMethod("ncol",  signature = signature(x = "TAMatrix"), 
           function(x){
             return(ncol(x@data))
@@ -373,7 +365,6 @@ setMethod("select",  signature = signature(x = "TAMatrix"),
 #' @aliases length-FIMatrix length,FIMatrix-method
 #' @return Number of frequent itemsets within the FIMatrix
 #' @export 
-
 setMethod("length", "FIMatrix", function(x) {
   x@data@Dim[2]
 })
@@ -503,7 +494,6 @@ setMethod("summary", signature(object = "FIMatrix"), function(object) {
 #' @param col colour that is given to plot function.
 #' @aliases plot-FIMatrix plot,FIMatrix-method
 #' @return Scatter plot of Itemsize vs support.
-#' 
 setMethod("plot", signature(x = "FIMatrix"), function(x, pch = 1, col = "red") {
   
   if (length(x) <= 0) {

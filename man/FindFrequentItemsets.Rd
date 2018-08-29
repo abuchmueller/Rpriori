@@ -13,7 +13,7 @@ transactions.}
 \item{minsupport}{Minimal support value of the frequent itemsets}
 }
 \value{
-Object of class FIMatrix conataining the frequent items
+Object of class FIMatrix conatining the frequent items
 }
 \description{
 This function calculates the frequent itemset with a minimal support value.
