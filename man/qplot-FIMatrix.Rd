@@ -6,22 +6,22 @@
 \alias{qplot,FIMatrix-method}
 \title{Plot an FI-matrices with ggplot}
 \usage{
-\S4method{qplot}{FIMatrix}(x, col = "red", alpha = 0.1, type = c("hist",
-  "scatter"))
+\S4method{qplot}{FIMatrix}(x, col = "red", alpha = 0.1,
+  type = c("hist", "scatter"))
 }
 \arguments{
 \item{x}{Object of class FIMatrix}
 
-\item{col}{colour that is given to plot function.}
+\item{col}{colour of data points (only scatter plot) per default "red"}
 
-\item{alpha}{Alpha value value that is given to qplot}
+\item{alpha}{alpha value for scatter plot}
 
-\item{type}{should it be a scatter plot or a histogram?}
+\item{type}{character string "hist" or "scatter" depending on wether you want a histogram or scatter plot}
 }
 \value{
-Scatter plot of Itemsize vs support.
+Scatter plot of itemset length against support or histogram of itemset lengths
 }
 \description{
-The qplot function gives a scatter plot with the support on the y-axis and the itemset-length on
-the x-axis
+The qplot function can do a scatter plot with the support on the y-axis and the itemset-length on
+the x-axis or a histogram of itemset lengths
 }
