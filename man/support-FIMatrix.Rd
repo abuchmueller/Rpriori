@@ -6,10 +6,10 @@
 \alias{support,FIMatrix-method}
 \title{Extract the support of itemsets in class FIMatrix}
 \usage{
-\S4method{support}{FIMatrix}(object)
+\S4method{support}{FIMatrix}(x)
 }
 \arguments{
-\item{object}{Object of class FIMatrix}
+\item{x}{Object of class FIMatrix}
 }
 \value{
 A numeric vector containing the support values of the itemsets in the FIMatrix.

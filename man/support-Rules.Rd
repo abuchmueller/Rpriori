@@ -6,10 +6,10 @@
 \alias{support,Rules-method}
 \title{Extract the support of itemsets in class Rules}
 \usage{
-\S4method{support}{Rules}(object)
+\S4method{support}{Rules}(x)
 }
 \arguments{
-\item{object}{Object of class Rules}
+\item{x}{Object of class Rules}
 }
 \value{
 A numeric vector containing the support values of Rules.

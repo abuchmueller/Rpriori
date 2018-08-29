@@ -90,12 +90,12 @@ FindFrequentItemsets <- function(dataset, minsupport){
                   support = L_temp_support)
     
     # Prune the candidates that do not have minimal support.
-    L_temp <- select(L_temp,,L_temp@support >= minsupport)
+    L_temp <- select(L_temp,NULL,L_temp@support >= minsupport)
     
     # It may happen during the generation of Candidates that a certain Item does
     # not occur anymore and does not have any TRUE values in its respective row.
     # Since we do not need this item any longer I delete it here.
-    L_temp <- select(L_temp,rowSums(L_temp@data) > 0,)
+    L_temp <- select(L_temp,rowSums(L_temp@data) > 0,NULL)
     
     # Create new object of class FIMatrix the contains the frequent itemset of length k
     assign(paste("L", k, sep = ""), L_temp)
