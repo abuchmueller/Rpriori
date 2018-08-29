@@ -51,7 +51,7 @@ AssociationRules <- function(Itemsets, minsupport, minconfidence = 0, FrequentIt
   # Test whether the input data sets do have minimal support
   if (!missing(FrequentItems)){
     if (any(FrequentItems@support < minsupport)){
-      FrequentItems <- select(FrequentItems,,FrequentItems@support >= minsupport)
+      FrequentItems <- select(FrequentItems, NULL,FrequentItems@support >= minsupport)
     }
   }
   
@@ -64,7 +64,7 @@ AssociationRules <- function(Itemsets, minsupport, minconfidence = 0, FrequentIt
   # Only frequent itemsets of length >1 are relevant for rules with consequent length > 1.
   # Therefore, I will select only these itemsets from the itemset matrix. 
   selection <- colSums(FrequentItems) > 1
-  FrequentItems <- select(FrequentItems,,selection)
+  FrequentItems <- select(FrequentItems, NULL,selection)
   
   # Check whether FrequentItems contains Itemsets. Otherwise for this support level now rules could
   # be created.
@@ -96,16 +96,16 @@ AssociationRules <- function(Itemsets, minsupport, minconfidence = 0, FrequentIt
 
   # Prune out the candidates that do not have minimal confidence.
   rel_its <- R1@confidence >= minconfidence
-  R1 <- select(R1,,rel_its)
+  R1 <- select(R1,NULL,rel_its)
 
     
   # It might happen that some Items are no longer relevant for the rules in the sense that they 
   # do not exist anymore. This case is fulfilled if a row in the rhs and lhs does not have any
   # entry with 1.
   rel_item <- !(rowSums(R1, lhs = TRUE) == 0  & rowSums(R1, lhs = FALSE) == 0)
-  R1 <- select(R1,rel_item,)
+  R1 <- select(R1,rel_item, NULL)
   
-  R1@FrequentItemsets <- select(R1@FrequentItemsets,rel_item,)
+  R1@FrequentItemsets <- select(R1@FrequentItemsets,rel_item,NULL)
   
   if (maxConsequentLength == 1){
     # Reassign the correct frequent itemsets before output.
@@ -122,7 +122,7 @@ AssociationRules <- function(Itemsets, minsupport, minconfidence = 0, FrequentIt
     # I will select these relevant itemsets in the rules object r_cur.
     rel_Items <- which(colSums(R1@FrequentItemsets) > 2)
     
-    R_cur <- select(R1,,R1@itemsetID %in% rel_Items)
+    R_cur <- select(R1,NULL,R1@itemsetID %in% rel_Items)
     
     # Abort the loop if the generated candidates from the last step are empty.
     while (any(duplicated(R_cur@itemsetID)) && k <= maxConsequentLength){
@@ -142,7 +142,7 @@ AssociationRules <- function(Itemsets, minsupport, minconfidence = 0, FrequentIt
       
       # Prune Rules out do not have minconf #
       rel_its <- R_cur@confidence >= minconfidence
-      R_cur <- select(R_cur,,rel_its)
+      R_cur <- select(R_cur,NULL,rel_its)
       
       # Assign the generated rules to the object Rk that is dynamically created based on the value
       # for k.
@@ -153,7 +153,7 @@ AssociationRules <- function(Itemsets, minsupport, minconfidence = 0, FrequentIt
       # Therefore, I will select only these itemsets from R_curr.
       rel_Items <- which(colSums(R_cur@FrequentItemsets) > k + 1)
       
-      R_cur <- select(R_cur,,R_cur@itemsetID %in% rel_Items)
+      R_cur <- select(R_cur,NULL,R_cur@itemsetID %in% rel_Items)
       
       
       k <- k + 1

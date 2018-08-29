@@ -25,7 +25,7 @@ DetRules_1 <- function(Items){
   # The apply function does give a matrix if possible. But I need a list of vectors later on.
   # If this happened I convert the ouput back to list.
   # R is just the best ! <3 
-  if (! is.list(pos_items)){
+  if (!is.list(pos_items)){
     pos_items <- lapply(seq_len(ncol(pos_items)), function(i) pos_items[,i])
   }
   
@@ -64,7 +64,7 @@ DetRules_1 <- function(Items){
     # Here I calculate the position of the itemsets on the rhs. This is simple since for each
     # itemset I have as many candidates as items in the original. Then I have have set for each
     # item only one element in the rhs to true.
-    pos <- 0:(ncols -1) * nrow(Items) + unlist(pos_items)
+    pos <- 0:(ncols - 1) * nrow(Items) + unlist(pos_items)
     
     # If one "adds" the lhs to the rhs the result is the frequent itemset the rule is generated
     # from. Therefore, when I set one of the items true in the rhs I have to set it to false on 
@@ -84,7 +84,7 @@ DetRules_1 <- function(Items){
                itemsetID = id,
                FrequentItemsets = new("FIMatrix",
                                       data = Items@data,
-                                      support= Items@support)))
+                                      support = Items@support)))
 }
 
 #' Determine all possible association rules with consequent length 1for given frequent transaction.
@@ -99,7 +99,7 @@ DetRules_K <- function(rules){
 
   # We can only created new rules for frequent itemsets that had at least two items
   # To have two rules the itemsetID of the respective frequent itemset has to be repeated at least once.
-  duplicated_cand <- duplicated(rules@itemsetID)| duplicated(rules@itemsetID, fromLast = TRUE)
+  duplicated_cand <- duplicated(rules@itemsetID) | duplicated(rules@itemsetID, fromLast = TRUE)
   
   if (!any(duplicated_cand)){
     
@@ -108,7 +108,7 @@ DetRules_K <- function(rules){
   } 
 
   # Only use the itemsets that have at least 2 items #
-  rules <- select(rules,,duplicated_cand)
+  rules <- select(rules,NULL,duplicated_cand)
 
 
   # For each frequent Itemset I have to create the possible m_item consquents based on its rules
@@ -123,7 +123,7 @@ DetRules_K <- function(rules){
   nrows <- nrow(rules)
   
   # Initiallize the number of columns, support and id vector.
-  ncols_each <- supp <- id<- rep(NA, length(unique(rules@itemsetID)))
+  ncols_each <- supp <- id <- rep(NA, length(unique(rules@itemsetID)))
   
   # This does contain the underlying frequent itemsets I will iterate trough to create
   # candidates of new rules for each.
@@ -147,7 +147,7 @@ DetRules_K <- function(rules){
   id <- rep(id, times = ncols_each)
   
   # Create the new output matrices for the lhs, rhs.
-  lhs <- select(rules@FrequentItemsets,,id)@data
+  lhs <- select(rules@FrequentItemsets,NULL,id)@data
   rhs <- sparseMatrix(i = c(),
                                  j = c(),
                                  giveCsparse = FALSE,
@@ -175,7 +175,7 @@ DetRules_K <- function(rules){
     iter <- 1
     for (i in 1:length(ncols_each)){
       end <- iter + ncols_each[i]
-      rhs[,iter:(end- 1)] <- list_cand[[i]]
+      rhs[,iter:(end - 1)] <- list_cand[[i]]
       iter <- end
     }
     

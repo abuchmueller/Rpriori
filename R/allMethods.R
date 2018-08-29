@@ -253,7 +253,7 @@ setMethod("nrow",  signature = signature(x = "TAMatrix"),
 #' @param j Either columns represented by their column number or logical vector of length
 #' number of columns
 #' @return A character vector containing the names of the items
-setGeneric("select", function(x, i,j) 
+setGeneric("select", function(x, i, j) 
   standardGeneric("select") )
 
 #' Subsetting of an TAMatrix
@@ -274,7 +274,7 @@ setMethod("select",  signature = signature(x = "TAMatrix"),
           function(x, i, j) {
             
             # Make some sanity checks on i, j.
-            if(!missing(i)){
+            if(!(missing(i) || is.null(i))){
               if (is.logical(i)){
                 if(length(i) > nrow(x)){
                   stop(paste('Logical subscript of length',
@@ -290,7 +290,7 @@ setMethod("select",  signature = signature(x = "TAMatrix"),
               }
             }
             
-            if(!missing(j)){
+            if(!(missing(j) || is.null(j))){
               if (is.logical(j)){
                 if(length(j) > ncol(x)){
                   stop(paste('Logical subscript of length', length(j), "too long for TAMatrix with",
@@ -308,7 +308,7 @@ setMethod("select",  signature = signature(x = "TAMatrix"),
             
             
             # If i or j are missing, all rows / columns should be selected.
-            if (missing(i)){
+            if (missing(i) || is.null(i)){
               
               if (is.logical(j)){
                 j <- which(j)
@@ -320,7 +320,7 @@ setMethod("select",  signature = signature(x = "TAMatrix"),
                          items = x@items))
             }
             
-            if (missing(j)){
+            if (missing(j) || is.null(j)){
               
               if (is.logical(i)){
                 i <- which(i)
@@ -332,7 +332,7 @@ setMethod("select",  signature = signature(x = "TAMatrix"),
                          items = x@items[i, drop = FALSE]))
             }
             
-            if (missing(i) && missing(j)){
+            if ((missing(i) || is.null(i)) && (missing(j) || is.null(j))){
               return(x)
             }
             
@@ -633,7 +633,7 @@ setMethod("prune", "FIMatrix", function(object, Support) {
   }
   
   if (!missing(Support)){
-    res <- select(object,support(object) >= Support)
+    res <- select(object,support(object) >= Support, NULL)
     return(res)
   } else {
     return(object) 
@@ -736,14 +736,14 @@ setMethod("select",  signature = signature(x = "FIMatrix"),
           function(x, i, j) {
             
             # Make some sanity checks on i, j.
-            if(!missing(i)){
-              if (is.logical(i)){
-                if(length(i) > nrow(x)){
+            if (!(missing(i) || is.null(i))){ 
+              if (is.logical(i)){ 
+                if (length(i) > nrow(x)){ 
                   stop(paste('Logical subscript of length', length(i), "too long for FIMatrix with", nrow(x), "rows"))
                 }
-              } else {
-                if (is.numeric(i)){
-                  if (any(! (i %in% 1:nrow(x)))){
+              } else { 
+                if (is.numeric(i)){  
+                  if (any(!(i %in% 1:nrow(x)))){ 
                     stop(paste("Subscript is too long. (", paste(i[!i %in% 1:nrow(x)], collapse = ', '),
                                ") cannot be subsetted from FIMatrix with ", nrow(x), ' rows', sep = ''))
                   }
@@ -751,15 +751,15 @@ setMethod("select",  signature = signature(x = "FIMatrix"),
               }
             }
             
-            if(!missing(j)){
+            if (!(missing(j) || is.null(j))){
               if (is.logical(j)){
-                if(length(j) > ncol(x)){
+                if (length(j) > ncol(x)){
                   stop(paste('Logical subscript of length', length(j), "too long for FIMatrix with",
                              ncol(x), "columns"))
                 }
               } else {
                 if (is.numeric(j)){
-                  if (any(! (j %in% 1:ncol(x)))){
+                  if (any(!(j %in% 1:ncol(x)))){
                     stop(paste("Subscript is too long. (", paste(j[!j %in% 1:ncol(x)], collapse = ', '),
                                ") cannot be subsetted from FIMatrix with ", ncol(x), ' columns', sep = ''))
                   }
@@ -775,12 +775,12 @@ setMethod("select",  signature = signature(x = "FIMatrix"),
             }
             
             # If i is missing use all rows of the input 
-            if (missing(i)){
+            if (missing(i) || is.null(i)){
               i <- 1:nrow(x@data)
             }
             
             # If j is missing use all columns of the input 
-            if (missing(j)){
+            if (missing(j) || is.null(j)){
               j <- 1:ncol(x@data)
             }
             
@@ -1146,14 +1146,14 @@ setMethod("prune", "Rules", function(object, Support, Confidence, Lift, Leverage
   selection <- rep(TRUE, ncol(object))
   
   # 
-  if(!missing(Support)){
+  if (!missing(Support)){
     selection <- selection & support(object) >= Support
   }
-  if(!missing(Confidence)){
+  if (!missing(Confidence)){
     selection <- selection & confidence(object) >= Confidence
   }
-  if(!missing(Lift)){
-    if(!inv_Lift){
+  if (!missing(Lift)){
+    if (!inv_Lift){
       selection <- selection & lift(object) >= Lift
     } else {
       selection <- selection & lift(object) <= Lift
@@ -1161,15 +1161,15 @@ setMethod("prune", "Rules", function(object, Support, Confidence, Lift, Leverage
     
     
   }
-  if(!missing(Leverage)){
-    if(!inv_lev){
+  if (!missing(Leverage)){
+    if (!inv_lev){
       selection <- selection & leverage(object) >= Leverage
     } else {
       selection <- selection & leverage(object) <= Leverage
     }
   }
   
-  res <- select(object,, selection)
+  res <- select(object,NULL, selection)
   
   return(res)
 })
@@ -1286,9 +1286,9 @@ setMethod("select",  signature = signature(x = "Rules"),
           function(x, i, j) {
             
             # Make some sanity checks on i, j.
-            if(!missing(i)){
+            if (!(missing(i) || is.null(i))){
               if (is.logical(i)){
-                if(length(i) > nrow(x)){
+                if (length(i) > nrow(x)){
                   stop(paste('Logical subscript of length', length(i), "too long for Rules with", nrow(x), "rows"))
                 }
               } else {
@@ -1301,7 +1301,7 @@ setMethod("select",  signature = signature(x = "Rules"),
               }
             }
             
-            if(!missing(j)){
+            if(!(missing(j) || is.null(j))){
               if (is.logical(j)){
                 if(length(j) > ncol(x)){
                   stop(paste('Logical subscript of length', length(j), "too long for Rules with",
@@ -1331,12 +1331,12 @@ setMethod("select",  signature = signature(x = "Rules"),
             }
             
             # If i is missing use all rows of the input 
-            if (missing(i)){
+            if (missing(i) || is.null(i)){
               i <- 1:nrow(x@lhs)
             }
             
             # If j is missing use all columns of the input 
-            if (missing(j)){
+            if (missing(j) || is.null(j)){
               j <- 1:ncol(x@lhs)
             }
             

@@ -18,7 +18,7 @@ test_that("Test subsetting of TAMatrix", {
                                   dim = c(2L,1L),
                                   items = c("a", 'b')) )
   
-  expect_equal(select(testmat,c(1,3),),new('TAMatrix',
+  expect_equal(select(testmat,c(1,3),NULL),new('TAMatrix',
                                     data = as(matrix(c(1,0,1,0,1,1,1,0),
                                                      nrow = 2,
                                                      byrow = TRUE,
@@ -26,17 +26,17 @@ test_that("Test subsetting of TAMatrix", {
                                     dim = c(2L,4L),
                                     items = c("a", 'c')))
   
-  expect_equal(select(testmat,,c(TRUE, TRUE, FALSE, FALSE)),new('TAMatrix',
+  expect_equal(select(testmat,NULL,c(TRUE, TRUE, FALSE, FALSE)),new('TAMatrix',
                                                          data = as(matrix(c(1,0,0,0,1,1),
                                                                           nrow = 3,
                                                                           byrow = TRUE,
                                                                           dimnames = list(c('a', 'b','c'),NULL)), "ngTMatrix"),
                                                          dim = c(3L,2L),
                                                          items = c("a", 'b', 'c')) )
-  expect_error(select(testmat,,c(TRUE, TRUE, TRUE, TRUE, FALSE)),
+  expect_error(select(testmat,NULL,c(TRUE, TRUE, TRUE, TRUE, FALSE)),
                'Logical subscript of length 5 too long for TAMatrix with 4 columns')
-  expect_error(select(testmat,c(5, 6)))
-  expect_error(select(testmat,c(TRUE, TRUE, TRUE, TRUE, FALSE),),
+  expect_error(select(testmat,c(5, 6), NULL))
+  expect_error(select(testmat,c(TRUE, TRUE, TRUE, TRUE, FALSE),NULL),
                'Logical subscript of length 5 too long for TAMatrix with 3 rows')
   expect_error(testmat[c(5),])
 
@@ -56,12 +56,12 @@ test_that("Test subsetting of FIMatrix",{
                                                   byrow = TRUE,
                                                   dimnames = list(c('a'),NULL)), "ngTMatrix"),
                                  support = c( 0.6)))
-  expect_error(select(testmat,,c(TRUE, TRUE, TRUE, TRUE, FALSE)),
+  expect_error(select(testmat,NULL,c(TRUE, TRUE, TRUE, TRUE, FALSE)),
                'Logical subscript of length 5 too long for FIMatrix with 4 columns')
-  expect_error(select(testmat,,c(5, 6)))
-  expect_error(select(testmat,c(TRUE, TRUE, TRUE, TRUE, FALSE),),
+  expect_error(select(testmat,NULL,c(5, 6)))
+  expect_error(select(testmat,c(TRUE, TRUE, TRUE, TRUE, FALSE),NULL),
                'Logical subscript of length 5 too long for FIMatrix with 3 rows')
-  expect_error(select(testmat,c(5),))
+  expect_error(select(testmat,c(5),NULL))
 })
 
 test_that("Test subsetting of Rules",{
@@ -107,11 +107,11 @@ test_that("Test subsetting of Rules",{
                                                                          byrow = TRUE,
                                                                          dimnames = list(c('a', 'b', 'c'),NULL)), "ngTMatrix"),
                                                         support = rep(0.3, 4))))
-  expect_error(select(testmat,,c(TRUE, TRUE, TRUE, TRUE, FALSE)),
+  expect_error(select(testmat,NULL,c(TRUE, TRUE, TRUE, TRUE, FALSE)),
                'Logical subscript of length 5 too long for Rules with 4 columns')
-  expect_error(select(testmat,,c(5, 6)))
-  expect_error(select(testmat,c(TRUE, TRUE, TRUE, TRUE, FALSE),),
+  expect_error(select(testmat,NULL,c(5, 6)))
+  expect_error(select(testmat,c(TRUE, TRUE, TRUE, TRUE, FALSE),NULL),
                'Logical subscript of length 5 too long for Rules with 3 rows')
-  expect_error(select(testmat,c(5),))
+  expect_error(select(testmat,c(5),NULL))
   
 })
