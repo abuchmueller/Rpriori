@@ -3,13 +3,13 @@ context("Test DetRules 1 and k")
 
 test_that("A simple test for rule Generation of consequent_length one", {
   
-  FrequentItems <- ProjectApriori:::DetRules_1_FrequentItemets
+  FrequentItems <- Rpriori:::DetRules_1_FrequentItemets
   
   FrequentItems <- new("FIMatrix",
                        data = as(FrequentItems, "ngTMatrix"),
-                       support = ProjectApriori:::DetRules_1_FrequentItems_support)
+                       support = Rpriori:::DetRules_1_FrequentItems_support)
   
-  result <- ProjectApriori:::DetRules_1_R1
+  result <- Rpriori:::DetRules_1_R1
   
   result <- new("Rules",
                 lhs = as(result$lhs, "ngTMatrix"),
@@ -29,7 +29,7 @@ test_that("DetRules_K: Generate only one rule of length 2 from rules of length 1
   
   # Example for rules of length 2 where only one rules is created (Special Case)
   # Create input set #
-  input <- ProjectApriori:::test_Detrules1 
+  input <- Rpriori:::test_Detrules1 
   
   input <- new("Rules",
                lhs = as(input$lhs, "ngTMatrix"),
@@ -45,7 +45,7 @@ test_that("DetRules_K: Generate only one rule of length 2 from rules of length 1
 
   
   # Create output set #
-  result <- ProjectApriori:::test_Detrules2
+  result <- Rpriori:::test_Detrules2
   
   result <- new("Rules",
                 lhs = as(result$lhs, "ngTMatrix"),

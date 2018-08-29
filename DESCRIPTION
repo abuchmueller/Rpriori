@@ -1,4 +1,4 @@
-Package: ProjectApriori
+Package: Rpriori
 Version: 1.1
 Title: Implementaion of the Apriori Algorithm
 Description: This packages includes a full implementation of the Apriori algorithm. It does include a compete S4 class structure as well as many convenience functions such as print or plot. 

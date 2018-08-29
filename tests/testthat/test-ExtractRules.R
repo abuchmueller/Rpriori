@@ -1,7 +1,7 @@
 context("Test ExtractRules")
 
 test_that("test with consequents of one", {
-  input <- ProjectApriori:::ExtractRules_R1
+  input <- Rpriori:::ExtractRules_R1
   input <- new('Rules',
                lhs = as(input$lhs, 'ngTMatrix' ),
                rhs = as(input$rhs, 'ngTMatrix'),
@@ -14,7 +14,7 @@ test_that("test with consequents of one", {
                                       data = as(input$frequentItems,'ngTMatrix'),
                                       support = rep(0, ncol(input$frequentItems))))
   
-  result <-  ProjectApriori:::ExtractRules_result1
+  result <-  Rpriori:::ExtractRules_result1
   result$Lift <- rep(-1, length(input@confidence))
   result$Leverage <- rep(-1, length(input@confidence))
   
@@ -22,7 +22,7 @@ test_that("test with consequents of one", {
 })
 
 test_that("test with consequents of two",{
-  input <- ProjectApriori:::ExtractRules_R2
+  input <- Rpriori:::ExtractRules_R2
   input <- new('Rules',
                lhs = as(input$lhs, 'ngTMatrix' ),
                rhs = as(input$rhs, 'ngTMatrix'),
@@ -35,7 +35,7 @@ test_that("test with consequents of two",{
                                       data = as(input$frequentItems, "ngTMatrix"),
                                       support = rep(0, ncol(input$frequentItems))))
   
-  result <- ProjectApriori:::ExtractRules_result2
+  result <- Rpriori:::ExtractRules_result2
   result$Lift <- rep(-1, length(input@confidence))
   result$Leverage <- rep(-1, length(input@confidence))
   

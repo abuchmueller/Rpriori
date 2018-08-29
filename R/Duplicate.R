@@ -2,7 +2,7 @@
 #' 
 #' This function is based on a c function from the arules package that finds duplicated columns
 #' in a sparse matrix
-#' @useDynLib ProjectApriori R_pnindex
+#' @useDynLib Rpriori R_pnindex
 #' @name Duplicate
 #' @param mat a sparse matrix.
 #' @return A boolean vector that does have one element for each column in the matrix.

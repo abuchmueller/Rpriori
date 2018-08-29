@@ -2,7 +2,7 @@ context("Test DetSupport")
 
 testthat::test_that("Empty input, Empty output",{
  
-  cand <- ProjectApriori:::Test_GiveUniquecols_L3   
+  cand <- Rpriori:::Test_GiveUniquecols_L3   
   
   testthat::expect_equal(DetSupport(cand, NULL), c(0)[0])
 })

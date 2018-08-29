@@ -7,7 +7,7 @@
 DetRules_K(rules)
 }
 \arguments{
-\item{rules}{Object of class Rules from Project_Apriori containing the current rules with 
+\item{rules}{Object of class Rules from Rapriori containing the current rules with 
 minimal support and confidence.}
 }
 \description{

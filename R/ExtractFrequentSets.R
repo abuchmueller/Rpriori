@@ -6,12 +6,12 @@
 #' @param Apriori_object This has to be the ouput of the apriori command from the arules
 #'  package when looking for frequent itemsets
 #' @return Gives back a list with sets, the frequent itemsets and  their corresponding
-#'  support. The format is similar to the output of ProjectApriori function FrequentItemsets.
+#'  support. The format is similar to the output of Rapriori function FrequentItemsets.
 
 ExtractFrequentSets <- function(Apriori_object){
   
   # Extract the sparse matrix object from the apriori object.
-  # This is a compressed sparse matrix and since the package Project_Apriori does work with 
+  # This is a compressed sparse matrix and since the package Rapriori does work with 
   # not compressed sparse matrices I do convert It.
   sets <- as(Apriori_object@items@data, "TsparseMatrix")
   

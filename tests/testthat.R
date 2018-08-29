@@ -1,4 +1,4 @@
 library(testthat)
-library(ProjectApriori)
+library(Rpriori)
 
-test_check("ProjectApriori")
+test_check("Rpriori")

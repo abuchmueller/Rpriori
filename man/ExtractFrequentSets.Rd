@@ -12,7 +12,7 @@ package when looking for frequent itemsets}
 }
 \value{
 Gives back a list with sets, the frequent itemsets and  their corresponding
- support. The format is similar to the output of ProjectApriori function FrequentItemsets.
+ support. The format is similar to the output of Rapriori function FrequentItemsets.
 }
 \description{
 This function does extract the sets and the support of a search for the frequent itemsets

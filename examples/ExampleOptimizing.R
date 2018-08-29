@@ -13,8 +13,6 @@ print(result)
 
 #Optimize GiveUniqueCol
 ## The use case right now takes about 9 seconds and is the majority of the runtime of Gen_candidates. #
-
-# cand <- readRDS(system.file("testdata",'test_cand.rds', package="ProjectApriori"))
 # 
 # debugonce(GiveUniqueCol)
 # start_time <- Sys.time()
@@ -27,9 +25,9 @@ print(result)
 # Det Support #
 ## currently 14 secs #
 # data("Groceries")
-# groc_trans <- ProjectApriori::makeTransactionMatrix(Groceries)
+# groc_trans <- Rpriori::makeTransactionMatrix(Groceries)
 # 
-# L2 <- readRDS(system.file("testdata","Perf_L2.rds", package="ProjectApriori"))
+# L2 <- readRDS(system.file("testdata","Perf_L2.rds", package="Rpriori"))
 # 
 # start_time <- Sys.time()
 # res_1 <- DetSupport(L2, groc_trans)
@@ -52,7 +50,7 @@ print(result)
 
 # For the use case in L1 we need right now 20 seconds #
 
-# L1 <- readRDS(system.file("testdata","Perf_L1.rds", package="ProjectApriori"))
+# L1 <- readRDS(system.file("testdata","Perf_L1.rds", package="Rpriori"))
 # 
 # #debugonce(GenCandidates)
 # start_time <- Sys.time()

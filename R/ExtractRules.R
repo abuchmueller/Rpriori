@@ -1,10 +1,10 @@
 #' Extract Rules
 #' 
-#' This function extracts the rule from the output of ProjectAprioris Association rules
+#' This function extracts the rule from the output of Rapriori Association rules
 #' function in the form of {It1, ... ItN} -> {ITK}.
 #' @name ExtractRules
 #' @export
-#' @param rules A output object from Project_Apriori's Association rules function has to be used
+#' @param rules A output object from Rapriori's Association rules function has to be used
 #' here.
 #' @param maxNumConsequent The maximum length of consequents that the rules of the ouput should 
 #' have. In Default all rules are shown.

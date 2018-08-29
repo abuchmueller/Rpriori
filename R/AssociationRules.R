@@ -44,7 +44,7 @@ AssociationRules <- function(Itemsets, minsupport, minconfidence = 0, FrequentIt
   # If the frequent itemsets are not provided they have to be calculated here.
   if (missing(FrequentItems)){
     # Calculate the frequent itemsets with minimal support minsupport with the help of the 
-    # Project_Apriori function Frequent Itemsets
+    # Rapriori function Frequent Itemsets
     FrequentItems <- FindFrequentItemsets(Itemsets, minsupport = minsupport)
   }
   

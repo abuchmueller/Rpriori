@@ -92,7 +92,7 @@ DetRules_1 <- function(Items){
 #' This function take the frequent transactions as input and generates rules of length len. It uses the Apriori-gen for more efficient generation
 #' of rule candidates.
 #' @name DetRules_K
-#' @param rules Object of class Rules from Project_Apriori containing the current rules with 
+#' @param rules Object of class Rules from Rapriori containing the current rules with 
 #' minimal support and confidence.
 
 DetRules_K <- function(rules){

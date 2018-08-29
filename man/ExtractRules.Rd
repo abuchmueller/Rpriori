@@ -8,7 +8,7 @@ ExtractRules(rules, maxNumConsequent = NULL, order_by = NULL,
   decreasing = TRUE)
 }
 \arguments{
-\item{rules}{A output object from Project_Apriori's Association rules function has to be used
+\item{rules}{A output object from Rapriori's Association rules function has to be used
 here.}
 
 \item{maxNumConsequent}{The maximum length of consequents that the rules of the ouput should 
@@ -25,6 +25,6 @@ The rules from the left hand and right hand side in the form of {It1, ... ItN} -
 in a data.frame. This data.frame does have columns lhs, rhs, unnamed, support and confidence.
 }
 \description{
-This function extracts the rule from the output of ProjectAprioris Association rules
+This function extracts the rule from the output of Rapriori Association rules
 function in the form of {It1, ... ItN} -> {ITK}.
 }
