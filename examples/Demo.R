@@ -1,59 +1,57 @@
 ##### This file contains a demonstration of how   #####
-##### our package works. If Rpriori is            #####
-##### properly installed this should run top to   #####
-##### bottom without giving any errors however if #####
-##### you wish, you can create the objects (run   #####
-##### until line 27) and head straigt to the      #####
-##### methods at the bottom (line 59 and below).  #####
+##### our package works. If Rpriori is properly   #####
+##### installed this should run top to bottom     #####
+##### without any errors.                         #####
 #######################################################
 
 library(Rpriori)
 
 data("Groceries")
 
-#Sparse matrix of itemsets, where rows are items and columns transactions
-#this is fully optional, FindFrequentItemsets and AssociationRules now do this automatically
+# This creates a sparse matrix of itemsets, where rows are items and columns transactions
+# this is fully optional, FindFrequentItemsets() and AssociationRules() now do this automatically
 TAM <- makeTAMatrix(Groceries)
 
-#Sparse matrix of frequent itemsets + support vector containing support for each itemset
+# Creates sparse matrix of frequent itemsets and a support vector containing support for each itemset
+# this is also optional; it is the same as the matrix in the @FrequentItemsets slot in a Rules object
 Frequent <- FindFrequentItemsets(Groceries, 0.01)
 
-#Object of 'Rule' class
+# Create an object of 'Rule' class
 Rules <- AssociationRules(Groceries, minsupport = 0.01)
 
-#### from here on you can skip to the methods (line 59) ####
-
 # using a frequent itemset matrix instead of a transaction matrix
-# (faster since it doesn't have to recalculate frequent itemsets again)
+# (might faster since it doesn't have to recalculate frequent itemsets 
+# again if you dont lower the support threshold)
 fRules <- AssociationRules(Groceries, Frequent, minsupport = 0.03,
                           minconfidence = 0.4)
 
 
 
 #for comparison
-aRules <- apriori(Groceries, parameter = list(supp = 0.03, conf = 0.4));inspect(aRules)
+aRules <- apriori(Groceries, parameter = list(supp = 0.01, conf = 0.4));inspect(aRules)
 
 
-#Check if classes are implemented correct
-class(TransactionMatrix)
-class(frequent_items)
+# Check if classes are implemented correct
+class(TAM)
+class(Frequent)
 class(Rules)
 
 ## check if we have methods listed for following classes: 
-#  TAMatrix [our Transactionmatrix class], FIMatrix [our frequent itemmatrix class], Rules [our Rules class]
+#  TAMatrix (our Transactionmatrix class), FIMatrix (our frequent itemmatrix class), Rules (our Rules class)
 showMethods("length")
 showMethods("show")
 showMethods("print")
 showMethods("summary")
 showMethods("plot")
-showMethods("hist") # (only FIMatrix)
+showMethods("hist")
+showMethods("qplot")
 
 ## or check by class name directly
 showMethods(class = "TAMatrix")
 showMethods(class = "FIMatrix")
 showMethods(class = "Rules")
 
-#### Overview over all Methods #####
+#### Overview over all methods #####
 
 #TAMatrix
 length(TAM)
@@ -70,7 +68,7 @@ print(Frequent)
 summary(Frequent)
 plot(Frequent)
 hist(Frequent)
-qplot(Frequent, type = "scatter", col = "blue", alpha = 0.25)
+qplot(Frequent, type = "scatter", col = "blue", alpha = 0.25) #You don't need to supply more than a valid object here but you can
 qplot(Frequent, type = "hist")
 
 #Rules
@@ -84,6 +82,4 @@ support(Rules)
 confidence(Rules)
 leverage(Rules)
 lift(Rules)
-extract(Rules)
-
-
+extract(Rules) # These are the underlying frequent itemsets used in rule creation

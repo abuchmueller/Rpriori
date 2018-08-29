@@ -5,12 +5,12 @@
 Rpriori
 =======
 
-The goal of Rpriori is to create association rules of type X=&gt;Y by using the Apriori algorithm.
+The goal of `Rpriori` is to create association rules of type X=&gt;Y by using the Apriori algorithm. For a more detailed demonstration of how the package works please consider the Demo file in the examples folder. This `README` only covers the most important features.
 
 Installation
 ------------
 
-You can install Rpriori from github with:
+You can install `Rpriori` from github with:
 
 ``` r
 # install.packages("devtools")
@@ -20,7 +20,7 @@ devtools::install_github("TimToebrock/Rpriori")
 Example: Creating association rules
 -----------------------------------
 
-This is a basic example which shows you how to create association rules with Rpriori using the `Groceries` dataset:
+This is a basic example which shows you how to create association rules with `Rpriori` using the `Groceries` dataset:
 
 ``` r
 data("Groceries")
