@@ -13,6 +13,8 @@ knitr::opts_chunk$set(
 library(arules)
 library(ProjectApriori)
 ```
+[![Build Status](https://travis-ci.org/TimToebrock/Project_Apriori.svg?branch=master)](https://travis-ci.org/TimToebrock/Project_Apriori)
+
 
 # ProjectApriori
 
