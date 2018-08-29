@@ -148,6 +148,7 @@ setGeneric("qplot", function(x,... )
 #' @aliases qplot-TAMatrix qplot,TAMatrix-method
 #' @return histogram of the length of the itemsets within the TA Matrix.
 #' @export
+#' @importFrom arules items support
 setMethod("qplot", signature(x = "TAMatrix"), function(x) {
 
   #dataframe needed for ggplot
@@ -161,14 +162,6 @@ setMethod("qplot", signature(x = "TAMatrix"), function(x) {
 })
 
 
-#' Extracing the names of the items. 
-#' @name items
-#' @rdname items
-#' @export  
-#' @param x Object to extract the items from
-#' @return A character vector containing the names of the items
-setGeneric("items", function(x) 
-  standardGeneric("items") )
 
 #' Export the item names for a TAMatrix.
 #' @name items-TAMatrix
@@ -274,15 +267,15 @@ setMethod("select",  signature = signature(x = "TAMatrix"),
           function(x, i, j) {
             
             # Make some sanity checks on i, j.
-            if(!(missing(i) || is.null(i))){
+            if (!(missing(i) || is.null(i))){
               if (is.logical(i)){
-                if(length(i) > nrow(x)){
+                if (length(i) > nrow(x)){
                   stop(paste('Logical subscript of length',
                              length(i), "too long for TAMatrix with", nrow(x), "rows"))
                 }
               } else {
                 if (is.numeric(i)){
-                  if (any(! (i %in% 1:nrow(x)))){
+                  if (any(!(i %in% 1:nrow(x)))){
                     stop(paste("Subscript is too long. (", paste(i[!i %in% 1:nrow(x)], collapse = ', '),
                                ") cannot be subsetted from TAMatrix with ", nrow(x), ' rows', sep = ''))
                   }
@@ -290,15 +283,15 @@ setMethod("select",  signature = signature(x = "TAMatrix"),
               }
             }
             
-            if(!(missing(j) || is.null(j))){
+            if (!(missing(j) || is.null(j))){
               if (is.logical(j)){
-                if(length(j) > ncol(x)){
+                if (length(j) > ncol(x)){
                   stop(paste('Logical subscript of length', length(j), "too long for TAMatrix with",
                              ncol(x), "columns"))
                 }
               } else {
                 if (is.numeric(j)){
-                  if (any(! (j %in% 1:ncol(x)))){
+                  if (any(!(j %in% 1:ncol(x)))){
                     stop(paste("Subscript is too long. (", paste(j[!j %in% 1:ncol(x)], collapse = ', '),
                                ") cannot be subsetted from TAMatrix with ", ncol(x), ' columns', sep = ''))
                   }
@@ -567,28 +560,18 @@ setMethod("hist", "FIMatrix", function(x) {
   }
 })
 
-#' Extracing the support of objects
-#' 
-#' Returns the support of the input objects
-#' @name support
-#' @rdname support
-#' @export  
-#' @param object Object to extract the support from
-#' @return A numeric vector containing the support values.
-setGeneric("support", function(object) {
-  standardGeneric("support")
-})
+
 
 #' Extract the support of itemsets in class FIMatrix
 #' @name support-FIMatrix
 #' @rdname support-FIMatrix
 #' @export  
-#' @param object Object of class FIMatrix
+#' @param x Object of class FIMatrix
 #' @aliases support-FIMatrix support,FIMatrix-method
 #' @return A numeric vector containing the support values of the itemsets in the FIMatrix.
 #' 
-setMethod("support", "FIMatrix", function(object) {
-  return(object@support)
+setMethod("support", "FIMatrix", function(x) {
+  return(x@support)
 })
 
 
@@ -1059,11 +1042,11 @@ setMethod("leverage", "Rules", function(object) {
 #' @name support-Rules
 #' @rdname support-Rules
 #' @export  
-#' @param object Object of class Rules
+#' @param x Object of class Rules
 #' @aliases support-Rules support,Rules-method
 #' @return A numeric vector containing the support values of Rules.
-setMethod("support", "Rules", function(object) {
-  object@support
+setMethod("support", "Rules", function(x) {
+  x@support
 })
 
 #' Extract FIMatrix object from class
