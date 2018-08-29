@@ -114,6 +114,7 @@ setMethod("summary", signature(object = "TAMatrix"), function(object) {
 #' @param x Object of class TAMatrix
 #' @aliases plot-TAMatrix plot,TAMatrix-method
 #' @return histogram of the length of the itemsets within the TA Matrix.
+#' @importFrom utils data
 setMethod("plot", signature(x = "TAMatrix"), function(x) {
   
   if (length(x) <= 0) {
@@ -131,12 +132,25 @@ setMethod("plot", signature(x = "TAMatrix"), function(x) {
   
 })
 
-
+#' ggplot plot methods for Rules, TAMatrix and FIMatrix
+#' @param x object of class Rules, TAMatrix or FIMatrix
+#' @param ... Further information that should be passed down to plot function
+#' @return Plot
 #' @export
-#' @import ggplot2
-setGeneric("qplot", function(x,... ) 
+#' @importFrom ggplot2 aes element_text geom_bar geom_point ggplot labs scale_color_gradient theme
+setGeneric("qplot", function(x,... )
+  
   standardGeneric("qplot") )
 
+#' Plot an TAMatrix object with ggplot.
+#' 
+#' The qplot function for TA Matrix does give a histgram of the itemset length.
+#' @name qplot-TAMatrix
+#' @rdname qplot-TAMatrix
+#' @export  
+#' @param x Object of class TAMatrix
+#' @aliases qplot-TAMatrix qplot,TAMatrix-method
+#' @return histogram of the length of the itemsets within the TA Matrix.
 #' @export
 setMethod("qplot", signature(x = "TAMatrix"), function(x) {
 
@@ -503,7 +517,18 @@ setMethod("plot", signature(x = "FIMatrix"), function(x, pch = 1, col = "red") {
   
 })
 
-
+#' Plot an FI-matrices with ggplot
+#' 
+#' The qplot function gives a scatter plot with the support on the y-axis and the itemset-length on
+#' the x-axis
+#' @name qplot-FIMatrix
+#' @rdname qplot-FIMatrix
+#' @param x Object of class FIMatrix
+#' @param col colour that is given to plot function.
+#' @param alpha Alpha value value that is given to qplot
+#' @param type should it be a scatter plot or a histogram?
+#' @aliases qplot-FIMatrix qplot,FIMatrix-method
+#' @return Scatter plot of Itemsize vs support.
 #' @export
 setMethod("qplot", signature(x = "FIMatrix"), function(x, col = "red", alpha = 0.1, type = c("hist", "scatter")) {
 
@@ -946,7 +971,17 @@ setMethod("plot", "Rules", function(x) {
 
 })
 
-#' @export
+#' Plot an Rules object wiht ggplot2
+#' 
+#' The plot function gives a scatter plot with the support on the x-axis, the confidence on the y-axis
+#' and the lift as a color gradient. 
+#' @name qplot-Rules
+#' @rdname qplot-Rules
+#' @export  
+#' @param x Object of class Rules
+#' @aliases qplot-Rules qplot,Rules-method
+#' @return Scatter qplot of support versus confidence, lift as a color gradient..
+#' 
 setMethod("qplot", "Rules", function(x) {
 
   quality.df <- data.frame(support = x@support,
