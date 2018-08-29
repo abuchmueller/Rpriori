@@ -1,3 +1,10 @@
+# ------------------------------------------------------------------------------------------------ #
+# --------------------------------------- Corce Types -------------------------------------------- #
+# ------------------------------------------------------------------------------------------------ #
+
+# The following methods are used to coerce allowed input types such as sparse matrices, matrices,
+# data.frame ect into Rpriori classes.
+
 #' Take different input and make them a TAMatrix.
 #' 
 #' Takes a object of class Matrix, ngCMatrix, ngTMatrix or formel class transactions and return a

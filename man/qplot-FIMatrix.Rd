@@ -6,8 +6,8 @@
 \alias{qplot,FIMatrix-method}
 \title{Plot an FI-matrices with ggplot}
 \usage{
-\S4method{qplot}{FIMatrix}(x, col = "red", alpha = 0.1,
-  type = c("hist", "scatter"))
+\S4method{qplot}{FIMatrix}(x, col = "red", alpha = 0.1, type = c("hist",
+  "scatter"))
 }
 \arguments{
 \item{x}{Object of class FIMatrix}
