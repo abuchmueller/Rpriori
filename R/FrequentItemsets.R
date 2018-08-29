@@ -1,13 +1,23 @@
 #' Calculate frequent itemset with minimal support
 #' 
-#' This function calculate the frequent itemset with a minimal support. 
+#' This function calculates the frequent itemset with a minimal support value. 
 #' @name FindFrequentItemsets
 #' @export
-#' @param dataset currently under development
-#' @param minsupport This defines the minimal level of the support the resulting itemsets should have.
-#' @return The is a list that does store the frequent itemsets as a sparse incidence matrix
-#'  as well as the resulting support as a vector.
-
+#' @param dataset Transactions in an object of class TAMatrix, matrix, sparse matrix, data.frame or
+#' transactions.
+#' @param minsupport Minimal support value of the frequent itemsets
+#' @return Object of class FIMatrix conatining the frequent items
+#' @examples \donttest{
+#' # Calculate the frequent itemsets with minimal support 0.03 
+#' # and confidence 0.4 based on the dataset Groceries
+#' Groceries_Fitems <- FindFrequentItemsets(Itemsets = Groceries, minsupport = 0.03)
+#' 
+#' # print the frequent itemsets
+#' print(Groceries_Fitems)
+#' 
+#' # plot the frequent itemsets
+#' plot(Groceries_Fitems)
+#' }
 
 FindFrequentItemsets <- function(dataset, minsupport){
   
