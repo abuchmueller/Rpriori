@@ -1,11 +1,11 @@
-# ----------------------------------------------------------------------------- #
-# ------------------- All methods for the classes. ---------------------------- #
-# ----------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------------------------ #
+# ----------------------------- All methods for the classes. ------------------------------------- #
+# ------------------------------------------------------------------------------------------------ #
 
 
-# ----------------------------------------------------------------------------- #
-# ------------------ All methods for class TAMATRIX --------------------------- #
-# ----------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------------------------ #
+# ---------------------------- All methods for class TAMATRIX ------------------------------------ #
+# ------------------------------------------------------------------------------------------------ #
 
 #' Determine the number of items in a TAMatrix
 #' 
@@ -132,20 +132,23 @@ setMethod("plot", signature(x = "TAMatrix"), function(x) {
 })
 
 
+#' @export
+#' @import ggplot2
+setGeneric("qplot", function(x,... ) 
+  standardGeneric("qplot") )
 
+#' @export
+setMethod("qplot", signature(x = "TAMatrix"), function(x) {
 
-# #ggplot2 implementation
-# setMethod("qplot", signature(x = "TAMatrix"), function(x) {
-#   
-#   #dataframe needed for ggplot
-#   df <- data.frame(itemset_length = colSums(x@data))
-#   
-#   ggplot(df, aes(df$itemset_length)) + 
-#     geom_bar() +
-#     labs(title = "Histogram of itemset lengths", x = "Itemset length") +
-#     theme(plot.title = element_text(hjust = 0.5))
-#   
-# })
+  #dataframe needed for ggplot
+  df <- data.frame(itemset_length = colSums(x@data))
+
+  ggplot(df, aes(df$itemset_length)) +
+    geom_bar() +
+    labs(title = "Histogram of itemset lengths", x = "Itemset length") +
+    theme(plot.title = element_text(hjust = 0.5))
+
+})
 
 
 #' Extracing the names of the items. 
@@ -268,7 +271,8 @@ setMethod("select",  signature = signature(x = "TAMatrix"),
             if(!missing(i)){
               if (is.logical(i)){
                 if(length(i) > nrow(x)){
-                  stop(paste('Logical subscript of length', length(i), "too long for TAMatrix with", nrow(x), "rows"))
+                  stop(paste('Logical subscript of length',
+                             length(i), "too long for TAMatrix with", nrow(x), "rows"))
                 }
               } else {
                 if (is.numeric(i)){
@@ -342,9 +346,9 @@ setMethod("select",  signature = signature(x = "TAMatrix"),
           })
 
 
-# ----------------------------------------------------------------------------- #
-# ------------------ All methods for class FIMatrix --------------------------- #
-# ----------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------------------------ #
+# -------------------------------- All methods for class FIMatrix -------------------------------- #
+# ------------------------------------------------------------------------------------------------ #
 
 #' Determine the number of items in a FIMatrix
 #' 
@@ -500,30 +504,30 @@ setMethod("plot", signature(x = "FIMatrix"), function(x, pch = 1, col = "red") {
 })
 
 
-##ggplot2 implementation
-# setMethod("qplot", signature(x = "FIMatrix"), function(x, col = "red", alpha = 0.1, type = c("hist", "scatter")) {
-#   
-#   if (missing(type)) {
-#     stop("type missing: Please supply a type by specifiying either 'scatter' or 'hist'")
-#   }
-#   
-#   #set up data frame for ggplot
-#   df <- data.frame(data = colSums(x@data), support = x@support)
-#   
-#   if (type == "scatter") {
-# 
-#     ggplot(df, aes(data, support)) + 
-#       geom_point(col = col, alpha = alpha) +
-#       labs(x = "Itemset length", y = "support")
-#   } else {
-#     
-#     ggplot(df, aes(df$data)) + 
-#       geom_bar() +
-#       labs(title = "Histogram of itemset lengths", x = "Itemset length") +
-#       theme(plot.title = element_text(hjust = 0.5))
-#   }
-#   
-# })
+#' @export
+setMethod("qplot", signature(x = "FIMatrix"), function(x, col = "red", alpha = 0.1, type = c("hist", "scatter")) {
+
+  if (missing(type)) {
+    stop("type missing: Please supply a type by specifiying either 'scatter' or 'hist'")
+  }
+
+  #set up data frame for ggplot
+  df <- data.frame(data = colSums(x@data), support = x@support)
+
+  if (type == "scatter") {
+
+    ggplot(df, aes(data, support)) +
+      geom_point(col = col, alpha = alpha) +
+      labs(x = "Itemset length", y = "support")
+  } else {
+
+    ggplot(df, aes(df$data)) +
+      geom_bar() +
+      labs(title = "Histogram of itemset lengths", x = "Itemset length") +
+      theme(plot.title = element_text(hjust = 0.5))
+  }
+
+})
 
 #' Plot an Histogram of itemset length for an FI-matrices.
 #' 
@@ -791,9 +795,9 @@ setMethod("select",  signature = signature(x = "FIMatrix"),
 
 
 
-# ----------------------------------------------------------------------------- #
-# -------------------- All methods for class Rules ---------------------------- #
-# ----------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------------------------ #
+# ------------------------------ All methods for class Rules ------------------------------------- #
+# ------------------------------------------------------------------------------------------------ #
 
 #' Determine the number of rules in a Rules object
 #' 
@@ -942,19 +946,19 @@ setMethod("plot", "Rules", function(x) {
 
 })
 
-# #ggplot2 implementation
-# setMethod("qplot", "Rules", function(x) {
-#   
-#   quality.df <- data.frame(support = x@support, 
-#                            confidence = x@confidence,
-#                            lift = x@lift,
-#                            leverage = x@leverage)
-#   
-#   ggplot(quality.df, aes(x=support, y=confidence, color=lift)) + 
-#     geom_point() + 
-#     scale_color_gradient(low="lightblue", high="blue")
-#   
-# })
+#' @export
+setMethod("qplot", "Rules", function(x) {
+
+  quality.df <- data.frame(support = x@support,
+                           confidence = x@confidence,
+                           lift = x@lift,
+                           leverage = x@leverage)
+
+  ggplot(quality.df, aes(x=support, y=confidence, color=lift)) +
+    geom_point() +
+    scale_color_gradient(low="lightblue", high="blue")
+
+})
 
 
 #' Extract confidence from object

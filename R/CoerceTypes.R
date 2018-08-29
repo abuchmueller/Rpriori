@@ -430,7 +430,7 @@ makeFIMatrix.lgCMatrix <- function(input, support, dataset){
   
   # Input is  a sparse, compressed pattern matrix
   
-  # Create a sparse Matrix using the sparseMatrix function from the Matrix package
+  # Create a sparse Matrix using the sparseMatrix function from thve Matrix package
   # Input is a compressed, sparse matrix
   out_mat <- sparseMatrix(i = input@i,
                           p = input@p,

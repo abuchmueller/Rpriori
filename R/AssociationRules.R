@@ -18,8 +18,8 @@
 #'   the vector does represent the rule that is defined by the i'th column of the lhs and rhs
 #'   matrix.
 
-AssociationRules <- function(Itemsets, FrequentItems, minsupport, minconfidence = 0,
-                             maxConsequentLength = 1){
+AssociationRules <- function(Itemsets, minsupport, minconfidence = 0,
+                             maxConsequentLength = 1, FrequentItems){
   
   
   # Check input types of FrequentItems and Itemsets
