@@ -1,3 +1,7 @@
+# ------------------------------------------------------------------------------------------------ #
+# ------------------------------------ AssociationRules ------------------------------------------ #
+# ------------------------------------------------------------------------------------------------ #
+
 #' Calculate Association rules with minimal support and confidence.
 #'
 #' AssocationRules() computes association rules with minimal support and confidence based on a 
@@ -57,6 +61,10 @@ AssociationRules <- function(Itemsets, minsupport, minconfidence = 0, FrequentIt
   # length > 1 but they do not represent the Frequent itemsets anymore.
   FrequentItems_correct <- FrequentItems
   
+  # ---------------------------------------- #
+  # Calculate rules with consequent length 1 #
+  # ---------------------------------------- #
+  
   # Only frequent itemsets of length >1 are relevant for rules with consequent length > 1.
   # Therefore, I will select only these itemsets from the itemset matrix. 
   selection <- colSums(FrequentItems) > 1
@@ -103,14 +111,19 @@ AssociationRules <- function(Itemsets, minsupport, minconfidence = 0, FrequentIt
   R1@FrequentItemsets <- select(R1@FrequentItemsets,rel_item,NULL)
   
   if (maxConsequentLength == 1) {
-    # Reassign the correct frequent itemsets before output.
+    
+    # Output the created rules since only rules with consequent length 1 should be calculated.
     R1@FrequentItemsets <- FrequentItems_correct
     return(R1)
   } else {
     if (maxConsequentLength < 1) {
       stop("Only values >= 1 allowed for maxConsequentLength")
     }
-    # Find rules of consequent longer than 1.
+    
+    # ---------------------------------------------- #
+    # Calculate rules with consequents longer than 1 #
+    # ---------------------------------------------- #
+    
     k <- 2 
     
     # For the creation of rules of length 2 the itemsets have to have at least three items.
@@ -119,7 +132,8 @@ AssociationRules <- function(Itemsets, minsupport, minconfidence = 0, FrequentIt
     
     R_cur <- select(R1,NULL,R1@itemsetID %in% rel_Items)
     
-    # Abort the loop if the generated candidates from the last step are empty.
+    # Abort the loop if there are not at least two rules coming from the same frequent itemset or 
+    # the maxconsequentLength is reached.
     while (any(duplicated(R_cur@itemsetID)) && k <= maxConsequentLength) {
       
       # Determine the rules of length k + 1.
@@ -151,6 +165,10 @@ AssociationRules <- function(Itemsets, minsupport, minconfidence = 0, FrequentIt
       
       k <- k + 1
     }
+    
+    # ---------------------- #
+    # Output all found rules #
+    # ---------------------- #
     
     # Initiallize the list in which the different elements (rhs, lfs, support, confidence) from
     # the iterations 1 to k - 1 will be saved.

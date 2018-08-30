@@ -1,11 +1,19 @@
+# ------------------------------------------------------------------------------------------------ #
+# ----------------------------------------- Datasets --------------------------------------------- #
+# ------------------------------------------------------------------------------------------------ #
+
+# ------------------------------------------------------------------------------------------------ #
+# ----------------------------------------- Groceries -------------------------------------------- #
+# ------------------------------------------------------------------------------------------------ #
+
 #' One month of real-world point-of-sale transaction data from a typical local grocery outlet.
 #'
-#'The \code{Groceries} data set contains 1 month (30 days) of real-world
-#'point-of-sale transaction data from a typical local grocery outlet.  The data
-#'set contains 9835 transactions and the items are aggregated to 169
-#'categories.
+#' The \code{Groceries} data set contains 1 month (30 days) of real-world
+#' point-of-sale transaction data from a typical local grocery outlet.  The data
+#' set contains 9835 transactions and the items are aggregated to 169
+#' categories.
 #'
-#' @format An object of class transaction with  9835 itemsets and 169 items.
+#' @format An object of class transactions with 9835 itemsets and 169 items.
 #' @author Michael Hahsler
 #' @references Michael Hahsler, Kurt Hornik, and Thomas Reutterer (2006) Implications of
 #' probabilistic data modeling for mining association rules. In M. Spiliopoulou,
@@ -14,10 +22,13 @@
 #'Analysis, and Knowledge Organization}, pages 598--605. Springer-Verlag.
 "Groceries"
 
+# ------------------------------------------------------------------------------------------------ #
+# -------------------------------------------- Epub ---------------------------------------------- #
+# ------------------------------------------------------------------------------------------------ #
 
 #' Download history of documents from the electronic publication platform
 #'
-#'The \code{Epub} data set contains the download history of documents
+#' The \code{Epub} data set contains the download history of documents
 #' from the electronic publication platform of the Vienna University of
 #' Economics and Business Administration.
 #' The data was recorded between Jan 2003 and Dec 2008.
