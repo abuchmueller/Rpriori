@@ -20,39 +20,34 @@ devtools::install_github("TimToebrock/Rpriori")
 Example: Creating association rules
 -----------------------------------
 
-Let's say we would like to mine association rules based on the `Groceries` dataset with the `Rpriori` package. Let's first get a rought overview over the dataset. To do so we could take a look the `summary()` function of Rpriori.
+Let's say we would like to mine association rules based on the `Groceries` dataset with the `Rpriori` package. Let's first get a rough overview over the dataset. To do so we could take a look the `summary()` function of Rpriori.
 
 ``` r
-data("Groceries")
-summary(Groceries)
-#> transactions as itemMatrix in sparse format with
-#>  9835 rows (elements/itemsets/transactions) and
-#>  169 columns (items) and a density of 0.02609146 
+summary(makeTAMatrix(Groceries))
 #> 
-#> most frequent items:
+#> Transaction database in binary sparse matrix representation 
+#>  with 169 rows (items) and 
+#>  9835 columns (itemsets/transactions) and 
+#>  a density of 0.0261 (sparsity: 0.9739)
+#> 
+#> Most frequent items: 
 #>       whole milk other vegetables       rolls/buns             soda 
 #>             2513             1903             1809             1715 
-#>           yogurt          (Other) 
-#>             1372            34055 
+#>           yogurt    bottled water  root vegetables   tropical fruit 
+#>             1372             1087             1072             1032 
 #> 
-#> element (itemset/transaction) length distribution:
-#> sizes
+#> Distribution of itemset length:
+#> 
 #>    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15 
 #> 2159 1643 1299 1005  855  645  545  438  350  246  182  117   78   77   55 
 #>   16   17   18   19   20   21   22   23   24   26   27   28   29   32 
 #>   46   29   14   14    9   11    4    6    1    1    1    1    3    1 
 #> 
 #>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#>   1.000   2.000   3.000   4.409   6.000  32.000 
-#> 
-#> includes extended item information - examples:
-#>        labels  level2           level1
-#> 1 frankfurter sausage meat and sausage
-#> 2     sausage sausage meat and sausage
-#> 3  liver loaf sausage meat and sausage
+#>   1.000   2.000   3.000   4.409   6.000  32.000
 ```
 
-Interesting! We have 9835 transactions recorded with a total 169 items. With a density of 0.026 the average basket does have 4 items in it. That seems realistic. Let's try to find some frequent items with the `FindFrequentItemsets()` function or `Rpriori`!
+Interesting! We have 9835 transactions recorded with a total of 169 items. With a density of 0.026 the average basket does have 4 items in it. That seems realistic. Let's try to find some frequent items with the `FindFrequentItemsets()` function of `Rpriori`!
 
 ``` r
 Frequent <- FindFrequentItemsets(Groceries, minsupport = 0.1)
@@ -60,7 +55,7 @@ show(Frequent)
 #> Found 8 frequent itemset(s). Use print() to display
 ```
 
-We see that here are some items really frequent and occur in on out of ten transaction! What are these items? We can take a closer look at the items by using the `print()` function.
+We see that there are some really frequent items that occur in one out of ten transactions! What are these items? We can take a closer look at the items by using the `print()` function.
 
 ``` r
 print(Frequent)
