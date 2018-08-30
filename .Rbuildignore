@@ -4,4 +4,5 @@
 ^README\.Rmd$
 ^README-.*\.png$
 ^Examples$
+^\.travis\.yml$
 ^Random$
