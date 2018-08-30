@@ -16,33 +16,29 @@ setClass("TAMatrix",
            dim  = "integer",
            items = "character"
          ),
-        
         validity = function(object) {
            
            # There should be a column and row dimension of the data.
-           if (length(object@dim) != 2){
+           if (length(object@dim) != 2) {
              stop("Invalid defintion of TAMatrx: dim should contain the number of rows and columns")
            }
            
            # The first value of dim should describe the number of rows the second one the number
            # of columns
-           if (object@dim[1] != nrow(object@data)){
+           if (object@dim[1] != nrow(object@data)) {
              stop("Invalid defintion of TAMatrx: Wrong number of rows")
            }
            
-           if (object@dim[2] != ncol(object@data)){
+           if (object@dim[2] != ncol(object@data)) {
              stop("Invalid defintion of TAMatrx: Wrong number of columns")
            }
            
            # in items the names of the items should be stored, therefore it must have as many
            # elements as the matrix has rows.
-           if (length(object@items) != nrow(object@data)){
+           if (length(object@items) != nrow(object@data)) {
              stop("Invalid defintion of TAMatrx: Wrong number items in items")
            }
-           
-         }
-)
-
+         })
 
 #' S4 class to represent frequent itemsets in a sparse Matrix
 #' @name FIMatrix-class
@@ -56,23 +52,20 @@ setClass("FIMatrix",
            data = "ngTMatrix",
            support = "numeric"
           ),
-         
          validity = function(object) {
            
            # For each columns (itemset) in the matrix there should be one corresponding
            # support values in support.
-           if (ncol(object@data) != length(object@support)){
+           if (ncol(object@data) != length(object@support)) {
              stop("For each itemset there should be the corresponding support saved in slot support.")
            } 
            
            # The support is a relative frequency  and can therefore only be within 
            # the interval (0,1)
-           if (any(object@support > 1) || any(object@support < 0)){
+           if (any(object@support > 1) || any(object@support < 0)) {
              stop("The support can only be within (0,1)")
            }
-        }
-)
-
+        })
 
 #' S4 class to store association rules and relevant quality metrics
 #' @name Rules-class
@@ -99,14 +92,13 @@ setClass("Rules",
            itemsetID = "numeric",
            FrequentItemsets = "FIMatrix"
          ),
-         
          validity = function(object) {
            
            # here validity checking for the rules class is done.
            
            # A rule consists of the i'th columns of rhs and lhs. Therefore, both of 
            # them must have the same number of columns
-           if (ncol(object@rhs) != ncol(object@lhs)){
+           if (ncol(object@rhs) != ncol(object@lhs)) {
              stop("The lhs should have as many items / columns as the right hand side")
            } 
            
@@ -114,42 +106,40 @@ setClass("Rules",
            # about each of the rules is saved. Therefore, for each column (rule) in lhs and
            # rhs there hat to be exactly one element in support, confidence, lift, leverage and
            # itemsetID
-           if (ncol(object@rhs) != length(object@support)){
+           if (ncol(object@rhs) != length(object@support)) {
              stop("For each of the items in the rules there should be a corresponding support
                   value.")
            }
            
-           if (ncol(object@rhs) != length(object@confidence)){
+           if (ncol(object@rhs) != length(object@confidence)) {
              stop("For each of the items in the rules there should be a corresponding confidence
                   value.")
            }
            
-           if (ncol(object@rhs) != length(object@lift)){
+           if (ncol(object@rhs) != length(object@lift)) {
              stop("For each of the items in the rules there should be a corresponding lift
                   value.")
            }
            
-           if (ncol(object@rhs) != length(object@leverage)){
+           if (ncol(object@rhs) != length(object@leverage)) {
              stop("For each of the items in the rules there should be a corresponding leverage
                   value.")
            }
            
-           if (ncol(object@rhs) != length(object@itemsetID)){
+           if (ncol(object@rhs) != length(object@itemsetID)) {
              stop("For each of the items in the rules there should be a corresponding itemsetID
                   value.")
            }
            
            # The support is the relative frequency of the itemset and can therefore only be within 
            # the interval (0,1)
-           if (any(object@support > 1) || any(object@support < 0)){
+           if (any(object@support > 1) || any(object@support < 0)) {
              stop("The support can only be within (0,1)")
            }
            
            # The confidence is (basicly) a relative frequency of the itemset and can therefore
            # only be within the interval (0,1)
-           if (any(object@confidence > 1) || any(object@confidence < 0)){
+           if (any(object@confidence > 1) || any(object@confidence < 0)) {
              stop("The confidence can only be within (0,1)")
            }
-         }
-)
-
+         })
