@@ -2,7 +2,6 @@
 # ----------------------------- All methods for the classes. ------------------------------------- #
 # ------------------------------------------------------------------------------------------------ #
 
-
 # ------------------------------------------------------------------------------------------------ #
 # ---------------------------- All methods for class TAMATRIX ------------------------------------ #
 # ------------------------------------------------------------------------------------------------ #
@@ -35,14 +34,11 @@ setMethod("length", "TAMatrix", function(x) {
 #' @param descending Starting with the highest or lowest count?
 #' @aliases print-TAMatrix print,TAMatrix-method
 #' @return The frequent itemsets ordererd by their occurence
-#' 
 setMethod("print", "TAMatrix", function(x, descending = TRUE) {
   
   #collect all itemnames, print them by their frequency in a descending order
   print(data.frame(frequency = sort(rowSums(x@data), decreasing = descending)))
-  
 })
-
 
 #' Definition of show method for TAMatrix
 #' 
@@ -57,7 +53,6 @@ setMethod("show", "TAMatrix", function(object) {
   
   n <- length(object)
   cat("Found", n, "items. Use the print() to display\n")
-  
 })
 
 #' Summary for FI-matrices.
@@ -98,7 +93,6 @@ setMethod("summary", signature(object = "TAMatrix"), function(object) {
   #summary statistics on itemset lengths
   print(summary(colSums(object@data)))
   cat("\n")
-  
 })
 
 #' Plot an TAMatrix object.
@@ -125,7 +119,6 @@ setMethod("plot", signature(x = "TAMatrix"), function(x) {
        main = "Distribution of itemset lengths", xlab = "Itemset length", 
        col = "lightblue")
   }
-  
 })
 
 #' ggplot plot methods for Rules, TAMatrix and FIMatrix
@@ -134,9 +127,7 @@ setMethod("plot", signature(x = "TAMatrix"), function(x) {
 #' @return Plot
 #' @export
 #' @importFrom ggplot2 aes element_text geom_bar geom_point ggplot labs scale_color_gradient theme scale_x_continuous
-setGeneric("qplot", function(x,... )
-  
-  standardGeneric("qplot") )
+setGeneric("qplot", function(x,... )  standardGeneric("qplot"))
 
 #' Plot an TAMatrix object with ggplot.
 #' 
@@ -158,10 +149,7 @@ setMethod("qplot", signature(x = "TAMatrix"), function(x) {
     geom_bar() +
     labs(title = "Histogram of itemset lengths", x = "Itemset length") +
     theme(plot.title = element_text(hjust = 0.5))
-
 })
-
-
 
 #' Export the item names for a TAMatrix.
 #' @name items-TAMatrix
@@ -171,10 +159,9 @@ setMethod("qplot", signature(x = "TAMatrix"), function(x) {
 #' @aliases items-TAMatrix items,TAMatrix-method
 #' @return Names of all items in TAMatrix.
 setMethod("items",  signature = signature(x = "TAMatrix"), 
-          function(x){
+          function(x) {
             return(rownames(x@data))
           })
-
 
 #' Give the sum of each column for the underlying matrix within an TAMatrix.
 #' 
@@ -188,7 +175,7 @@ setMethod("items",  signature = signature(x = "TAMatrix"),
 #' @aliases colSums-TAMatrix colSums,TAMatrix-method
 #' @return numeric vector containing the sum of each column of the TAMatrix
 setMethod("colSums",  signature = signature(x = "TAMatrix"), 
-          function(x){
+          function(x) {
             return(colSums(x@data))
           })
 
@@ -204,7 +191,7 @@ setMethod("colSums",  signature = signature(x = "TAMatrix"),
 #' @aliases rowSums-TAMatrix rowSums,TAMatrix-method
 #' @return numeric vector containing the sum of each row of the TAMatrix
 setMethod("rowSums",  signature = signature(x = "TAMatrix"), 
-          function(x){
+          function(x) {
             return(rowSums(x@data))
           })
 
@@ -218,7 +205,7 @@ setMethod("rowSums",  signature = signature(x = "TAMatrix"),
 #' @aliases ncol-TAMatrix ncol,TAMatrix-method
 #' @return number of columns / itemsets in the TAMatrix
 setMethod("ncol",  signature = signature(x = "TAMatrix"), 
-          function(x){
+          function(x) {
             return(ncol(x@data))
           })
 
@@ -232,7 +219,7 @@ setMethod("ncol",  signature = signature(x = "TAMatrix"),
 #' @aliases nrow-TAMatrix nrow,TAMatrix-method
 #' @return number of rows / items in the TAMatrix
 setMethod("nrow",  signature = signature(x = "TAMatrix"), 
-          function(x){
+          function(x) {
             return(nrow(x@data))
           })
 
@@ -246,8 +233,7 @@ setMethod("nrow",  signature = signature(x = "TAMatrix"),
 #' @param j Either columns represented by their column number or logical vector of length
 #' number of columns
 #' @return A character vector containing the names of the items
-setGeneric("select", function(x, i, j) 
-  standardGeneric("select") )
+setGeneric("select", function(x, i, j) standardGeneric("select"))
 
 #' Subsetting of an TAMatrix
 #' 
@@ -258,24 +244,24 @@ setGeneric("select", function(x, i, j)
 #' @rdname select-TAMatrix
 #' @param x Object of class TAMatrix
 #' @param i Either the rows represented by their row number or a logical vector of length number of 
-#' row of TAMatrix.
+#' row of TAMatrix. If missing or NULL all rows are selected.
 #' @param j Either the columns represented by their columns numbers or logical vector of length 
-#' number of columns in TAMatrix
+#' number of columns in TAMatrix. If missing or NULL all columns are selected.
 #' @aliases select-TAMatrix select,TAMatrix-method
 #' @return subsetted TAMatrix
 setMethod("select",  signature = signature(x = "TAMatrix"), 
           function(x, i, j) {
             
             # Make some sanity checks on i, j.
-            if (!(missing(i) || is.null(i))){
-              if (is.logical(i)){
-                if (length(i) > nrow(x)){
+            if (!(missing(i) || is.null(i))) {
+              if (is.logical(i)) {
+                if (length(i) > nrow(x)) {
                   stop(paste('Logical subscript of length',
                              length(i), "too long for TAMatrix with", nrow(x), "rows"))
                 }
               } else {
-                if (is.numeric(i)){
-                  if (any(!(i %in% 1:nrow(x)))){
+                if (is.numeric(i)) {
+                  if (any(!(i %in% 1:nrow(x)))) {
                     stop(paste("Subscript is too long. (", paste(i[!i %in% 1:nrow(x)], collapse = ', '),
                                ") cannot be subsetted from TAMatrix with ", nrow(x), ' rows', sep = ''))
                   }
@@ -283,15 +269,15 @@ setMethod("select",  signature = signature(x = "TAMatrix"),
               }
             }
             
-            if (!(missing(j) || is.null(j))){
-              if (is.logical(j)){
-                if (length(j) > ncol(x)){
+            if (!(missing(j) || is.null(j))) {
+              if (is.logical(j)) {
+                if (length(j) > ncol(x)) {
                   stop(paste('Logical subscript of length', length(j), "too long for TAMatrix with",
                              ncol(x), "columns"))
                 }
               } else {
-                if (is.numeric(j)){
-                  if (any(!(j %in% 1:ncol(x)))){
+                if (is.numeric(j)) {
+                  if (any(!(j %in% 1:ncol(x)))) {
                     stop(paste("Subscript is too long. (", paste(j[!j %in% 1:ncol(x)], collapse = ', '),
                                ") cannot be subsetted from TAMatrix with ", ncol(x), ' columns', sep = ''))
                   }
@@ -301,9 +287,9 @@ setMethod("select",  signature = signature(x = "TAMatrix"),
             
             
             # If i or j are missing, all rows / columns should be selected.
-            if (missing(i) || is.null(i)){
+            if (missing(i) || is.null(i)) {
               
-              if (is.logical(j)){
+              if (is.logical(j)) {
                 j <- which(j)
               }
               
@@ -313,9 +299,9 @@ setMethod("select",  signature = signature(x = "TAMatrix"),
                          items = x@items))
             }
             
-            if (missing(j) || is.null(j)){
+            if (missing(j) || is.null(j)) {
               
-              if (is.logical(i)){
+              if (is.logical(i)) {
                 i <- which(i)
               }
               
@@ -325,16 +311,16 @@ setMethod("select",  signature = signature(x = "TAMatrix"),
                          items = x@items[i, drop = FALSE]))
             }
             
-            if ((missing(i) || is.null(i)) && (missing(j) || is.null(j))){
+            if ((missing(i) || is.null(i)) && (missing(j) || is.null(j))) {
               return(x)
             }
             
             # If i or j is logical than make it to an integer of the true positions
-            if (is.logical(i)){
+            if (is.logical(i)) {
               i <- which(i)
             }
             
-            if (is.logical(j)){
+            if (is.logical(j)) {
               j <- which(j)
             }
             
@@ -344,14 +330,13 @@ setMethod("select",  signature = signature(x = "TAMatrix"),
                        items = x@items[i, drop = FALSE]))
           })
 
-
 # ------------------------------------------------------------------------------------------------ #
 # -------------------------------- All methods for class FIMatrix -------------------------------- #
 # ------------------------------------------------------------------------------------------------ #
 
 #' Determine the number of items in a FIMatrix
 #' 
-#' The length function for the FIMatrix returns the number of frequent items
+#' The length function for the FIMatrix returns the number of frequent items.
 #' @name length-FIMatrix
 #' @rdname length-FIMatrix
 #' @param x Object of class FIMatrix
@@ -364,7 +349,7 @@ setMethod("length", "FIMatrix", function(x) {
 
 #' Definition of show method for FIMatrix
 #' 
-#' The show function prints out the number of frequent itemsets in the FIMatrix
+#' The show function prints out the number of frequent itemsets in the FIMatrix.
 #' @name show-FIMatrix
 #' @rdname show-FIMatrix
 #' @export  
@@ -375,7 +360,6 @@ setMethod("show", "FIMatrix", function(object) {
   
   n <- length(object)
   cat("Found", n, "frequent itemset(s). Use print() to display\n")
-  
 })
 
 #' Definition of show method for FIMatrix
@@ -402,7 +386,6 @@ setMethod("print", signature(x = "FIMatrix"), function(x, descending = TRUE) {
   #order output by support before returning (default TRUE)
   output <- output[order(output$support, decreasing = descending), ]
   print(output)
-  
 })
 
 #' Summary for FI-matrices.
@@ -414,7 +397,6 @@ setMethod("print", signature(x = "FIMatrix"), function(x, descending = TRUE) {
 #' @param object Object of class FIMatrix
 #' @aliases summary-FIMatrix summary,FIMatrix-method
 #' @return Summary information about the FImatrix
-#' 
 setMethod("summary", signature(object = "FIMatrix"), function(object) {
   
   n <- length(object)
@@ -471,9 +453,7 @@ setMethod("summary", signature(object = "FIMatrix"), function(object) {
   cat("Summary of the support measure:\n")
   print(summary(object@support))
   cat("\n")
-  
 })
-
 
 #' Plot an FI-matrices.
 #' 
@@ -495,9 +475,8 @@ setMethod("plot", signature(x = "FIMatrix"), function(x, pch = 1, col = "red") {
   plot(colSums(x@data), x@support, 
        xlab = "Itemset length", ylab = "Support", 
        main = "Support distribution by itemset length", pch = pch, col = col, xaxt = "n")
-    axis(1, at = seq(1, max(colSums(x@data)), by = 1), las=0)
+    axis(1, at = seq(1, max(colSums(x@data)), by = 1), las = 0)
   }
-  
 })
 
 #' Plot an FI-matrices with ggplot
@@ -513,7 +492,8 @@ setMethod("plot", signature(x = "FIMatrix"), function(x, pch = 1, col = "red") {
 #' @aliases qplot-FIMatrix qplot,FIMatrix-method
 #' @return Scatter plot of itemset length against support or histogram of itemset lengths
 #' @export
-setMethod("qplot", signature(x = "FIMatrix"), function(x, col = "red", alpha = 0.1, type = c("hist", "scatter")) {
+setMethod("qplot", signature(x = "FIMatrix"),
+          function(x, col = "red", alpha = 0.1, type = c("hist", "scatter")) {
 
   if (missing(type)) {
     type == "scatter"
@@ -524,13 +504,15 @@ setMethod("qplot", signature(x = "FIMatrix"), function(x, col = "red", alpha = 0
   df <- data.frame(data = colSums(x@data), support = x@support)
 
   if (type == "scatter") {
-
+    
+    # Make a scatter plot
     ggplot(df, aes(data, support)) +
       geom_point(col = col, alpha = alpha) +
       labs(x = "Itemset length", y = "support") +
       scale_x_continuous(breaks = seq(1, max(colSums(x@data)), by = 1))
   } else if (type == "hist") {
-
+    
+    # Make a histogram.
     ggplot(df, aes(df$data)) +
       geom_bar() +
       labs(title = "Histogram of itemset lengths", x = "Itemset length") +
@@ -538,7 +520,6 @@ setMethod("qplot", signature(x = "FIMatrix"), function(x, col = "red", alpha = 0
   } else {
     stop("Please supply a valid 'type' argument 'hist' or 'scatter' ")
   }
-
 })
 
 #' Plot an Histogram of itemset length for an FI-matrices.
@@ -550,7 +531,6 @@ setMethod("qplot", signature(x = "FIMatrix"), function(x, col = "red", alpha = 0
 #' @param x Object of class FIMatrix
 #' @aliases hist-FIMatrix hist,FIMatrix-method
 #' @return Histogram of Itemsize in FIMatrix.
-#' 
 setMethod("hist", "FIMatrix", function(x) {
   
   if (length(x) <= 0) {
@@ -560,11 +540,9 @@ setMethod("hist", "FIMatrix", function(x) {
        main = "Histogram of frequent Itemsets", 
        xlab = "Itemset length", 
        col = "lightblue", xaxt = "n")
-    axis(1, at = seq(1, max(colSums(x@data)), by = 1), las=0)
+    axis(1, at = seq(1, max(colSums(x@data)), by = 1), las = 0)
   }
 })
-
-
 
 #' Extract the support of itemsets in class FIMatrix
 #' @name support-FIMatrix
@@ -573,11 +551,9 @@ setMethod("hist", "FIMatrix", function(x) {
 #' @param x Object of class FIMatrix
 #' @aliases support-FIMatrix support,FIMatrix-method
 #' @return A numeric vector containing the support values of the itemsets in the FIMatrix.
-#' 
 setMethod("support", "FIMatrix", function(x) {
   return(x@support)
 })
-
 
 #' Pruning objects by metric.
 #' 
@@ -589,10 +565,7 @@ setMethod("support", "FIMatrix", function(x) {
 #' @param object Objected to be pruned.
 #' @param ... metrics to prune by
 #' @return Pruned object of same class as input.
-setGeneric("prune", function(object, ...) {
-  standardGeneric("prune")
-})
-
+setGeneric("prune", function(object, ...) standardGeneric("prune"))
 
 #' Prune method for objects of class FIMatrix
 #' 
@@ -600,26 +573,25 @@ setGeneric("prune", function(object, ...) {
 #' @name prune-FIMatrix
 #' @rdname prune-FIMatrix
 #' @export  
-#' @param object Object of class FIMatrix
+#' @param object Object of class FIMatrix.
 #' @aliases prune-FIMatrix prune,FIMatrix-method
-#' @param Support Minimal support the pruned FIMatrix or Rules should have.
+#' @param Support Minimal support the pruned FIMatrix should have.
 #' @return Pruned object of class FIMatrix
-#' 
 setMethod("prune", "FIMatrix", function(object, Support) {
   
   # Error checking
   # Support should be numeric and within (0,1)
-  if((!missing(Support)) && is.numeric(Support)){
-    if (Support > 1 || Support < 0){
+  if ((!missing(Support)) && is.numeric(Support)) {
+    if (Support > 1 || Support < 0) {
       stop("Supportort should be within (0,1). Pruning aborted.")
     }
   } else {
-    if (!missing(Support)){
+    if (!missing(Support)) {
       stop('The Supportort specified in Support should be numeric!. Pruning aborted.')
     }
   }
   
-  if (!missing(Support)){
+  if (!missing(Support)) {
     res <- select(object,support(object) >= Support, NULL)
     return(res)
   } else {
@@ -634,9 +606,8 @@ setMethod("prune", "FIMatrix", function(object, Support) {
 #' @param x Object of class FIMatrix
 #' @aliases items-FIMatrix items,FIMatrix-method
 #' @return Names of all items in FIMatrix.
-#' 
 setMethod("items",  signature = signature(x = "FIMatrix"), 
-          function(x){
+          function(x) {
             return(rownames(x@data))
           })
 
@@ -651,9 +622,8 @@ setMethod("items",  signature = signature(x = "FIMatrix"),
 #' @param x Object of class FIMatrix
 #' @aliases colSums-FIMatrix colSums,FIMatrix-method
 #' @return numeric vector containing the sum of each column of the FIMatrix
-#' 
 setMethod("colSums",  signature = signature(x = "FIMatrix"), 
-          function(x){
+          function(x) {
             return(colSums(x@data))
           })
 
@@ -668,13 +638,12 @@ setMethod("colSums",  signature = signature(x = "FIMatrix"),
 #' @param x Object of class FIMatrix
 #' @aliases rowSums-FIMatrix rowSums,FIMatrix-method
 #' @return numeric vector containing the sum of each row of the FIMatrix
-#' 
 setMethod("rowSums",  signature = signature(x = "FIMatrix"), 
-          function(x){
+          function(x) {
             return(rowSums(x@data))
           })
 
-#' Give the number of columns of underlying matrix in an FIMatrix. 
+#' Give the number of columns of the underlying matrix in an FIMatrix. 
 #' 
 #' This number does represent the number of itemsets within that FIMatrix
 #' @name ncol-FIMatrix
@@ -683,12 +652,12 @@ setMethod("rowSums",  signature = signature(x = "FIMatrix"),
 #' @param x Object of class FIMatrix
 #' @aliases ncol-FIMatrix ncol,FIMatrix-method
 #' @return number of columns / itemsets in the FIMatrix
-#' 
 setMethod("ncol",  signature = signature(x = "FIMatrix"), 
-          function(x){
+          function(x) {
             return(ncol(x@data))
           })
-#' Give the number of rows of underlying matrix in an FIMatrix. 
+
+#' Give the number of rows of the underlying matrix in an FIMatrix. 
 #' 
 #' This number does represent the number of items within that FIMatrix
 #' @name nrow-FIMatrix
@@ -698,39 +667,37 @@ setMethod("ncol",  signature = signature(x = "FIMatrix"),
 #' @aliases nrow-FIMatrix nrow,FIMatrix-method
 #' @return number of rows / items in the FIMatrix
 setMethod("nrow",  signature = signature(x = "FIMatrix"), 
-          function(x){
+          function(x) {
             return(nrow(x@data))
           })
-
-
 
 #' Subsetting of an FIMatrix
 #' 
 #' An FImatrix does contain the matrix of itemsets as well as the a vector that contains the support
 #' for each itemset. Therefore, both are logically connected and when a FIMatrix is subsetted column-
-#' wise the supported vector is subsetted as well.
+#' wise the supported vector has to be subsetted as well.
 #' @name select-FIMatrix
 #' @rdname select-FIMatrix
 #' @export  
-#' @param x Object of class FIMatrix
+#' @param x Object of class FIMatrix.
 #' @param i Either the rows represented by their row number or a logical vector of length number of 
-#' row of FIMAtrix.
+#' row of FIMAtrix. If missing or NULL all rows are selected.
 #' @param j Either the columns represented by their columns numbers or logical vector of length 
-#' number of columns in FIMatrix
+#' number of columns in FIMatrix. If missing or NULL all columns are selected.
 #' @aliases select-FIMatrix select,FIMatrix-method
 #' @return subsetted FIMatrix
 setMethod("select",  signature = signature(x = "FIMatrix"), 
           function(x, i, j) {
             
             # Make some sanity checks on i, j.
-            if (!(missing(i) || is.null(i))){ 
-              if (is.logical(i)){ 
-                if (length(i) > nrow(x)){ 
+            if (!(missing(i) || is.null(i))) { 
+              if (is.logical(i)) { 
+                if (length(i) > nrow(x)) { 
                   stop(paste('Logical subscript of length', length(i), "too long for FIMatrix with", nrow(x), "rows"))
                 }
               } else { 
-                if (is.numeric(i)){  
-                  if (any(!(i %in% 1:nrow(x)))){ 
+                if (is.numeric(i)) {  
+                  if (any(!(i %in% 1:nrow(x)))) { 
                     stop(paste("Subscript is too long. (", paste(i[!i %in% 1:nrow(x)], collapse = ', '),
                                ") cannot be subsetted from FIMatrix with ", nrow(x), ' rows', sep = ''))
                   }
@@ -738,15 +705,15 @@ setMethod("select",  signature = signature(x = "FIMatrix"),
               }
             }
             
-            if (!(missing(j) || is.null(j))){
-              if (is.logical(j)){
-                if (length(j) > ncol(x)){
+            if (!(missing(j) || is.null(j))) {
+              if (is.logical(j)) {
+                if (length(j) > ncol(x)) {
                   stop(paste('Logical subscript of length', length(j), "too long for FIMatrix with",
                              ncol(x), "columns"))
                 }
               } else {
-                if (is.numeric(j)){
-                  if (any(!(j %in% 1:ncol(x)))){
+                if (is.numeric(j)) {
+                  if (any(!(j %in% 1:ncol(x)))) {
                     stop(paste("Subscript is too long. (", paste(j[!j %in% 1:ncol(x)], collapse = ', '),
                                ") cannot be subsetted from FIMatrix with ", ncol(x), ' columns', sep = ''))
                   }
@@ -755,34 +722,34 @@ setMethod("select",  signature = signature(x = "FIMatrix"),
             }
             
             # If the matrix does not have row or columns return an empty matrix
-            if (nrow(x@data) == 0 || ncol(x@data) == 0){
+            if (nrow(x@data) == 0 || ncol(x@data) == 0) {
               return(new('FIMatrix',
                          data = x@data[0, 0, drop = FALSE],
                          support = x@support[0, drop = FALSE]))
             }
             
             # If i is missing use all rows of the input 
-            if (missing(i) || is.null(i)){
+            if (missing(i) || is.null(i)) {
               i <- 1:nrow(x@data)
             }
             
             # If j is missing use all columns of the input 
-            if (missing(j) || is.null(j)){
+            if (missing(j) || is.null(j)) {
               j <- 1:ncol(x@data)
             }
             
             # if i, j is logical replace it by the positions of the true values
-            if (is.logical(i)){
+            if (is.logical(i)) {
               i <- which(i)
               i <- as.numeric(i)
             }
             
-            if (is.logical(j)){
+            if (is.logical(j)) {
               j <- which(j)
               j <- as.numeric(j)
             }
             
-            if (length(i) == 0 || length(j) == 0){
+            if (length(i) == 0 || length(j) == 0) {
               return(new('FIMatrix',
                          data = x@data[0, 0, drop = FALSE],
                          support = x@support[0, drop = FALSE]))
@@ -794,8 +761,6 @@ setMethod("select",  signature = signature(x = "FIMatrix"),
                        support = x@support[j, drop = FALSE]))
             
           })
-
-
 
 # ------------------------------------------------------------------------------------------------ #
 # ------------------------------ All methods for class Rules ------------------------------------- #
@@ -814,7 +779,6 @@ setMethod("length", "Rules", function(x) {
   x@lhs@Dim[2]
 })
 
-
 #' Definition of show method for Rules
 #' 
 #' The show function prints out the number of Rules
@@ -832,7 +796,6 @@ setMethod("show", "Rules", function(object) {
   } else {
     cat("Found no rules. Try lowering the support and/or confidence threshold.\n")
   }
-
 })
 
 #' Definition of show method for Rules
@@ -851,7 +814,6 @@ setMethod("show", "Rules", function(object) {
 #' @aliases print-Rules print,Rules-method
 #' @return The rules from the left hand and right hand side in the form of {It1, ... ItN} -> {ITK} 
 #' in a data.frame. This data.frame does have columns lhs, rhs, unnamed, support and confidence.
-#' 
 setMethod("print", "Rules", function(x,maxNumConsequent = 1,
                                      order_by = NULL, decreasing = TRUE) {
   
@@ -861,9 +823,7 @@ setMethod("print", "Rules", function(x,maxNumConsequent = 1,
     ExtractRules(x, maxNumConsequent = maxNumConsequent,
                  order_by = order_by, decreasing = decreasing)
   }
-  
 })
-
 
 #' Summary funtion for Rules object
 #' 
@@ -874,7 +834,6 @@ setMethod("print", "Rules", function(x,maxNumConsequent = 1,
 #' @param object Object of class Rules
 #' @aliases summary-Rules summary,Rules-method
 #' @return Summary information about the Rules
-#' 
 setMethod("summary", signature(object = "Rules"), function(object) {
   
   n <- length(object)
@@ -896,7 +855,6 @@ setMethod("summary", signature(object = "Rules"), function(object) {
   } else {
     return("Found no rules. Try lowering the support and/or confidence threshold.")
   }
-
 })
 
 #' Plot an Rules object.
@@ -909,7 +867,6 @@ setMethod("summary", signature(object = "Rules"), function(object) {
 #' @param x Object of class Rules
 #' @aliases plot-Rules plot,Rules-method
 #' @return Scatter plot of support versus confidence with lift as a color gradient
-#' 
 setMethod("plot", "Rules", function(x) {
   
   if (length(x) <= 0) {
@@ -943,9 +900,7 @@ setMethod("plot", "Rules", function(x) {
          y = seq(0, max(x@lift), l = 3), 
          labels = seq(round(min(x@lift), 2), round(max(x@lift), 2), l = 3))
     rasterImage(legend.raster, 0, 0, 1, round(max(x@lift), 2))
-    
   }
-
 })
 
 #' Plot an Rules object wiht ggplot2
@@ -958,7 +913,6 @@ setMethod("plot", "Rules", function(x) {
 #' @param x Object of class Rules
 #' @aliases qplot-Rules qplot,Rules-method
 #' @return Scatter qplot of support versus confidence, lift as a color gradient..
-#' 
 setMethod("qplot", "Rules", function(x) {
 
   quality.df <- data.frame(support = x@support,
@@ -966,12 +920,10 @@ setMethod("qplot", "Rules", function(x) {
                            lift = x@lift,
                            leverage = x@leverage)
 
-  ggplot(quality.df, aes(x=support, y=confidence, color=lift)) +
+  ggplot(quality.df, aes(x = support, y = confidence, color = lift)) +
     geom_point() +
-    scale_color_gradient(low="lightblue", high="blue")
-
+    scale_color_gradient(low = "lightblue", high = "blue")
 })
-
 
 #' Extract confidence from object
 #' @name confidence
@@ -979,11 +931,9 @@ setMethod("qplot", "Rules", function(x) {
 #' @export
 #' @param object Object of Class Rules
 #' @return Vector of confidence values from all entities of the objects.
-
 setGeneric("confidence", function(object) {
   standardGeneric("confidence")
 })
-
 
 #' Extract confidence of all rules within a Rules object.
 #' @name confidence-Rules
@@ -992,7 +942,6 @@ setGeneric("confidence", function(object) {
 #' @param object Object of class Rules
 #' @aliases confidence-Rules confidence,Rules-method
 #' @return Vector of confidence values from all Rules in x.
-#' 
 setMethod("confidence", "Rules", function(object) {
   object@confidence
 })
@@ -1003,10 +952,7 @@ setMethod("confidence", "Rules", function(object) {
 #' @export
 #' @param object Object of Class Rules
 #' @return Vector of lift values from all entities of the objects.
-
-setGeneric("lift", function(object) {
-  standardGeneric("lift")
-})
+setGeneric("lift", function(object) standardGeneric("lift"))
 
 #' Extract lift of all rules within a Rules object.
 #' @name lift-Rules
@@ -1015,7 +961,6 @@ setGeneric("lift", function(object) {
 #' @param object Object of class Rules
 #' @aliases lift-Rules lift,Rules-method
 #' @return Vector of lift values from all Rules in x.
-#' 
 setMethod("lift", "Rules", function(object) {
   object@lift
 })
@@ -1026,10 +971,7 @@ setMethod("lift", "Rules", function(object) {
 #' @export
 #' @param object Object of Class Rules
 #' @return Vector of leverage values from all entities of the objects.
-
-setGeneric("leverage", function(object) {
-  standardGeneric("leverage")
-})
+setGeneric("leverage", function(object) standardGeneric("leverage"))
 
 #' Extract leverage of all rules within a Rules object.
 #' @name leverage-Rules
@@ -1059,7 +1001,6 @@ setMethod("support", "Rules", function(x) {
 #' @export
 #' @param object Object of Class Rules
 #' @return Object of Class FIMatrix
-
 setGeneric("extract", valueClass = "FIMatrix", function(object) {
   standardGeneric("extract")
 })
@@ -1074,7 +1015,6 @@ setGeneric("extract", valueClass = "FIMatrix", function(object) {
 setMethod("extract", "Rules", function(object) {
   object@FrequentItemsets
 })
-
 
 #' Prune method for objects of class Rules
 #' 
@@ -1092,55 +1032,53 @@ setMethod("extract", "Rules", function(object) {
 #' @param inv_Lift Pruning based on minimal or maximal lift?
 #' @param inv_lev Pruning based on minimal or maximal leverage?
 #' @return Pruned object of class Rules
-
 setMethod("prune", "Rules", function(object, Support, Confidence, Lift, Leverage,
                                      inv_Lift = FALSE, inv_lev = FALSE) {
   
   # Error checking
   # Support should be numeric and within (0,1)
-  if((!missing(Support)) && is.numeric(Support)){
-    if (Support > 1 || Support < 0){
+  if ((!missing(Support)) && is.numeric(Support)) {
+    if (Support > 1 || Support < 0) {
       stop("Supportort should be within (0,1). Pruning aborted.")
     }
   } else {
-    if(!missing(Support)){
+    if (!missing(Support)) {
       stop('The Supportort specified in Support should be numeric!. Pruning aborted.')
     }
   }
   
   # Confidenceidence should be numeric and within (0,1)
-  if((!missing(Confidence)) && is.numeric(Confidence)){
-    if (Confidence > 1 || Confidence < 0){
+  if ((!missing(Confidence)) && is.numeric(Confidence)) {
+    if (Confidence > 1 || Confidence < 0) {
       stop("Confidenceidence should be within (0,1). Pruning aborted.")
     }
   } else {
-    if(!missing(Confidence)){
+    if (!missing(Confidence)) {
       stop('The Confidenceidence specified in Support should be numeric!. Pruning aborted.')
     }
   }
   
   # Lift should be numeric
-  if ((!missing(Lift)) && !is.numeric(Lift)){
+  if ((!missing(Lift)) && !is.numeric(Lift)) {
     stop("Lift should be numeric. Pruning aborted")
   }
   
   # Leverage should be numeric
-  if ((!missing(Leverage)) &&!is.numeric(Leverage)){
+  if ((!missing(Leverage)) && !is.numeric(Leverage)) {
     stop("Leverage should be numeric. Pruning aborted")
   }
   
   # If non of the paramters is specified all colums / itemsets should be returned.
   selection <- rep(TRUE, ncol(object))
   
-  # 
-  if (!missing(Support)){
+  if (!missing(Support)) {
     selection <- selection & support(object) >= Support
   }
-  if (!missing(Confidence)){
+  if (!missing(Confidence)) {
     selection <- selection & confidence(object) >= Confidence
   }
-  if (!missing(Lift)){
-    if (!inv_Lift){
+  if (!missing(Lift)) {
+    if (!inv_Lift) {
       selection <- selection & lift(object) >= Lift
     } else {
       selection <- selection & lift(object) <= Lift
@@ -1148,8 +1086,8 @@ setMethod("prune", "Rules", function(object, Support, Confidence, Lift, Leverage
     
     
   }
-  if (!missing(Leverage)){
-    if (!inv_lev){
+  if (!missing(Leverage)) {
+    if (!inv_lev) {
       selection <- selection & leverage(object) >= Leverage
     } else {
       selection <- selection & leverage(object) <= Leverage
@@ -1160,7 +1098,6 @@ setMethod("prune", "Rules", function(object, Support, Confidence, Lift, Leverage
   
   return(res)
 })
-
 
 #' Give the sum of each row for the for either the rhs or lhs of a rule.
 #' 
@@ -1176,8 +1113,8 @@ setMethod("prune", "Rules", function(object, Support, Confidence, Lift, Leverage
 #' @aliases rowSums-Rules rowSums,Rules-method
 #' @return numeric vector containing the sum of each row of either the rhs or the lhs.
 setMethod("rowSums",  signature = signature(x = "Rules"), 
-          function(x, lhs = TRUE){
-            if (lhs){
+          function(x, lhs = TRUE) {
+            if (lhs) {
               return(rowSums(x@lhs))
             } else {
               return(rowSums(x@rhs))
@@ -1198,8 +1135,8 @@ setMethod("rowSums",  signature = signature(x = "Rules"),
 #' @aliases colSums-Rules colSums,Rules-method
 #' @return numeric vector containing the sum of each column of either the rhs or the lhs.
 setMethod("colSums",  signature = signature(x = "Rules"), 
-          function(x, lhs = TRUE){
-            if (lhs){
+          function(x, lhs = TRUE) {
+            if (lhs) {
               return(colSums(x@lhs))
             } else {
               return(colSums(x@rhs))
@@ -1213,12 +1150,10 @@ setMethod("colSums",  signature = signature(x = "Rules"),
 #' @param x Object of class Rules
 #' @aliases items-Rules items,Rules-method
 #' @return Vector containing the names of all items in Rules.
-#' 
 setMethod("items",  signature = signature(x = "Rules"), 
-          function(x){
+          function(x) {
             return(rownames(x@lhs))
           })
-
 
 #' Give the number of columns of underlying matrix in an Rules object. 
 #' 
@@ -1231,9 +1166,8 @@ setMethod("items",  signature = signature(x = "Rules"),
 #' @param x Object of class Rules
 #' @aliases ncol-Rules ncol,Rules-method
 #' @return number of columns / Rules in the Rules object.
-#' 
 setMethod("ncol",  signature = signature(x = "Rules"), 
-          function(x){
+          function(x) {
             return(ncol(x@lhs))
           })
 
@@ -1248,9 +1182,8 @@ setMethod("ncol",  signature = signature(x = "Rules"),
 #' @param x Object of class Rules
 #' @aliases nrow-Rules nrow,Rules-method
 #' @return number of rows / total number of possible items in the Rules object.
-#' 
 setMethod("nrow",  signature = signature(x = "Rules"), 
-          function(x){
+          function(x) {
             return(nrow(x@lhs))
           })
 
@@ -1264,23 +1197,23 @@ setMethod("nrow",  signature = signature(x = "Rules"),
 #' @export  
 #' @param x Object of class Rules
 #' @param i Either the rows represented by their row number or a logical vector of length number of 
-#' row of Rules.
+#' row of Rules. If i is missing or NULL all rows are selected.
 #' @param j Either the columns represented by their columns numbers or logical vector of length 
-#' number of columns in Rules
+#' number of columns in Rules. If j is missing or NULL all columns are selected.
 #' @aliases select-Rules select,Rules-method
 #' @return subsetted Rules object.
 setMethod("select",  signature = signature(x = "Rules"), 
           function(x, i, j) {
             
             # Make some sanity checks on i, j.
-            if (!(missing(i) || is.null(i))){
-              if (is.logical(i)){
-                if (length(i) > nrow(x)){
+            if (!(missing(i) || is.null(i))) {
+              if (is.logical(i)) {
+                if (length(i) > nrow(x)) {
                   stop(paste('Logical subscript of length', length(i), "too long for Rules with", nrow(x), "rows"))
                 }
               } else {
-                if (is.numeric(i)){
-                  if (any(! (i %in% 1:nrow(x)))){
+                if (is.numeric(i)) {
+                  if (any(!(i %in% 1:nrow(x)))) {
                     stop(paste("Subscript is too long. (", paste(i[!i %in% 1:nrow(x)], collapse = ', '),
                                ") cannot be subsetted from Rules with ", nrow(x), ' rows', sep = ''))
                   }
@@ -1288,15 +1221,15 @@ setMethod("select",  signature = signature(x = "Rules"),
               }
             }
             
-            if(!(missing(j) || is.null(j))){
-              if (is.logical(j)){
-                if(length(j) > ncol(x)){
+            if (!(missing(j) || is.null(j))) {
+              if (is.logical(j)) {
+                if (length(j) > ncol(x)) {
                   stop(paste('Logical subscript of length', length(j), "too long for Rules with",
                              ncol(x), "columns"))
                 }
               } else {
-                if (is.numeric(j)){
-                  if (any(! (j %in% 1:ncol(x)))){
+                if (is.numeric(j)) {
+                  if (any(!(j %in% 1:ncol(x)))) {
                     stop(paste("Subscript is too long. (", paste(j[!j %in% 1:ncol(x)], collapse = ', '),
                                ") cannot be subsetted from Rules with ", ncol(x), ' columns', sep = ''))
                   }
@@ -1305,7 +1238,7 @@ setMethod("select",  signature = signature(x = "Rules"),
             }
             
             # If the matrix does not have row or columns return an empty matrix
-            if (nrow(x@lhs) == 0 || ncol(x@lhs) == 0 || nrow(x@rhs) == 0 || ncol(x@rhs) == 0){
+            if (nrow(x@lhs) == 0 || ncol(x@lhs) == 0 || nrow(x@rhs) == 0 || ncol(x@rhs) == 0) {
               return(new('Rules',
                          lhs = x@lhs[0,0,drop = FALSE],
                          rhs = x@rhs[0,0,drop = FALSE],
@@ -1318,27 +1251,27 @@ setMethod("select",  signature = signature(x = "Rules"),
             }
             
             # If i is missing use all rows of the input 
-            if (missing(i) || is.null(i)){
+            if (missing(i) || is.null(i)) {
               i <- 1:nrow(x@lhs)
             }
             
             # If j is missing use all columns of the input 
-            if (missing(j) || is.null(j)){
+            if (missing(j) || is.null(j)) {
               j <- 1:ncol(x@lhs)
             }
             
             # if i, j is logical replace it by the positions of the true values
-            if (is.logical(i)){
+            if (is.logical(i)) {
               i <- which(i)
               i <- as.numeric(i)
             }
             
-            if (is.logical(j)){
+            if (is.logical(j)) {
               j <- which(j)
               j <- as.numeric(j)
             }
             
-            if (length(i) == 0 || length(j) == 0){
+            if (length(i) == 0 || length(j) == 0) {
               return(new('Rules',
                          lhs = x@lhs[0,0,drop = FALSE],
                          rhs = x@rhs[0,0,drop = FALSE],
@@ -1358,9 +1291,4 @@ setMethod("select",  signature = signature(x = "Rules"),
                        leverage = x@leverage[j, drop = FALSE],
                        itemsetID = x@itemsetID[j, drop = FALSE],
                        FrequentItemsets = x@FrequentItemsets)) 
-            
           })
-
-
-
-
