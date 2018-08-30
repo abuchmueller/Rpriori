@@ -3,20 +3,23 @@
 # ------------------------------------------------------------------------------------------------ #
 
 # The following methods are used to coerce allowed input types such as sparse matrices, matrices,
-# data.frame ect into Rpriori classes.
+# data.frame ect. into the Rpriori classes TAMatrix and FIMatrix.
 
-#' Take different input and make them a TAMatrix.
+# ------------------------------------------------------------------------------------------------ #
+# -------------------------------------- makeTAMatrix -------------------------------------------- #
+# ------------------------------------------------------------------------------------------------ #
+
+#' Take different inputs and make them a TAMatrix.
 #' 
-#' Takes a object of class Matrix, ngCMatrix, ngTMatrix or formel class transactions and return a
-#' corresponding object of class TAMatrix. All these objects with the exception of transactions 
-#' should have row names that describe the different items. The columns should represent the 
-#' itemset and should be of type boolean
+#' Takes a object of class Matrix, ngCMatrix, ngTMatrix or  class transactions from arules and 
+#' return a corresponding object of class TAMatrix. All these objects with the exception of 
+#' transactions should have row names that describe the different items. The columns should 
+#' represent the itemsets. It should be a binary matrix.
 #' @name makeTAMatrix
 #' @export
 #' @param input Object of class matrix, sparse matrix or Formel class transaction (arules
 #' class).
 #' @return Object of class TAMatrix containing the same itemset as the input.
-
 setGeneric('makeTAMatrix', function(input) UseMethod('makeTAMatrix'))
 
 #' Function to create a TAMatrix from an ngTMatrix.
@@ -41,7 +44,7 @@ makeTAMatrix.TAMatrix <- function(input){
   return(input)
 }
   
-#' Function to create a TAMatrix from an object of class transaction(coming from the arules 
+#' Function to create a TAMatrix from an object of class transaction (coming from the arules 
 #' package)
 #' @name makeTAMatrix.transactions
 #' @param input Object of class transactions
@@ -50,7 +53,6 @@ makeTAMatrix.TAMatrix <- function(input){
 makeTAMatrix.transactions <- function(input){
   
   # Input is of class transaction from arules
-  
   # Get the underlying data matrix from the transaction matrix 
   out_mat <- as(input@data, "TsparseMatrix")
   
@@ -59,7 +61,6 @@ makeTAMatrix.transactions <- function(input){
   
   return(outputTAMatrix(out_mat))
 }
-
 
 #' Function to create a TAMatrix from an object of class matrix
 #' @name makeTAMatrix.matrix
@@ -177,12 +178,15 @@ makeTAMatrix.default <- function(input){
   print(paste("Object of class", class(input)[1], "cannot be coerced to TAMatrix. "))
 }
 
+# ------------------------------------------------------------------------------------------------ #
+# -------------------------------------- makeFIMatrix -------------------------------------------- #
+# ------------------------------------------------------------------------------------------------ #
 
 #' Take different input and make them a FIMatrix
 #' 
 #' Takes a object of class Matrix, ngCMatrix, ngTMatrix, transactions or itemsets  and return a
 #' corresponding object of class FIMatrix. The rows should represent the itemset and be named.
-#' The columns should describe the itemsets. 
+#' The columns should describe the itemsets. It should be a binary matrix.
 #' @name makeFIMatrix
 #' @export
 #' @param input Object of class matrix, sparse matrix,  transactions (arules
@@ -192,9 +196,7 @@ makeTAMatrix.default <- function(input){
 #' @param dataset Either this has to be provided or support. Please provide the initial datasets
 #' based on which the frequent itemsets from input with minimal support where calculated.
 #' @return Object of class FIMatrix representing the input object.
-#' 
 setGeneric('makeFIMatrix', function(input, support, dataset) UseMethod('makeFIMatrix'))
-
 
 #' Function to create a FIMatrix from an ngTMatrix as well as the corresponding vector of support.
 #' @name outputFIMatrix
@@ -212,7 +214,7 @@ outputFIMatrix <- function(mat, support){
 #' Calculate support if missing.
 #' 
 #' This function calculate the support for a frequent itemset with a transactions set if the 
-#' support vector is missing and otherwise otherwise just return the support vector
+#' support vector is missing and otherwise otherwise just returns the support vector
 #' @name calcsupportFIMatrix
 #' @param input The frequent Itemsets as a ngTMatrix
 #' @param support The support vector, if missing the support is calculated for the frequent itemsets
@@ -223,13 +225,13 @@ outputFIMatrix <- function(mat, support){
 #' @export
 calcsupportFIMatrix <- function(input, support, dataset){
   
-  if ((missing(support) || is.null(support)) && (missing(dataset) || is.null(dataset))){
+  if ((missing(support) || is.null(support)) && (missing(dataset) || is.null(dataset))) {
     stop("Supported has to be calculated. Please provide either the correct vector of 
          support or the dataset with a minimal support level.")
   }
   
   # Recalculate the support
-  if (missing(support) || is.null(support)){
+  if (missing(support) || is.null(support)) {
     out_support <- DetSupport(makeTAMatrix(input)@data, Transaction = makeTAMatrix(dataset),
                               same_item_num = FALSE)
   } else {
@@ -251,7 +253,6 @@ makeFIMatrix.FIMatrix <- function(input, support, dataset){
   # input is already in the correct format
   return(input)
 }
-
 
 #' Function to create a FIMatrix from an itemsets
 #' @name makeFIMatrix.itemsets
@@ -280,7 +281,6 @@ makeFIMatrix.itemsets <- function(input, support, dataset){
   return(outputFIMatrix(out_mat, out_support))
 }
 
-
 #' Function to create a FIMatrix from an transactions
 #' @name makeFIMatrix-transactions
 #' @param input Object of class transactions
@@ -292,7 +292,6 @@ makeFIMatrix.itemsets <- function(input, support, dataset){
 makeFIMatrix.transactions <- function(input, support, dataset){
   
   # Input is of class transaction from arules
-  
   # Get the underlying data matrix from the transaction matrix 
   out_mat <- as(input@data, "TsparseMatrix")
   
@@ -388,7 +387,6 @@ makeFIMatrix.ngCMatrix <- function(input, support, dataset){
 makeFIMatrix.ngTMatrix <- function(input, support, dataset){
   
   # Input is  a sparse, compressed pattern matrix
-  
   # Create a sparse Matrix using the sparseMatrix function from the Matrix package
   # Input is a compressed, sparse matrix
   out_mat <- input
@@ -410,7 +408,6 @@ makeFIMatrix.ngTMatrix <- function(input, support, dataset){
 makeFIMatrix.lgTMatrix <- function(input, support, dataset){
   
   # Input is  a sparse, compressed pattern matrix
-  
   # Create a sparse Matrix using the sparseMatrix function from the Matrix package
   # Input is a compressed, sparse matrix
   out_mat <- sparseMatrix(i = input@i,
@@ -436,7 +433,6 @@ makeFIMatrix.lgTMatrix <- function(input, support, dataset){
 makeFIMatrix.lgCMatrix <- function(input, support, dataset){
   
   # Input is  a sparse, compressed pattern matrix
-  
   # Create a sparse Matrix using the sparseMatrix function from thve Matrix package
   # Input is a compressed, sparse matrix
   out_mat <- sparseMatrix(i = input@i,

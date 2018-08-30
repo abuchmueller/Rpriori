@@ -26,32 +26,29 @@
 #' # plot the rules
 #' plot(Groceries_Rules)
 #' }
-
 AssociationRules <- function(Itemsets, minsupport, minconfidence = 0, FrequentItems,
-                             maxConsequentLength = 1){
-  
+                             maxConsequentLength = 1) {
   
   # Check input types of FrequentItems and Itemsets
-  if (class(Itemsets)[1] != "TAMatrix"){
+  if (class(Itemsets)[1] != "TAMatrix") {
     Itemsets <- makeTAMatrix(Itemsets)
   }
   
-  if (!missing(FrequentItems) && class(FrequentItems)[1] != "TAMatrix"){
-    FrequentItems <- makeFIMatrix(FrequentItems)
+  if (!missing(FrequentItems) && class(FrequentItems)[1] != "TAMatrix") {
+    FrequentItems <- makeFIMatrix(FrequentItems, NULL, Itemsets)
   }
   
-
   # If the frequent itemsets are not provided they have to be calculated here.
-  if (missing(FrequentItems)){
+  if (missing(FrequentItems)) {
     # Calculate the frequent itemsets with minimal support minsupport with the help of the 
     # Rapriori function Frequent Itemsets
     FrequentItems <- FindFrequentItemsets(Itemsets, minsupport = minsupport)
   }
   
   # Test whether the input data sets do have minimal support
-  if (!missing(FrequentItems)){
-    if (any(FrequentItems@support < minsupport)){
-      FrequentItems <- select(FrequentItems, NULL,FrequentItems@support >= minsupport)
+  if (!missing(FrequentItems)) {
+    if (any(FrequentItems@support < minsupport)) {
+      FrequentItems <- select(FrequentItems, NULL, FrequentItems@support >= minsupport)
     }
   }
   
@@ -60,15 +57,14 @@ AssociationRules <- function(Itemsets, minsupport, minconfidence = 0, FrequentIt
   # length > 1 but they do not represent the Frequent itemsets anymore.
   FrequentItems_correct <- FrequentItems
   
-
   # Only frequent itemsets of length >1 are relevant for rules with consequent length > 1.
   # Therefore, I will select only these itemsets from the itemset matrix. 
   selection <- colSums(FrequentItems) > 1
-  FrequentItems <- select(FrequentItems, NULL,selection)
+  FrequentItems <- select(FrequentItems, NULL, selection)
   
   # Check whether FrequentItems contains Itemsets. Otherwise for this support level now rules could
   # be created.
-  if(ncol(FrequentItems) == 0){
+  if (ncol(FrequentItems) == 0) {
     warning("No rules can be calculated for that minimal support and confidence level. 
             Returns empty Rules object")
     return(new('Rules',
@@ -96,8 +92,7 @@ AssociationRules <- function(Itemsets, minsupport, minconfidence = 0, FrequentIt
 
   # Prune out the candidates that do not have minimal confidence.
   rel_its <- R1@confidence >= minconfidence
-  R1 <- select(R1,NULL,rel_its)
-
+  R1 <- select(R1, NULL, rel_its)
     
   # It might happen that some Items are no longer relevant for the rules in the sense that they 
   # do not exist anymore. This case is fulfilled if a row in the rhs and lhs does not have any
@@ -107,12 +102,12 @@ AssociationRules <- function(Itemsets, minsupport, minconfidence = 0, FrequentIt
   
   R1@FrequentItemsets <- select(R1@FrequentItemsets,rel_item,NULL)
   
-  if (maxConsequentLength == 1){
+  if (maxConsequentLength == 1) {
     # Reassign the correct frequent itemsets before output.
     R1@FrequentItemsets <- FrequentItems_correct
     return(R1)
   } else {
-    if (maxConsequentLength < 1){
+    if (maxConsequentLength < 1) {
       stop("Only values >= 1 allowed for maxConsequentLength")
     }
     # Find rules of consequent longer than 1.
@@ -125,7 +120,7 @@ AssociationRules <- function(Itemsets, minsupport, minconfidence = 0, FrequentIt
     R_cur <- select(R1,NULL,R1@itemsetID %in% rel_Items)
     
     # Abort the loop if the generated candidates from the last step are empty.
-    while (any(duplicated(R_cur@itemsetID)) && k <= maxConsequentLength){
+    while (any(duplicated(R_cur@itemsetID)) && k <= maxConsequentLength) {
       
       # Determine the rules of length k + 1.
       R_cur <- DetRules_K(R_cur)
@@ -139,7 +134,6 @@ AssociationRules <- function(Itemsets, minsupport, minconfidence = 0, FrequentIt
       R_cur@lift <- R_cur@support / (supp_lhs * supp_rhs)
       R_cur@leverage <- R_cur@support - (supp_lhs * supp_rhs)
 
-      
       # Prune Rules out do not have minconf #
       rel_its <- R_cur@confidence >= minconfidence
       R_cur <- select(R_cur,NULL,rel_its)
@@ -155,7 +149,6 @@ AssociationRules <- function(Itemsets, minsupport, minconfidence = 0, FrequentIt
       
       R_cur <- select(R_cur,NULL,R_cur@itemsetID %in% rel_Items)
       
-      
       k <- k + 1
     }
     
@@ -164,7 +157,7 @@ AssociationRules <- function(Itemsets, minsupport, minconfidence = 0, FrequentIt
     out_list <- list()
     
     # Iterate from 1 to k-1 to collect the outputs from the iterations 1 to k -1 to their lists.
-    for (i in 1:(k-1)){
+    for (i in 1:(k - 1)) {
       out_list[[i]] <- get(paste("R", i, sep = ""))
     }
     
@@ -177,4 +170,3 @@ AssociationRules <- function(Itemsets, minsupport, minconfidence = 0, FrequentIt
     return(R)  
   }
 }
-
