@@ -10,9 +10,9 @@ S4 class to represent frequent itemsets in a sparse Matrix
 \section{Slots}{
 
 \describe{
-\item{\code{data}}{Frequent Itemset Matrix in sparse representation. Rows are the items and the 
-columns represent the itemsets.}
+\item{\code{data}}{ngTMatrix containing the Frequent Itemset. Rows should represent the items and the 
+columns should  represent the itemsets.}
 
-\item{\code{support}}{Vector containing the support of all Itemsets}
+\item{\code{support}}{Vector containing the support values for all Itemsets}
 }}
 

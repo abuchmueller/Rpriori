@@ -14,7 +14,7 @@ length should be two.}
 Object of class Rules that contains all relevant rules with consequent length 1.
 }
 \description{
-This function takes frequent itemsets as input and all generates rules of consequent length 1 
-that have to be considered for rules mining. It uses the Apriori-gen for more efficient
+This function takes frequent itemsets as input and generates all rules of consequent length 1 
+that have to be considered for rule mining. It uses the Apriori-gen for more efficient
 generation of rule candidates.
 }

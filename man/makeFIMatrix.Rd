@@ -22,5 +22,5 @@ Object of class FIMatrix representing the input object.
 \description{
 Takes a object of class Matrix, ngCMatrix, ngTMatrix, transactions or itemsets  and return a
 corresponding object of class FIMatrix. The rows should represent the itemset and be named.
-The columns should describe the itemsets.
+The columns should describe the itemsets. It should be a binary matrix.
 }

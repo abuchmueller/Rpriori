@@ -11,9 +11,6 @@
 \arguments{
 \item{x}{Object of class TAMatrix}
 }
-\value{
-histogram of the length of the itemsets within the TA Matrix.
-}
 \description{
 The plot function for TA Matrix does give a histgram of the itemset length.
 }

@@ -10,10 +10,10 @@ FindFrequentItemsets(dataset, minsupport)
 \item{dataset}{Transactions in an object of class TAMatrix, matrix, sparse matrix, data.frame or
 transactions.}
 
-\item{minsupport}{Minimal support value of the frequent itemsets}
+\item{minsupport}{Minimal support value of the frequent itemsets that are calculated.}
 }
 \value{
-Object of class FIMatrix conatining the frequent items
+Object of class FIMatrix containing the frequent items.
 }
 \description{
 This function calculates the frequent itemset with a minimal support value.

@@ -12,10 +12,10 @@
 \item{x}{Object of class TAMatrix}
 
 \item{i}{Either the rows represented by their row number or a logical vector of length number of 
-row of TAMatrix.}
+row of TAMatrix. If missing or NULL all rows are selected.}
 
 \item{j}{Either the columns represented by their columns numbers or logical vector of length 
-number of columns in TAMatrix}
+number of columns in TAMatrix. If missing or NULL all columns are selected.}
 }
 \value{
 subsetted TAMatrix

@@ -10,7 +10,8 @@ S4 class to represent transactions in a sparse Matrix
 \section{Slots}{
 
 \describe{
-\item{\code{data}}{Transaction Matrix in binary sparse representation}
+\item{\code{data}}{Transactions as Matrix in a ngTMatrix. The rows should be the items and the columns
+should represent the itemsets.}
 
 \item{\code{dim}}{A vector of size 2 containing the number of rows and the number of columns.}
 

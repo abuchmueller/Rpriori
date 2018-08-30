@@ -2,7 +2,7 @@
 % Please edit documentation in R/CoerceTypes.R
 \name{makeTAMatrix}
 \alias{makeTAMatrix}
-\title{Take different input and make them a TAMatrix.}
+\title{Take different inputs and make them a TAMatrix.}
 \usage{
 makeTAMatrix(input)
 }
@@ -14,8 +14,8 @@ class).}
 Object of class TAMatrix containing the same itemset as the input.
 }
 \description{
-Takes a object of class Matrix, ngCMatrix, ngTMatrix or formel class transactions and return a
-corresponding object of class TAMatrix. All these objects with the exception of transactions 
-should have row names that describe the different items. The columns should represent the 
-itemset and should be of type boolean
+Takes a object of class Matrix, ngCMatrix, ngTMatrix or  class transactions from arules and 
+return a corresponding object of class TAMatrix. All these objects with the exception of 
+transactions should have row names that describe the different items. The columns should 
+represent the itemsets. It should be a binary matrix.
 }

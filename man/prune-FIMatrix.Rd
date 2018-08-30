@@ -9,9 +9,9 @@
 \S4method{prune}{FIMatrix}(object, Support)
 }
 \arguments{
-\item{object}{Object of class FIMatrix}
+\item{object}{Object of class FIMatrix.}
 
-\item{Support}{Minimal support the pruned FIMatrix or Rules should have.}
+\item{Support}{Minimal support the pruned FIMatrix should have.}
 }
 \value{
 Pruned object of class FIMatrix
