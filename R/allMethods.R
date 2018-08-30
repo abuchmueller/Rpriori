@@ -456,8 +456,8 @@ setMethod("summary", signature(object = "FIMatrix"), function(object) {
 #' @rdname plot-FIMatrix
 #' @export  
 #' @param x Object of class FIMatrix
-#' @param pch Size of points that is given to plot function.
-#' @param col Colour used by plot()
+#' @param pch Gerneric points function
+#' @param col Colour used for plotting
 #' @aliases plot-FIMatrix plot,FIMatrix-method
 #' @return Scatter plot of itemsize against support
 setMethod("plot", signature(x = "FIMatrix"), function(x, pch = 1, col = "red") {
