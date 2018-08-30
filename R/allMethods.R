@@ -479,7 +479,7 @@ setMethod("plot", signature(x = "FIMatrix"), function(x, pch = 1, col = "red") {
   }
 })
 
-#' Plot an FI-matrices with ggplot
+#' Plot an FI-matrices with ggplot2
 #' 
 #' The qplot function can do a scatter plot with the support on the y-axis and the itemset-length on
 #' the x-axis or a histogram of itemset lengths
@@ -487,11 +487,19 @@ setMethod("plot", signature(x = "FIMatrix"), function(x, pch = 1, col = "red") {
 #' @rdname qplot-FIMatrix
 #' @param x Object of class FIMatrix
 #' @param col colour of data points (only scatter plot) per default "red"
-#' @param alpha alpha value for scatter plot
+#' @param alpha alpha value for scatter plot per default 0.1
 #' @param type character string "hist" or "scatter" depending on wether you want a histogram or scatter plot
 #' @aliases qplot-FIMatrix qplot,FIMatrix-method
 #' @return Scatter plot of itemset length against support or histogram of itemset lengths
 #' @export
+#' @examples \donttest{
+#' # Plot frequent itemsets as scatter plot.
+#' sp <- qlot(FIMatrix)
+#' # You can specify the color and alpha value for scatter plots.
+#' sp2 <- qplot(FIMatrix, col = "blue", alpha = 1)
+#' # Plot frequent itemsets as a histogram
+#' hst <- qplot(FIMatrix, type = "hist")
+#' }
 setMethod("qplot", signature(x = "FIMatrix"),
           function(x, col = "red", alpha = 0.1, type = c("hist", "scatter")) {
 

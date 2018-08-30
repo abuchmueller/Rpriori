@@ -2,7 +2,7 @@
 % Please edit documentation in R/CoerceTypes.R
 \name{makeTAMatrix.transactions}
 \alias{makeTAMatrix.transactions}
-\title{Function to create a TAMatrix from an object of class transaction(coming from the arules 
+\title{Function to create a TAMatrix from an object of class transaction (coming from the arules 
 package)}
 \usage{
 makeTAMatrix.transactions(input)
@@ -14,6 +14,6 @@ makeTAMatrix.transactions(input)
 Object of class transactions containing the same itemset as the input
 }
 \description{
-Function to create a TAMatrix from an object of class transaction(coming from the arules 
+Function to create a TAMatrix from an object of class transaction (coming from the arules 
 package)
 }

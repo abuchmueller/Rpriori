@@ -4,7 +4,7 @@
 \name{nrow-FIMatrix}
 \alias{nrow-FIMatrix}
 \alias{nrow,FIMatrix-method}
-\title{Give the number of rows of underlying matrix in an FIMatrix.}
+\title{Give the number of rows of the underlying matrix in an FIMatrix.}
 \usage{
 \S4method{nrow}{FIMatrix}(x)
 }

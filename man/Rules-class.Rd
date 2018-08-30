@@ -10,22 +10,22 @@ S4 class to store association rules and relevant quality metrics
 \section{Slots}{
 
 \describe{
-\item{\code{lhs}}{ngTMatrix describing the lhs of the rules}
+\item{\code{lhs}}{ngTMatrix describing the lhs of the rules.}
 
-\item{\code{rhs}}{ngTMatrix describing the rhs of the rules}
+\item{\code{rhs}}{ngTMatrix describing the rhs of the rules.}
 
-\item{\code{support}}{Support of  the Rules}
+\item{\code{support}}{Support of  the Rules.}
 
-\item{\code{confidence}}{Confidence of Rules}
+\item{\code{confidence}}{Confidence of Rules.}
 
-\item{\code{lift}}{Lift of the rules}
+\item{\code{lift}}{Lift of the rules.}
 
-\item{\code{leverage}}{Leverage of the rules}
+\item{\code{leverage}}{Leverage of the rules.}
 
 \item{\code{itemsetID}}{This represent a vector of unique identifiers for the different frequent
-itemsets. Used for internal computation.}
+itemsets the rules stem from. Used for internal computation.}
 
-\item{\code{FrequentItemsets}}{Internally used FIMatrix containing the frequent itemsets based on which
-the rules were created.}
+\item{\code{FrequentItemsets}}{Frequent Itemsets as an FIMatrix object containing the frequent items 
+the rules were created from.}
 }}
 

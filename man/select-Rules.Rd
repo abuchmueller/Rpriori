@@ -12,10 +12,10 @@
 \item{x}{Object of class Rules}
 
 \item{i}{Either the rows represented by their row number or a logical vector of length number of 
-row of Rules.}
+row of Rules. If i is missing or NULL all rows are selected.}
 
 \item{j}{Either the columns represented by their columns numbers or logical vector of length 
-number of columns in Rules}
+number of columns in Rules. If j is missing or NULL all columns are selected.}
 }
 \value{
 subsetted Rules object.

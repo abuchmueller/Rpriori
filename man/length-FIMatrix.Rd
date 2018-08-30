@@ -15,5 +15,5 @@
 Number of frequent itemsets within the FIMatrix
 }
 \description{
-The length function for the FIMatrix returns the number of frequent items
+The length function for the FIMatrix returns the number of frequent items.
 }

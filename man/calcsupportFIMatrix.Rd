@@ -20,5 +20,5 @@ Vector of support values.
 }
 \description{
 This function calculate the support for a frequent itemset with a transactions set if the 
-support vector is missing and otherwise otherwise just return the support vector
+support vector is missing and otherwise otherwise just returns the support vector
 }
