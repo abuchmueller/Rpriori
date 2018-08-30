@@ -197,7 +197,7 @@ qplot(Rules)
 Example: Using convenience functions like `support()`
 -----------------------------------------------------
 
-There are a set of convenience functions to access certain slots easily.
+There is a set of convenience functions to access information about the rules quality directly.
 
 ``` r
 support(Frequent)[1:5]
@@ -211,3 +211,58 @@ lift(Rules)[1:5]
 leverage(Rules)[1:5]
 #> [1] 0.004525561 0.004525561 0.003739795 0.003739795 0.005060933
 ```
+
+Example Prune: Prune rules by minimal Lift level.
+-------------------------------------------------
+
+Let's start by mining rules based on the test dataset Epub containing the download history of documents from the electronical publiation platform of the Vienna University of Economics and Business Administration. Let's find association rules with minimal support of 0.0009 and minimal confidence of 0.1.
+
+``` r
+rules <- AssociationRules(Epub, 0.0009, 0.1)
+qplot(rules)
+```
+
+![](figures/unnamed-chunk-12-1.png)
+
+We see that there are some rules with really high lift. Maybe we would like to examine only the rules with lift above 300.
+
+``` r
+rules_pruned <- prune(rules, Lift = 300)
+print(rules_pruned)
+#>                  lhs          rhs     Support Confidence     Lift
+#> 1          {doc_6e9} => {doc_6e7} 0.001271537  0.7142857 321.0000
+#> 2          {doc_6e7} => {doc_6e9} 0.001271537  0.5714286 321.0000
+#> 3          {doc_6e9} => {doc_6e8} 0.001207960  0.6785714 333.5391
+#> 4          {doc_506} => {doc_507} 0.001207960  0.6551724 303.0943
+#> 5          {doc_6e8} => {doc_6e9} 0.001207960  0.5937500 333.5391
+#> 6          {doc_507} => {doc_506} 0.001207960  0.5588235 303.0943
+#> 7 {doc_6e8, doc_6e9} => {doc_6e7} 0.001080806  0.8947368 402.0947
+#> 8 {doc_6e7, doc_6e9} => {doc_6e8} 0.001080806  0.8500000 417.8016
+#> 9 {doc_6e7, doc_6e8} => {doc_6e9} 0.001080806  0.8095238 454.7500
+#>      Leverage
+#> 1 0.001267575
+#> 2 0.001267575
+#> 3 0.001204338
+#> 4 0.001203974
+#> 5 0.001204338
+#> 6 0.001203974
+#> 7 0.001078118
+#> 8 0.001078219
+#> 9 0.001078429
+```
+
+Similarly, we could also prune by confidence and habe a look at the rules with minimal confidence 0.75
+
+``` r
+print(prune(rules, Confidence = 0.75))
+#>                  lhs          rhs     Support Confidence     Lift
+#> 1 {doc_6e8, doc_6e9} => {doc_6e7} 0.001080806  0.8947368 402.0947
+#> 2 {doc_6e7, doc_6e9} => {doc_6e8} 0.001080806  0.8500000 417.8016
+#> 3 {doc_6e7, doc_6e8} => {doc_6e9} 0.001080806  0.8095238 454.7500
+#>      Leverage
+#> 1 0.001078118
+#> 2 0.001078219
+#> 3 0.001078429
+```
+
+We seem to be pretty sure about these Rules!

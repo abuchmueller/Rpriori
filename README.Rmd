@@ -101,7 +101,7 @@ qplot(Rules)
 
 ## Example: Using convenience functions like `support()`
 
-There are a set of convenience functions to access certain slots easily.
+There is a set of convenience functions to access information about the rules quality directly.
 ```{r}
 support(Frequent)[1:5]
 support(Rules)[1:5]
@@ -109,4 +109,41 @@ confidence(Rules)[1:5]
 lift(Rules)[1:5]
 leverage(Rules)[1:5]
 ```
+
+## Example Prune: Prune rules by minimal Lift level.
+
+Let's start by mining rules based on the test dataset Epub containing the download history of
+documents from the electronical publiation platform of the Vienna University of Economics and
+Business Administration. Let's find association rules with minimal support of 0.0009 and minimal
+confidence of 0.1. 
+
+
+```{r}
+rules <- AssociationRules(Epub, 0.0009, 0.1)
+qplot(rules)
+```
+
+
+
+We see that there are some rules with really high lift. Maybe we would like to examine only the
+rules with lift above 300.
+
+
+```{r}
+rules_pruned <- prune(rules, Lift = 300)
+print(rules_pruned)
+```
+
+
+Similarly, we could also prune by confidence and habe a look at the rules with minimal confidence 
+0.75
+
+```{r}
+print(prune(rules, Confidence = 0.75))
+```
+
+
+We seem to be pretty sure about these Rules!
+
+
 
