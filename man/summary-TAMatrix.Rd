@@ -4,7 +4,7 @@
 \name{summary-TAMatrix}
 \alias{summary-TAMatrix}
 \alias{summary,TAMatrix-method}
-\title{Summary for FI-matrices.}
+\title{Summary for TAMatrix objects}
 \usage{
 \S4method{summary}{TAMatrix}(object)
 }
@@ -15,6 +15,6 @@
 Summary information about the TAMatrix
 }
 \description{
-The sumamary function gives general information about the TAMatrix such as the density or the 
+The summary function gives general information about the TAMatrix such as the density or the 
 distribution of the length of the itemsets
 }

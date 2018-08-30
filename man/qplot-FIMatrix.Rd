@@ -4,7 +4,7 @@
 \name{qplot-FIMatrix}
 \alias{qplot-FIMatrix}
 \alias{qplot,FIMatrix-method}
-\title{Plot an FI-matrices with ggplot2}
+\title{Plot FIMatrix objects with ggplot2}
 \usage{
 \S4method{qplot}{FIMatrix}(x, col = "red", alpha = 0.1,
   type = c("hist", "scatter"))

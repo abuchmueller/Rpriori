@@ -4,7 +4,7 @@
 \name{ncol-TAMatrix}
 \alias{ncol-TAMatrix}
 \alias{ncol,TAMatrix-method}
-\title{Give the number of columns of underlying matrix in an TAMatrix.}
+\title{Return the number of columns of underlying matrix in an TAMatrix.}
 \usage{
 \S4method{ncol}{TAMatrix}(x)
 }

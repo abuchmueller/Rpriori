@@ -2,17 +2,17 @@
 % Please edit documentation in R/allMethods.R
 \name{prune}
 \alias{prune}
-\title{Pruning objects by metric.}
+\title{Pruning objects by quality measure(s)}
 \usage{
 prune(object, ...)
 }
 \arguments{
 \item{object}{Objected to be pruned.}
 
-\item{...}{metrics to prune by}
+\item{...}{measure(s) to prune by}
 }
 \value{
-Pruned object of same class as input.
+Pruned object of same class
 }
 \description{
 With thes function one can eliminate parts of an object that do not fulfill certain threshholds.

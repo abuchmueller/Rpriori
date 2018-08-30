@@ -4,7 +4,7 @@
 \name{select-Rules}
 \alias{select-Rules}
 \alias{select,Rules-method}
-\title{Subsetting of an Rules object.}
+\title{Subsetting of a Rules object.}
 \usage{
 \S4method{select}{Rules}(x, i, j)
 }
@@ -21,7 +21,7 @@ number of columns in Rules. If j is missing or NULL all columns are selected.}
 subsetted Rules object.
 }
 \description{
-An Rules does contain the matrix of itemsets as well as the a vectors that contains the support,
+A Rules object does contain the matrix of itemsets as well as the a vectors that contains the support,
 confidence, lift and leverage for all rules.Therefore, both are logically connected and 
 when a Rules is subsetted column- wise the other vectors are subsetted as well.
 }

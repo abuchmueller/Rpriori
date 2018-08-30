@@ -4,7 +4,7 @@
 \name{colSums-TAMatrix}
 \alias{colSums-TAMatrix}
 \alias{colSums,TAMatrix-method}
-\title{Give the sum of each column for the underlying matrix within an TAMatrix.}
+\title{Return the sum of each column for the underlying matrix within an TAMatrix}
 \usage{
 \S4method{colSums}{TAMatrix}(x)
 }

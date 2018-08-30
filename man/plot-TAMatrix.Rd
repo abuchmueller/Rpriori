@@ -4,7 +4,7 @@
 \name{plot-TAMatrix}
 \alias{plot-TAMatrix}
 \alias{plot,TAMatrix-method}
-\title{Plot an TAMatrix object.}
+\title{Plot TAMatrix objects}
 \usage{
 \S4method{plot}{TAMatrix}(x)
 }
@@ -12,5 +12,5 @@
 \item{x}{Object of class TAMatrix}
 }
 \description{
-The plot function for TA Matrix does give a histgram of the itemset length.
+The plot function for TAMatrix creates a histogram of the itemset lengths
 }

@@ -4,7 +4,7 @@
 \name{leverage-Rules}
 \alias{leverage-Rules}
 \alias{leverage,Rules-method}
-\title{Extract leverage of all rules within a Rules object.}
+\title{Extract leverage of all rules within a Rules object}
 \usage{
 \S4method{leverage}{Rules}(object)
 }
@@ -15,5 +15,5 @@
 Vector of leverage values from all Rules in x.
 }
 \description{
-Extract leverage of all rules within a Rules object.
+Extract leverage of all rules within a Rules object
 }

@@ -4,7 +4,7 @@
 \name{ncol-Rules}
 \alias{ncol-Rules}
 \alias{ncol,Rules-method}
-\title{Give the number of columns of underlying matrix in an Rules object.}
+\title{Return the number of columns of underlying matrix in an Rules object}
 \usage{
 \S4method{ncol}{Rules}(x)
 }

@@ -4,7 +4,7 @@
 \name{qplot-Rules}
 \alias{qplot-Rules}
 \alias{qplot,Rules-method}
-\title{Plot an Rules object wiht ggplot2}
+\title{Plot a Rules object wiht ggplot2}
 \usage{
 \S4method{qplot}{Rules}(x)
 }

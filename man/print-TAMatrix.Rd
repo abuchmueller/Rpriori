@@ -11,12 +11,12 @@
 \arguments{
 \item{x}{Object of class TAMatrix}
 
-\item{descending}{Starting with the highest or lowest count?}
+\item{descending}{Logical value per default TRUE.}
 }
 \value{
 The frequent itemsets ordererd by their occurence
 }
 \description{
-The print function prints out all items of the TAMatrix with their respective counts. There are
-sorted descending by these counts
+The print function prints out all items of the TAMatrix with their respective counts. They are
+sorted in a descending order by their frequency.
 }

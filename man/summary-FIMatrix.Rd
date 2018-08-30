@@ -15,5 +15,5 @@
 Summary information about the FImatrix
 }
 \description{
-The sumamary function gives general information about the frequent itemsets.
+The summary function gives general information about the frequent itemsets.
 }

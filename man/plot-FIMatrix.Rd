@@ -4,7 +4,7 @@
 \name{plot-FIMatrix}
 \alias{plot-FIMatrix}
 \alias{plot,FIMatrix-method}
-\title{Plot an FI-matrices.}
+\title{Plot FIMatrix objects}
 \usage{
 \S4method{plot}{FIMatrix}(x, pch = 1, col = "red")
 }
@@ -13,12 +13,12 @@
 
 \item{pch}{Size of points that is given to plot function.}
 
-\item{col}{colour that is given to plot function.}
+\item{col}{Colour used by plot()}
 }
 \value{
-Scatter plot of Itemsize vs support.
+Scatter plot of itemsize against support
 }
 \description{
-The plot function gives a scatter plot with the support on the y-axis and the itemset-length on
+The plot function creates a scatter plot with the support on the y-axis and the itemset-length on
 the x-axis
 }

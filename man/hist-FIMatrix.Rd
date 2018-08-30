@@ -4,7 +4,7 @@
 \name{hist-FIMatrix}
 \alias{hist-FIMatrix}
 \alias{hist,FIMatrix-method}
-\title{Plot an Histogram of itemset length for an FI-matrices.}
+\title{Plot a Histogram of itemset lengths for a FIMatrix object}
 \usage{
 \S4method{hist}{FIMatrix}(x)
 }
