@@ -5,7 +5,7 @@
 Rpriori
 =======
 
-The goal of `Rpriori` is to create association rules of type X=&gt;Y by using the Apriori algorithm. For a more detailed demonstration of how the package works please consider the Demo file in the examples folder. This `README` only covers the most important features.
+The goal of `Rpriori` is to create association rules of type X=&gt;Y by using the Apriori algorithm. For a more detailed demonstration of how the package works please consider the examples.R file in the examples folder. This `README` only covers the most important features.
 
 Installation
 ------------
@@ -20,16 +20,79 @@ devtools::install_github("TimToebrock/Rpriori")
 Example: Creating association rules
 -----------------------------------
 
-This is a basic example which shows you how to create association rules with `Rpriori` using the `Groceries` dataset:
+Let's say we would like to mine association rules based on the `Groceries` dataset with the `Rpriori` package. Let's first get a rought overview over the dataset. To do so we could take a look the `summary()` function of Rpriori.
 
 ``` r
 data("Groceries")
-Rules <- AssociationRules(Groceries, minsupport = 0.01)
-show(Rules)
-#> Found 522 rule(s). Use print() to display
+summary(Groceries)
+#> transactions as itemMatrix in sparse format with
+#>  9835 rows (elements/itemsets/transactions) and
+#>  169 columns (items) and a density of 0.02609146 
+#> 
+#> most frequent items:
+#>       whole milk other vegetables       rolls/buns             soda 
+#>             2513             1903             1809             1715 
+#>           yogurt          (Other) 
+#>             1372            34055 
+#> 
+#> element (itemset/transaction) length distribution:
+#> sizes
+#>    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15 
+#> 2159 1643 1299 1005  855  645  545  438  350  246  182  117   78   77   55 
+#>   16   17   18   19   20   21   22   23   24   26   27   28   29   32 
+#>   46   29   14   14    9   11    4    6    1    1    1    1    3    1 
+#> 
+#>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#>   1.000   2.000   3.000   4.409   6.000  32.000 
+#> 
+#> includes extended item information - examples:
+#>        labels  level2           level1
+#> 1 frankfurter sausage meat and sausage
+#> 2     sausage sausage meat and sausage
+#> 3  liver loaf sausage meat and sausage
 ```
 
-To create rules you need to supply `AssociationRules()` with a transactions database and a minimum support threshold. You can additionally set a minimum confidence threshold.
+Interesting! We have 9835 transactions recorded with a total 169 items. With a density of 0.026 the average basket does have 4 items in it. That seems realistic. Let's try to find some frequent items with the `FindFrequentItemsets()` function or `Rpriori`!
+
+``` r
+Frequent <- FindFrequentItemsets(Groceries, minsupport = 0.1)
+show(Frequent)
+#> Found 8 frequent itemset(s). Use print() to display
+```
+
+We see that here are some items really frequent and occur in on out of ten transaction! What are these items? We can take a closer look at the items by using the `print()` function.
+
+``` r
+print(Frequent)
+#>              items   support
+#> 4       whole milk 0.2555160
+#> 3 other vegetables 0.1934926
+#> 6       rolls/buns 0.1839349
+#> 8             soda 0.1743772
+#> 5           yogurt 0.1395018
+#> 7    bottled water 0.1105236
+#> 2  root vegetables 0.1089985
+#> 1   tropical fruit 0.1049314
+```
+
+Does not even seem that unhealthy! Can we already find association rules based on this support value? Lets try out the `AssociationRules()` function.
+
+``` r
+AssociationRules(Groceries, 0.1)
+#> Warning in AssociationRules(Groceries, 0.1): No rules can be calculated for that minimal support and confidence level. 
+#>             Returns empty Rules object
+#> Found no rules. Try lowering the support and/or confidence threshold.
+```
+
+Unfortunately not. Lets try another support value and set the minimal confidence to 0.2.
+
+``` r
+Rules <- AssociationRules(Groceries, minsupport = 0.01, minconfidence = 0.2)
+show(Rules)
+#> Found 231 rule(s). Use print() to display
+```
+
+Wow! We found our first Association rules. In the next example we are going to look a little bit closer at them!
 
 Example: Inspecting data
 ------------------------
@@ -38,17 +101,17 @@ To get summary statistics on the rules simply call `summary()`
 
 ``` r
 summary(Rules)
-#> Found 522 rule(s). Use print() to display
+#> Found 231 rule(s). Use print() to display
 #> 
 #> 
 #> Summary of quality measures:
 #>     support          confidence          lift           leverage        
-#>  Min.   :0.01007   Min.   :0.0394   Min.   :0.7899   Min.   :-0.004495  
-#>  1st Qu.:0.01149   1st Qu.:0.1141   1st Qu.:1.3238   1st Qu.: 0.003568  
-#>  Median :0.01388   Median :0.1869   Median :1.5863   Median : 0.005414  
-#>  Mean   :0.01718   Mean   :0.2154   Mean   :1.6518   Mean   : 0.005863  
-#>  3rd Qu.:0.01973   3rd Qu.:0.2907   3rd Qu.:1.8753   3rd Qu.: 0.007444  
-#>  Max.   :0.07483   Max.   :0.5862   Max.   :3.3723   Max.   : 0.026291
+#>  Min.   :0.01007   Min.   :0.2006   Min.   :0.8991   Min.   :-0.004495  
+#>  1st Qu.:0.01200   1st Qu.:0.2470   1st Qu.:1.4455   1st Qu.: 0.004608  
+#>  Median :0.01474   Median :0.3180   Median :1.7278   Median : 0.006500  
+#>  Mean   :0.01903   Mean   :0.3324   Mean   :1.7924   Mean   : 0.007261  
+#>  3rd Qu.:0.02222   3rd Qu.:0.4035   3rd Qu.:2.0781   3rd Qu.: 0.008461  
+#>  Max.   :0.07483   Max.   :0.5862   Max.   :3.2950   Max.   : 0.026291
 ```
 
 If you want to take a look at the underlying data used in rule creation there are multiple ways. One way is to use the `extract` function:
@@ -144,13 +207,13 @@ All classes come with base plotting and `ggplot2` methods. Both `plot()` and `qp
 plot(Transactions)
 ```
 
-![](figures/unnamed-chunk-7-1.png)
+![](figures/unnamed-chunk-12-1.png)
 
 ``` r
 qplot(Transactions)
 ```
 
-![](figures/unnamed-chunk-7-2.png)
+![](figures/unnamed-chunk-12-2.png)
 
 ### Plotting frequent items
 
@@ -158,13 +221,13 @@ qplot(Transactions)
 plot(Frequent)
 ```
 
-![](figures/unnamed-chunk-8-1.png)
+![](figures/unnamed-chunk-13-1.png)
 
 ``` r
 qplot(Frequent, type = "scatter", col = "red", alpha = 0.1)
 ```
 
-![](figures/unnamed-chunk-8-2.png)
+![](figures/unnamed-chunk-13-2.png)
 
 ### Plotting frequent items (as a histogram)
 
@@ -172,13 +235,13 @@ qplot(Frequent, type = "scatter", col = "red", alpha = 0.1)
 hist(Frequent)
 ```
 
-![](figures/unnamed-chunk-9-1.png)
+![](figures/unnamed-chunk-14-1.png)
 
 ``` r
 qplot(Frequent, type = "hist")
 ```
 
-![](figures/unnamed-chunk-9-2.png)
+![](figures/unnamed-chunk-14-2.png)
 
 ### Plotting rules
 
@@ -186,13 +249,13 @@ qplot(Frequent, type = "hist")
 plot(Rules)
 ```
 
-![](figures/unnamed-chunk-10-1.png)
+![](figures/unnamed-chunk-15-1.png)
 
 ``` r
 qplot(Rules)
 ```
 
-![](figures/unnamed-chunk-10-2.png)
+![](figures/unnamed-chunk-15-2.png)
 
 Example: Using convenience functions like `support()`
 -----------------------------------------------------
@@ -203,13 +266,13 @@ There is a set of convenience functions to access information about the rules qu
 support(Frequent)[1:5]
 #> [1] 0.05897306 0.09395018 0.02602949 0.02582613 0.04290798
 support(Rules)[1:5]
-#> [1] 0.01006609 0.01006609 0.01016777 0.01016777 0.01647178
+#> [1] 0.01647178 0.02053889 0.01921708 0.02694459 0.02989324
 confidence(Rules)[1:5]
-#> [1] 0.10714286 0.17068966 0.09328358 0.17241379 0.08512874
+#> [1] 0.2793103 0.3482759 0.3258621 0.2867965 0.3181818
 lift(Rules)[1:5]
-#> [1] 1.816810 1.816810 1.581800 1.581800 1.443519
+#> [1] 1.443519 1.363029 1.771616 1.482209 1.245252
 leverage(Rules)[1:5]
-#> [1] 0.004525561 0.004525561 0.003739795 0.003739795 0.005060933
+#> [1] 0.005060933 0.005470332 0.008369877 0.008765919 0.005887463
 ```
 
 Example Prune: Prune rules by minimal Lift level.
@@ -222,7 +285,7 @@ rules <- AssociationRules(Epub, 0.0009, 0.1)
 qplot(rules)
 ```
 
-![](figures/unnamed-chunk-12-1.png)
+![](figures/unnamed-chunk-17-1.png)
 
 We see that there are some rules with really high lift. Maybe we would like to examine only the rules with lift above 300.
 
