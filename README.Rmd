@@ -17,7 +17,7 @@ library(Rpriori)
 
 # Rpriori
 
-The goal of `Rpriori` is to create association rules of type X=>Y by using the Apriori algorithm. For a more detailed demonstration of how the package works please consider the Demo file in the examples folder. This `README` only covers the most important features.
+The goal of `Rpriori` is to create association rules of type X=>Y by using the Apriori algorithm. For a more detailed demonstration of how the package works please consider the examples.R file in the examples folder. This `README` only covers the most important features.
 
 ## Installation
 
@@ -30,16 +30,44 @@ devtools::install_github("TimToebrock/Rpriori")
 
 ## Example: Creating association rules
 
-This is a basic example which shows you how to create association rules with `Rpriori` using the `Groceries` dataset:
+Let's say we would like to mine association rules based on the `Groceries` dataset with the 
+`Rpriori` package. Let's first get a rough overview over the dataset. To do so we could take a look
+the `summary()` function of Rpriori.
 
-```{r example, message=FALSE, warning=FALSE}
-data("Groceries")
-Rules <- AssociationRules(Groceries, minsupport = 0.01)
-show(Rules)
+```{r}
+summary(makeTAMatrix(Groceries))
 ```
 
-To create rules you need to supply `AssociationRules()` with a transactions database and a minimum support threshold. 
-You can additionally set a minimum confidence threshold.
+Interesting! We have 9835 transactions recorded with a total of 169 items. With a density of 0.026
+the average basket does have 4 items in it. That seems realistic. Let's try to find some frequent
+items with the `FindFrequentItemsets()` function of `Rpriori`!
+
+```{r}
+Frequent <- FindFrequentItemsets(Groceries, minsupport = 0.1)
+show(Frequent)
+```
+
+We see that there are some really frequent items that occur in one out of ten transactions! What are
+these items? We can take a closer look at the items by using the `print()` function.
+
+```{r}
+print(Frequent)
+```
+Does not even seem that unhealthy! Can we already find association rules based on this support value?
+Lets try out the `AssociationRules()` function.
+
+```{r}
+AssociationRules(Groceries, 0.1)
+```
+
+Unfortunately not. Lets try another support value and set the minimal confidence to 0.2.
+
+```{r}
+Rules <- AssociationRules(Groceries, minsupport = 0.01, minconfidence = 0.2)
+show(Rules)
+```
+Wow! We found our first Association rules. In the next example we are going to look a little bit
+closer at them!
 
 ## Example: Inspecting data
 
@@ -101,7 +129,7 @@ qplot(Rules)
 
 ## Example: Using convenience functions like `support()`
 
-There are a set of convenience functions to access certain slots easily.
+There is a set of convenience functions to access information about the rules quality directly.
 ```{r}
 support(Frequent)[1:5]
 support(Rules)[1:5]
@@ -109,4 +137,41 @@ confidence(Rules)[1:5]
 lift(Rules)[1:5]
 leverage(Rules)[1:5]
 ```
+
+## Example Prune: Prune rules by minimal Lift level.
+
+Let's start by mining rules based on the test dataset Epub containing the download history of
+documents from the electronical publiation platform of the Vienna University of Economics and
+Business Administration. Let's find association rules with minimal support of 0.0009 and minimal
+confidence of 0.1. 
+
+
+```{r}
+rules <- AssociationRules(Epub, 0.0009, 0.1)
+qplot(rules)
+```
+
+
+
+We see that there are some rules with really high lift. Maybe we would like to examine only the
+rules with lift above 300.
+
+
+```{r}
+rules_pruned <- prune(rules, Lift = 300)
+print(rules_pruned)
+```
+
+
+Similarly, we could also prune by confidence and habe a look at the rules with minimal confidence 
+0.75
+
+```{r}
+print(prune(rules, Confidence = 0.75))
+```
+
+
+We seem to be pretty sure about these Rules!
+
+
 

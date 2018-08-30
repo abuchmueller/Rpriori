@@ -2,5 +2,6 @@
 .RData
 .Rproj.user
 src/*
+!src/registerDynamicSymbol.c
 !src/ptree.c
 .DS_Store

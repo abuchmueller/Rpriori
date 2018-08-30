@@ -103,8 +103,9 @@ setMethod("summary", signature(object = "TAMatrix"), function(object) {
 #' @export  
 #' @param x Object of class TAMatrix
 #' @aliases plot-TAMatrix plot,TAMatrix-method
-#' @return histogram of the length of the itemsets within the TA Matrix.
 #' @importFrom utils data
+#' @importFrom ggplot2 qplot
+#' @importFrom ggplot2 aes element_text geom_bar geom_point ggplot labs scale_color_gradient theme scale_x_continuous
 setMethod("plot", signature(x = "TAMatrix"), function(x) {
   
   if (length(x) <= 0) {
@@ -120,14 +121,6 @@ setMethod("plot", signature(x = "TAMatrix"), function(x) {
        col = "lightblue")
   }
 })
-
-#' ggplot plot methods for Rules, TAMatrix and FIMatrix
-#' @param x object of class Rules, TAMatrix or FIMatrix
-#' @param ... Further information that should be passed down to plot function
-#' @return Plot
-#' @export
-#' @importFrom ggplot2 aes element_text geom_bar geom_point ggplot labs scale_color_gradient theme scale_x_continuous
-setGeneric("qplot", function(x,... )  standardGeneric("qplot"))
 
 #' Plot an TAMatrix object with ggplot.
 #' 

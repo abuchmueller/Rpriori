@@ -7,13 +7,15 @@
 GenCandidates(L)
 }
 \arguments{
-\item{L}{Sparse incident matrix of the candidates.}
+\item{L}{Sparse, binary  incident matrix of class ngTMatrix containing the candidates itemsets.
+The rows should be named and represent the items while the columns should be the itemsets.}
 }
 \value{
 The candidates of length k + 1 as a sparse incident matrix. rownames are kept.
 }
 \description{
-Take an sparce, incident matrix with itemsets of length k and generates the candidates of length
-k + 1 based on the apriori Candidate Generation. In the matrix the rows should be the items and 
-the columns should be the itemssets that represent the candidates.
+Take an sparce, binary, incident matrix of class ngTMatrix with itemsets of length k and
+generates the candidates of length  k + 1 based on the Apriori Candidate Generation. In the
+matrix the rows should be the items and the columns should be the itemssets that represent 
+the candidates.
 }

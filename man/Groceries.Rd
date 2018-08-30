@@ -4,7 +4,7 @@
 \name{Groceries}
 \alias{Groceries}
 \title{One month of real-world point-of-sale transaction data from a typical local grocery outlet.}
-\format{An object of class transaction with  9835 itemsets and 169 items.}
+\format{An object of class transactions with 9835 itemsets and 169 items.}
 \usage{
 Groceries
 }

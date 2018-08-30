@@ -21,8 +21,7 @@ FIMatrix or itemsets class object.}
 \item{maxConsequentLength}{Maximal length of the consequents for the generated rules.}
 }
 \value{
-Object of class Rules containing the calculated rules as well as information on their
-quality.
+Object of class Rules containing the calculated rules as well as quality measures.
 }
 \description{
 AssocationRules() computes association rules with minimal support and confidence based on a 
@@ -32,7 +31,7 @@ calculated. This can be changed with the parameter maxConsquentLength.
 }
 \examples{
 \donttest{
-# Calculate the frequent itemsets with minimal support 0.03 
+# Calculate the Rules with minimal support 0.03 
 # and confidence 0.4 based on the dataset Groceries
 Groceries_Rules <- AssociationRules(Itemsets = Groceries, minsupport = 0.03, minconfidence = 0.4)
 

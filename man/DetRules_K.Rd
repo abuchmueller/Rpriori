@@ -10,7 +10,8 @@ DetRules_K(rules)
 \item{rules}{Object of class Rules containing the current rules with consequent length k}
 }
 \description{
-This function take the frequent transactions as input and generates rules of consequent length >1.
-For a rule having consequent length k it will return, if possible, rules with consequent length 
-k + 1. It uses the Apriori-gen for more efficient generation of rule candidates.
+This function takes the rules with consequent length k as input and generates rules of 
+consequent length K + 1. For a rule having consequent length k it will return, if possible,
+rules with consequent length  k + 1. It uses the Apriori-gen for more efficient generation 
+of rule candidates.
 }
