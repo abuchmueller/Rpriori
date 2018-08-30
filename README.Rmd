@@ -35,7 +35,7 @@ Let's say we would like to mine association rules based on the `Groceries` datas
 the `summary()` function of Rpriori.
 
 ```{r}
-summary(makeTAMatrix(Groceries))
+summary(Groceries)
 ```
 
 Interesting! We have 9835 transactions recorded with a total of 169 items. With a density of 0.026

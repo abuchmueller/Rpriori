@@ -5,6 +5,7 @@
 #######################################################
 
 library(Rpriori)
+library(arules)
 
 data("Groceries")
 
@@ -47,9 +48,9 @@ showMethods("hist")
 showMethods("qplot")
 
 ## or check by class name directly
-showMethods(class = "TAMatrix")
-showMethods(class = "FIMatrix")
-showMethods(class = "Rules")
+showMethods(classes = "TAMatrix")
+showMethods(classes = "FIMatrix")
+showMethods(classes = "Rules")
 
 #### Overview over all methods #####
 
@@ -83,3 +84,4 @@ confidence(Rules)
 leverage(Rules)
 lift(Rules)
 extract(Rules) # These are the underlying frequent itemsets used in rule creation
+
