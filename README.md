@@ -144,13 +144,13 @@ All classes come with base plotting and `ggplot2` methods. Both `plot()` and `qp
 plot(Transactions)
 ```
 
-![](examples/figures/unnamed-chunk-7-1.png)
+![](figures/unnamed-chunk-7-1.png)
 
 ``` r
 qplot(Transactions)
 ```
 
-![](examples/figures/unnamed-chunk-7-2.png)
+![](figures/unnamed-chunk-7-2.png)
 
 ### Plotting frequent items
 
@@ -158,13 +158,13 @@ qplot(Transactions)
 plot(Frequent)
 ```
 
-![](examples/figures/unnamed-chunk-8-1.png)
+![](figures/unnamed-chunk-8-1.png)
 
 ``` r
 qplot(Frequent, type = "scatter", col = "red", alpha = 0.1)
 ```
 
-![](examples/figures/unnamed-chunk-8-2.png)
+![](figures/unnamed-chunk-8-2.png)
 
 ### Plotting frequent items (as a histogram)
 
@@ -172,13 +172,13 @@ qplot(Frequent, type = "scatter", col = "red", alpha = 0.1)
 hist(Frequent)
 ```
 
-![](examples/figures/unnamed-chunk-9-1.png)
+![](figures/unnamed-chunk-9-1.png)
 
 ``` r
 qplot(Frequent, type = "hist")
 ```
 
-![](examples/figures/unnamed-chunk-9-2.png)
+![](figures/unnamed-chunk-9-2.png)
 
 ### Plotting rules
 
@@ -186,13 +186,13 @@ qplot(Frequent, type = "hist")
 plot(Rules)
 ```
 
-![](examples/figures/unnamed-chunk-10-1.png)
+![](figures/unnamed-chunk-10-1.png)
 
 ``` r
 qplot(Rules)
 ```
 
-![](examples/figures/unnamed-chunk-10-2.png)
+![](figures/unnamed-chunk-10-2.png)
 
 Example: Using convenience functions like `support()`
 -----------------------------------------------------

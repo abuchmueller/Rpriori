@@ -1,6 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-
+^figures$
 ^README\.Rmd$
 ^README-.*\.png$
 ^Examples$
