@@ -1,10 +1,10 @@
 Package: Rpriori
 Version: 0.9
+Date: 2018-08-31
 Title: Implementation of the Apriori Algorithm
-Description: This packages includes a full implementation of the Apriori algorithm. It does include a S4 class structure as well as many convenience functions such as print, plot or summary. 
-Author: Tim Toebrock <timtoebrock@gmail.com>,
-      Andreas Buchmueller <abuchmueller@gmail.com>
-Maintainer: Tim Toebrock<timtoebrock@gmail.com>
+Description: This package includes a full implementation of the Apriori algorithm. It comes with a S4 class structure as well as many convenience functions such as print, plot or summary. 
+Authors@R: c(person("Tim", "Toebrock", role = c("aut", "cre"), email = "timtoebrock@gmail.com"),
+            person("Andreas", "Buchmueller", role = "aut", email = "anbuchmueller@gmail.com"))
 Depends: R (>= 3.4.0)
 Imports: Matrix (>= 1.2),
         methods,
