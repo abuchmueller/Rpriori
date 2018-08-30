@@ -99,7 +99,7 @@ plot(Rules)
 qplot(Rules)
 ```
 
-## Example: Using convenience functions like `support`
+## Example: Using convenience functions like `support()`
 
 There are a set of convenience functions to access certain slots easily.
 ```{r}

@@ -194,8 +194,8 @@ qplot(Rules)
 
 ![](figures/unnamed-chunk-10-2.png)
 
-Example: Using convenience functions like `support`
----------------------------------------------------
+Example: Using convenience functions like `support()`
+-----------------------------------------------------
 
 There are a set of convenience functions to access certain slots easily.
 
