@@ -4,7 +4,7 @@
 \name{rowSums-FIMatrix}
 \alias{rowSums-FIMatrix}
 \alias{rowSums,FIMatrix-method}
-\title{Give the row Sums for the underlying matrix within an FIMatrix.}
+\title{Return the row Sums for the underlying matrix within an FIMatrix}
 \usage{
 \S4method{rowSums}{FIMatrix}(x)
 }

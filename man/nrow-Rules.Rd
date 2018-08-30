@@ -4,7 +4,7 @@
 \name{nrow-Rules}
 \alias{nrow-Rules}
 \alias{nrow,Rules-method}
-\title{Give the number of rows of underlying matrix in an Rules object.}
+\title{Return the number of rows of underlying matrix in an Rules object.}
 \usage{
 \S4method{nrow}{Rules}(x)
 }

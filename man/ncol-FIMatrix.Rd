@@ -4,7 +4,7 @@
 \name{ncol-FIMatrix}
 \alias{ncol-FIMatrix}
 \alias{ncol,FIMatrix-method}
-\title{Give the number of columns of the underlying matrix in an FIMatrix.}
+\title{Return the number of columns of the underlying matrix in an FIMatrix}
 \usage{
 \S4method{ncol}{FIMatrix}(x)
 }

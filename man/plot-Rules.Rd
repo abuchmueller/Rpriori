@@ -4,7 +4,7 @@
 \name{plot-Rules}
 \alias{plot-Rules}
 \alias{plot,Rules-method}
-\title{Plot an Rules object.}
+\title{Plot a Rules object}
 \usage{
 \S4method{plot}{Rules}(x)
 }

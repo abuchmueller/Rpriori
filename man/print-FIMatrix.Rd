@@ -11,7 +11,7 @@
 \arguments{
 \item{x}{Object of class FIMatrix}
 
-\item{descending}{Starting with the highest or lowest support value?}
+\item{descending}{Logical value per default TRUE.}
 }
 \value{
 The frequent itemsets ordererd by their support

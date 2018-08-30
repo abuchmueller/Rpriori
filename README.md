@@ -31,17 +31,17 @@ summary(Groceries)
 #>  a density of 0.0261 (sparsity: 0.9739)
 #> 
 #> Most frequent items: 
-#>       whole milk other vegetables       rolls/buns             soda 
-#>             2513             1903             1809             1715 
-#>           yogurt    bottled water  root vegetables   tropical fruit 
-#>             1372             1087             1072             1032 
+#>       whole milk other vegetables       rolls/buns             soda           yogurt 
+#>             2513             1903             1809             1715             1372 
+#>    bottled water  root vegetables   tropical fruit 
+#>             1087             1072             1032 
 #> 
 #> Distribution of itemset length:
 #> 
-#>    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15 
-#> 2159 1643 1299 1005  855  645  545  438  350  246  182  117   78   77   55 
-#>   16   17   18   19   20   21   22   23   24   26   27   28   29   32 
-#>   46   29   14   14    9   11    4    6    1    1    1    1    3    1 
+#>    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16   17   18   19   20 
+#> 2159 1643 1299 1005  855  645  545  438  350  246  182  117   78   77   55   46   29   14   14    9 
+#>   21   22   23   24   26   27   28   29   32 
+#>   11    4    6    1    1    1    1    3    1 
 #> 
 #>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 #>   1.000   2.000   3.000   4.409   6.000  32.000
@@ -120,17 +120,17 @@ summary(Frequent)
 #>  333 columns (frequent itemsets)
 #> 
 #> Most frequent items: 
-#>       whole milk other vegetables           yogurt       rolls/buns 
-#>               71               63               39               36 
-#>  root vegetables             soda   tropical fruit          sausage 
-#>               34               28               26               17 
+#>       whole milk other vegetables           yogurt       rolls/buns  root vegetables 
+#>               71               63               39               36               34 
+#>             soda   tropical fruit          sausage 
+#>               28               26               17 
 #> 
 #> 
 #> Observed frequency in frequent itemsets:
-#>       whole milk other vegetables           yogurt       rolls/buns 
-#>           0.2132           0.1892           0.1171           0.1081 
-#>  root vegetables             soda   tropical fruit          sausage 
-#>           0.1021           0.0841           0.0781           0.0511 
+#>       whole milk other vegetables           yogurt       rolls/buns  root vegetables 
+#>           0.2132           0.1892           0.1171           0.1081           0.1021 
+#>             soda   tropical fruit          sausage 
+#>           0.0841           0.0781           0.0511 
 #> 
 #> 
 #> Distribution of itemset length:
@@ -175,17 +175,17 @@ summary(Transactions)
 #>  a density of 0.0261 (sparsity: 0.9739)
 #> 
 #> Most frequent items: 
-#>       whole milk other vegetables       rolls/buns             soda 
-#>             2513             1903             1809             1715 
-#>           yogurt    bottled water  root vegetables   tropical fruit 
-#>             1372             1087             1072             1032 
+#>       whole milk other vegetables       rolls/buns             soda           yogurt 
+#>             2513             1903             1809             1715             1372 
+#>    bottled water  root vegetables   tropical fruit 
+#>             1087             1072             1032 
 #> 
 #> Distribution of itemset length:
 #> 
-#>    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15 
-#> 2159 1643 1299 1005  855  645  545  438  350  246  182  117   78   77   55 
-#>   16   17   18   19   20   21   22   23   24   26   27   28   29   32 
-#>   46   29   14   14    9   11    4    6    1    1    1    1    3    1 
+#>    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16   17   18   19   20 
+#> 2159 1643 1299 1005  855  645  545  438  350  246  182  117   78   77   55   46   29   14   14    9 
+#>   21   22   23   24   26   27   28   29   32 
+#>   11    4    6    1    1    1    1    3    1 
 #> 
 #>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 #>   1.000   2.000   3.000   4.409   6.000  32.000
@@ -270,57 +270,48 @@ leverage(Rules)[1:5]
 #> [1] 0.005060933 0.005470332 0.008369877 0.008765919 0.005887463
 ```
 
-Example Prune: Prune rules by minimal Lift level.
--------------------------------------------------
+Example: Pruning rules
+----------------------
 
-Let's start by mining rules based on the test dataset Epub containing the download history of documents from the electronical publiation platform of the Vienna University of Economics and Business Administration. Let's find association rules with minimal support of 0.0009 and minimal confidence of 0.1.
+In this example we will use the `Epub` dataset containing the download history of documents from the electronical publiation platform of the Vienna University of Economics and Business Administration.
+
+If you want to find association rules with minimal support of 0.0009 and minimal confidence of 0.1 run:
 
 ``` r
 rules <- AssociationRules(Epub, 0.0009, 0.1)
+```
+
+If you use `qplot` you can see that there are some rules with extremely high lift values.
+
+``` r
 qplot(rules)
 ```
 
-![](figures/unnamed-chunk-17-1.png)
+![](figures/unnamed-chunk-18-1.png)
 
-We see that there are some rules with really high lift. Maybe we would like to examine only the rules with lift above 300.
+Now imagine you are only interested in rules with a lift value above 300:
 
 ``` r
 rules_pruned <- prune(rules, Lift = 300)
 print(rules_pruned)
-#>                  lhs          rhs     Support Confidence     Lift
-#> 1          {doc_6e9} => {doc_6e7} 0.001271537  0.7142857 321.0000
-#> 2          {doc_6e7} => {doc_6e9} 0.001271537  0.5714286 321.0000
-#> 3          {doc_6e9} => {doc_6e8} 0.001207960  0.6785714 333.5391
-#> 4          {doc_506} => {doc_507} 0.001207960  0.6551724 303.0943
-#> 5          {doc_6e8} => {doc_6e9} 0.001207960  0.5937500 333.5391
-#> 6          {doc_507} => {doc_506} 0.001207960  0.5588235 303.0943
-#> 7 {doc_6e8, doc_6e9} => {doc_6e7} 0.001080806  0.8947368 402.0947
-#> 8 {doc_6e7, doc_6e9} => {doc_6e8} 0.001080806  0.8500000 417.8016
-#> 9 {doc_6e7, doc_6e8} => {doc_6e9} 0.001080806  0.8095238 454.7500
-#>      Leverage
-#> 1 0.001267575
-#> 2 0.001267575
-#> 3 0.001204338
-#> 4 0.001203974
-#> 5 0.001204338
-#> 6 0.001203974
-#> 7 0.001078118
-#> 8 0.001078219
-#> 9 0.001078429
+#>                  lhs          rhs     Support Confidence     Lift    Leverage
+#> 1          {doc_6e9} => {doc_6e7} 0.001271537  0.7142857 321.0000 0.001267575
+#> 2          {doc_6e7} => {doc_6e9} 0.001271537  0.5714286 321.0000 0.001267575
+#> 3          {doc_6e9} => {doc_6e8} 0.001207960  0.6785714 333.5391 0.001204338
+#> 4          {doc_506} => {doc_507} 0.001207960  0.6551724 303.0943 0.001203974
+#> 5          {doc_6e8} => {doc_6e9} 0.001207960  0.5937500 333.5391 0.001204338
+#> 6          {doc_507} => {doc_506} 0.001207960  0.5588235 303.0943 0.001203974
+#> 7 {doc_6e8, doc_6e9} => {doc_6e7} 0.001080806  0.8947368 402.0947 0.001078118
+#> 8 {doc_6e7, doc_6e9} => {doc_6e8} 0.001080806  0.8500000 417.8016 0.001078219
+#> 9 {doc_6e7, doc_6e8} => {doc_6e9} 0.001080806  0.8095238 454.7500 0.001078429
 ```
 
-Similarly, we could also prune by confidence and habe a look at the rules with minimal confidence 0.75
+Similarly, you can also prune by confidence and have a look at the rules with confidence of 0.75 or above:
 
 ``` r
 print(prune(rules, Confidence = 0.75))
-#>                  lhs          rhs     Support Confidence     Lift
-#> 1 {doc_6e8, doc_6e9} => {doc_6e7} 0.001080806  0.8947368 402.0947
-#> 2 {doc_6e7, doc_6e9} => {doc_6e8} 0.001080806  0.8500000 417.8016
-#> 3 {doc_6e7, doc_6e8} => {doc_6e9} 0.001080806  0.8095238 454.7500
-#>      Leverage
-#> 1 0.001078118
-#> 2 0.001078219
-#> 3 0.001078429
+#>                  lhs          rhs     Support Confidence     Lift    Leverage
+#> 1 {doc_6e8, doc_6e9} => {doc_6e7} 0.001080806  0.8947368 402.0947 0.001078118
+#> 2 {doc_6e7, doc_6e9} => {doc_6e8} 0.001080806  0.8500000 417.8016 0.001078219
+#> 3 {doc_6e7, doc_6e8} => {doc_6e9} 0.001080806  0.8095238 454.7500 0.001078429
 ```
-
-We seem to be pretty sure about these Rules!

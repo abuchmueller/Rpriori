@@ -4,7 +4,7 @@
 \name{nrow-TAMatrix}
 \alias{nrow-TAMatrix}
 \alias{nrow,TAMatrix-method}
-\title{Give the number of rows of underlying matrix in an TAMatrix.}
+\title{Return the number of rows of underlying matrix in an TAMatrix.}
 \usage{
 \S4method{nrow}{TAMatrix}(x)
 }

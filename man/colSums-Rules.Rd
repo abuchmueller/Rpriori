@@ -4,7 +4,7 @@
 \name{colSums-Rules}
 \alias{colSums-Rules}
 \alias{colSums,Rules-method}
-\title{Give the sum of each column for the for either the rhs or lhs of a rule.}
+\title{Return the sum of each column for the for either the rhs or lhs of a rule}
 \usage{
 \S4method{colSums}{Rules}(x, lhs = TRUE)
 }

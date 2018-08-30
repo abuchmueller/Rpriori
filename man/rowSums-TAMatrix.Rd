@@ -4,7 +4,7 @@
 \name{rowSums-TAMatrix}
 \alias{rowSums-TAMatrix}
 \alias{rowSums,TAMatrix-method}
-\title{Give the row Sums for the underlying matrix within an TAMatrix.}
+\title{Return the row Sums for the underlying matrix within an TAMatrix.}
 \usage{
 \S4method{rowSums}{TAMatrix}(x)
 }

@@ -4,7 +4,7 @@
 \name{colSums-FIMatrix}
 \alias{colSums-FIMatrix}
 \alias{colSums,FIMatrix-method}
-\title{Give the colSums for the underlying matrix within an FIMatrix.}
+\title{Return the colSums for the underlying matrix within an FIMatrix}
 \usage{
 \S4method{colSums}{FIMatrix}(x)
 }

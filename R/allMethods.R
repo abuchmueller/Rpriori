@@ -25,13 +25,13 @@ setMethod("length", "TAMatrix", function(x) {
 
 #' Definition of print method for TAMatrix
 #' 
-#' The print function prints out all items of the TAMatrix with their respective counts. There are
-#' sorted descending by these counts
+#' The print function prints out all items of the TAMatrix with their respective counts. They are
+#' sorted in a descending order by their frequency.
 #' @name print-TAMatrix
 #' @rdname print-TAMatrix
 #' @export  
 #' @param x Object of class TAMatrix
-#' @param descending Starting with the highest or lowest count?
+#' @param descending Logical value per default TRUE.
 #' @aliases print-TAMatrix print,TAMatrix-method
 #' @return The frequent itemsets ordererd by their occurence
 setMethod("print", "TAMatrix", function(x, descending = TRUE) {
@@ -55,9 +55,9 @@ setMethod("show", "TAMatrix", function(object) {
   cat("Found", n, "items. Use the print() to display\n")
 })
 
-#' Summary for FI-matrices.
+#' Summary for TAMatrix objects
 #' 
-#' The sumamary function gives general information about the TAMatrix such as the density or the 
+#' The summary function gives general information about the TAMatrix such as the density or the 
 #' distribution of the length of the itemsets
 #' @name summary-TAMatrix
 #' @rdname summary-TAMatrix
@@ -95,9 +95,9 @@ setMethod("summary", signature(object = "TAMatrix"), function(object) {
   cat("\n")
 })
 
-#' Plot an TAMatrix object.
+#' Plot TAMatrix objects
 #' 
-#' The plot function for TA Matrix does give a histgram of the itemset length.
+#' The plot function for TAMatrix creates a histogram of the itemset lengths
 #' @name plot-TAMatrix
 #' @rdname plot-TAMatrix
 #' @export  
@@ -122,7 +122,7 @@ setMethod("plot", signature(x = "TAMatrix"), function(x) {
   }
 })
 
-#' Plot an TAMatrix object with ggplot.
+#' Plot an TAMatrix object with ggplot2
 #' 
 #' The qplot function for TA Matrix does give a histgram of the itemset length.
 #' @name qplot-TAMatrix
@@ -144,7 +144,7 @@ setMethod("qplot", signature(x = "TAMatrix"), function(x) {
     theme(plot.title = element_text(hjust = 0.5))
 })
 
-#' Export the item names for a TAMatrix.
+#' Export the item names for a TAMatrix
 #' @name items-TAMatrix
 #' @rdname items-TAMatrix
 #' @export  
@@ -156,7 +156,7 @@ setMethod("items",  signature = signature(x = "TAMatrix"),
             return(rownames(x@data))
           })
 
-#' Give the sum of each column for the underlying matrix within an TAMatrix.
+#' Return the sum of each column for the underlying matrix within an TAMatrix
 #' 
 #' In the matrix underlying the TAMatrix the rows represent the items and the columns  represent 
 #' the itemsets. Here the sums of all columns should be calculated that are the number of items
@@ -172,7 +172,7 @@ setMethod("colSums",  signature = signature(x = "TAMatrix"),
             return(colSums(x@data))
           })
 
-#' Give the row Sums for the underlying matrix within an TAMatrix.
+#' Return the row Sums for the underlying matrix within an TAMatrix.
 #' 
 #' In the matrix underlying the TAMatrix the rows represent the items and the columns to represent 
 #' the itemsets. Here the sums of each row should be calculated that are the number of occurences
@@ -188,7 +188,7 @@ setMethod("rowSums",  signature = signature(x = "TAMatrix"),
             return(rowSums(x@data))
           })
 
-#' Give the number of columns of underlying matrix in an TAMatrix. 
+#' Return the number of columns of underlying matrix in an TAMatrix. 
 #' 
 #' This number does represent the number of itemsets within that TAMatrix
 #' @name ncol-TAMatrix
@@ -202,7 +202,7 @@ setMethod("ncol",  signature = signature(x = "TAMatrix"),
             return(ncol(x@data))
           })
 
-#' Give the number of rows of underlying matrix in an TAMatrix. 
+#' Return the number of rows of underlying matrix in an TAMatrix. 
 #' 
 #' This number does represent the number of items within that TAMatrix
 #' @name nrow-TAMatrix
@@ -362,7 +362,7 @@ setMethod("show", "FIMatrix", function(object) {
 #' @rdname print-FIMatrix
 #' @export  
 #' @param x Object of class FIMatrix
-#' @param descending Starting with the highest or lowest support value? 
+#' @param descending Logical value per default TRUE.
 #' @aliases print-FIMatrix print,FIMatrix-method
 #' @return The frequent itemsets ordererd by their support
 #' 
@@ -383,7 +383,7 @@ setMethod("print", signature(x = "FIMatrix"), function(x, descending = TRUE) {
 
 #' Summary for FI-matrices.
 #' 
-#' The sumamary function gives general information about the frequent itemsets. 
+#' The summary function gives general information about the frequent itemsets. 
 #' @name summary-FIMatrix
 #' @rdname summary-FIMatrix
 #' @export  
@@ -448,18 +448,18 @@ setMethod("summary", signature(object = "FIMatrix"), function(object) {
   cat("\n")
 })
 
-#' Plot an FI-matrices.
+#' Plot FIMatrix objects
 #' 
-#' The plot function gives a scatter plot with the support on the y-axis and the itemset-length on
+#' The plot function creates a scatter plot with the support on the y-axis and the itemset-length on
 #' the x-axis
 #' @name plot-FIMatrix
 #' @rdname plot-FIMatrix
 #' @export  
 #' @param x Object of class FIMatrix
 #' @param pch Size of points that is given to plot function.
-#' @param col colour that is given to plot function.
+#' @param col Colour used by plot()
 #' @aliases plot-FIMatrix plot,FIMatrix-method
-#' @return Scatter plot of Itemsize vs support.
+#' @return Scatter plot of itemsize against support
 setMethod("plot", signature(x = "FIMatrix"), function(x, pch = 1, col = "red") {
   
   if (length(x) <= 0) {
@@ -472,7 +472,7 @@ setMethod("plot", signature(x = "FIMatrix"), function(x, pch = 1, col = "red") {
   }
 })
 
-#' Plot an FI-matrices with ggplot
+#' Plot FIMatrix objects with ggplot2
 #' 
 #' The qplot function can do a scatter plot with the support on the y-axis and the itemset-length on
 #' the x-axis or a histogram of itemset lengths
@@ -480,11 +480,19 @@ setMethod("plot", signature(x = "FIMatrix"), function(x, pch = 1, col = "red") {
 #' @rdname qplot-FIMatrix
 #' @param x Object of class FIMatrix
 #' @param col colour of data points (only scatter plot) per default "red"
-#' @param alpha alpha value for scatter plot
+#' @param alpha alpha value for scatter plot per default 0.1
 #' @param type character string "hist" or "scatter" depending on wether you want a histogram or scatter plot
 #' @aliases qplot-FIMatrix qplot,FIMatrix-method
 #' @return Scatter plot of itemset length against support or histogram of itemset lengths
 #' @export
+#' @examples \donttest{
+#' # Plot frequent itemsets as scatter plot.
+#' sp <- qlot(FIMatrix)
+#' # You can specify the color and alpha value for scatter plots.
+#' sp2 <- qplot(FIMatrix, col = "blue", alpha = 1)
+#' # Plot frequent itemsets as a histogram
+#' hst <- qplot(FIMatrix, type = "hist")
+#' }
 setMethod("qplot", signature(x = "FIMatrix"),
           function(x, col = "red", alpha = 0.1, type = c("hist", "scatter")) {
 
@@ -515,7 +523,7 @@ setMethod("qplot", signature(x = "FIMatrix"),
   }
 })
 
-#' Plot an Histogram of itemset length for an FI-matrices.
+#' Plot a Histogram of itemset lengths for a FIMatrix object
 #' 
 #' The hist function gives a histogram of the lengths of the itemsets.
 #' @name hist-FIMatrix
@@ -548,7 +556,7 @@ setMethod("support", "FIMatrix", function(x) {
   return(x@support)
 })
 
-#' Pruning objects by metric.
+#' Pruning objects by quality measure(s)
 #' 
 #' With thes function one can eliminate parts of an object that do not fulfill certain threshholds.
 #' Currently this function is implemented for the Classes FIMarix and Rules.
@@ -556,8 +564,8 @@ setMethod("support", "FIMatrix", function(x) {
 #' @rdname prune
 #' @export  
 #' @param object Objected to be pruned.
-#' @param ... metrics to prune by
-#' @return Pruned object of same class as input.
+#' @param ... measure(s) to prune by
+#' @return Pruned object of same class
 setGeneric("prune", function(object, ...) standardGeneric("prune"))
 
 #' Prune method for objects of class FIMatrix
@@ -592,7 +600,7 @@ setMethod("prune", "FIMatrix", function(object, Support) {
   }
 })
 
-#' Export the item names for a FIMatrix.
+#' Export the item names for a FIMatrix
 #' @name items-FIMatrix
 #' @rdname items-FIMatrix
 #' @export  
@@ -604,7 +612,7 @@ setMethod("items",  signature = signature(x = "FIMatrix"),
             return(rownames(x@data))
           })
 
-#' Give the colSums for the underlying matrix within an FIMatrix.
+#' Return the colSums for the underlying matrix within an FIMatrix
 #' 
 #' In the matrix underlying the FIMatrix the rows represent the items and the columns to represent 
 #' the itemsets. Here the sums of all columns should be calculated that are the number of items
@@ -620,7 +628,7 @@ setMethod("colSums",  signature = signature(x = "FIMatrix"),
             return(colSums(x@data))
           })
 
-#' Give the row Sums for the underlying matrix within an FIMatrix.
+#' Return the row Sums for the underlying matrix within an FIMatrix
 #' 
 #' In the matrix underlying the FIMatrix the rows represent the items and the columns to represent 
 #' the itemsets. Here the sums of each row should be calculated that are the number of occurences
@@ -636,7 +644,7 @@ setMethod("rowSums",  signature = signature(x = "FIMatrix"),
             return(rowSums(x@data))
           })
 
-#' Give the number of columns of the underlying matrix in an FIMatrix. 
+#' Return the number of columns of the underlying matrix in an FIMatrix
 #' 
 #' This number does represent the number of itemsets within that FIMatrix
 #' @name ncol-FIMatrix
@@ -650,7 +658,7 @@ setMethod("ncol",  signature = signature(x = "FIMatrix"),
             return(ncol(x@data))
           })
 
-#' Give the number of rows of the underlying matrix in an FIMatrix. 
+#' Return the number of rows of the underlying matrix in an FIMatrix
 #' 
 #' This number does represent the number of items within that FIMatrix
 #' @name nrow-FIMatrix
@@ -850,7 +858,7 @@ setMethod("summary", signature(object = "Rules"), function(object) {
   }
 })
 
-#' Plot an Rules object.
+#' Plot a Rules object
 #' 
 #' The plot function gives a scatter plot with the support on the x-axis, the confidence on the y-axis
 #' and the lift as a color gradient. 
@@ -896,7 +904,7 @@ setMethod("plot", "Rules", function(x) {
   }
 })
 
-#' Plot an Rules object wiht ggplot2
+#' Plot a Rules object wiht ggplot2
 #' 
 #' The plot function gives a scatter plot with the support on the x-axis, the confidence on the y-axis
 #' and the lift as a color gradient. 
@@ -966,7 +974,7 @@ setMethod("lift", "Rules", function(object) {
 #' @return Vector of leverage values from all entities of the objects.
 setGeneric("leverage", function(object) standardGeneric("leverage"))
 
-#' Extract leverage of all rules within a Rules object.
+#' Extract leverage of all rules within a Rules object
 #' @name leverage-Rules
 #' @rdname leverage-Rules
 #' @export  
@@ -1092,7 +1100,7 @@ setMethod("prune", "Rules", function(object, Support, Confidence, Lift, Leverage
   return(res)
 })
 
-#' Give the sum of each row for the for either the rhs or lhs of a rule.
+#' Return the sum of each row for the for either the rhs or lhs of a rule
 #' 
 #' Underlying a rules there is a right-hand side and a left-hand side. Both are stored as matrices. 
 #' With this function one can calculated the sum of each row, that is the respective number
@@ -1114,7 +1122,7 @@ setMethod("rowSums",  signature = signature(x = "Rules"),
             }
           })
 
-#' Give the sum of each column for the for either the rhs or lhs of a rule.
+#' Return the sum of each column for the for either the rhs or lhs of a rule
 #' 
 #' Underlying a rules there is a right-hand side and a left-hand side. Both are stored as matrices. 
 #' With this function one can calculated the sum of each column, that is the respective number
@@ -1136,7 +1144,7 @@ setMethod("colSums",  signature = signature(x = "Rules"),
             }
           })
 
-#' Export the item names for a Rules object.
+#' Export the item names for a Rules object
 #' @name items-Rules
 #' @rdname items-Rules
 #' @export  
@@ -1148,7 +1156,7 @@ setMethod("items",  signature = signature(x = "Rules"),
             return(rownames(x@lhs))
           })
 
-#' Give the number of columns of underlying matrix in an Rules object. 
+#' Return the number of columns of underlying matrix in an Rules object
 #' 
 #' Although a Rules object does have left-hand side and a right hand-side the number of columns for
 #' both does represent the number rules and therefore should be the same for both sides. This functions
@@ -1164,7 +1172,7 @@ setMethod("ncol",  signature = signature(x = "Rules"),
             return(ncol(x@lhs))
           })
 
-#' Give the number of rows of underlying matrix in an Rules object. 
+#' Return the number of rows of underlying matrix in an Rules object. 
 #' 
 #' Although a Rules object does have left-hand side and a right hand-side the number of rows for
 #' both does represent the number items and therefore should be the same for both sides. This functions
@@ -1180,9 +1188,9 @@ setMethod("nrow",  signature = signature(x = "Rules"),
             return(nrow(x@lhs))
           })
 
-#' Subsetting of an Rules object.
+#' Subsetting of a Rules object.
 #' 
-#' An Rules does contain the matrix of itemsets as well as the a vectors that contains the support,
+#' A Rules object does contain the matrix of itemsets as well as the a vectors that contains the support,
 #' confidence, lift and leverage for all rules.Therefore, both are logically connected and 
 #' when a Rules is subsetted column- wise the other vectors are subsetted as well.
 #' @name select-Rules

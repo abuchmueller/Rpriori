@@ -4,7 +4,7 @@
 \name{rowSums-Rules}
 \alias{rowSums-Rules}
 \alias{rowSums,Rules-method}
-\title{Give the sum of each row for the for either the rhs or lhs of a rule.}
+\title{Return the sum of each row for the for either the rhs or lhs of a rule}
 \usage{
 \S4method{rowSums}{Rules}(x, lhs = TRUE)
 }

@@ -4,7 +4,7 @@
 \name{items-TAMatrix}
 \alias{items-TAMatrix}
 \alias{items,TAMatrix-method}
-\title{Export the item names for a TAMatrix.}
+\title{Export the item names for a TAMatrix}
 \usage{
 \S4method{items}{TAMatrix}(x)
 }
@@ -15,5 +15,5 @@
 Names of all items in TAMatrix.
 }
 \description{
-Export the item names for a TAMatrix.
+Export the item names for a TAMatrix
 }

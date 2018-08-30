@@ -4,7 +4,7 @@
 \name{items-FIMatrix}
 \alias{items-FIMatrix}
 \alias{items,FIMatrix-method}
-\title{Export the item names for a FIMatrix.}
+\title{Export the item names for a FIMatrix}
 \usage{
 \S4method{items}{FIMatrix}(x)
 }
@@ -15,5 +15,5 @@
 Names of all items in FIMatrix.
 }
 \description{
-Export the item names for a FIMatrix.
+Export the item names for a FIMatrix
 }

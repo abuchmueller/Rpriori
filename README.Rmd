@@ -10,6 +10,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.path = "figures/"
 )
+options(width = 100)
 library(Rpriori)
 ```
 [![Build Status](https://travis-ci.org/TimToebrock/Rpriori.svg?branch=master)](https://travis-ci.org/TimToebrock/Rpriori)
@@ -138,40 +139,32 @@ lift(Rules)[1:5]
 leverage(Rules)[1:5]
 ```
 
-## Example Prune: Prune rules by minimal Lift level.
+## Example: Pruning rules
 
-Let's start by mining rules based on the test dataset Epub containing the download history of
+In this example we will use the `Epub` dataset containing the download history of
 documents from the electronical publiation platform of the Vienna University of Economics and
-Business Administration. Let's find association rules with minimal support of 0.0009 and minimal
-confidence of 0.1. 
+Business Administration.
 
-
+If you want to find association rules with minimal support of 0.0009 and minimal confidence of 0.1 run:
 ```{r}
 rules <- AssociationRules(Epub, 0.0009, 0.1)
+```
+
+If you use `qplot` you can see that there are some rules with extremely high lift values.
+
+```{r}
 qplot(rules)
 ```
 
 
-
-We see that there are some rules with really high lift. Maybe we would like to examine only the
-rules with lift above 300.
-
-
+Now imagine you are only interested in rules with a lift value above 300:
 ```{r}
 rules_pruned <- prune(rules, Lift = 300)
 print(rules_pruned)
 ```
 
-
-Similarly, we could also prune by confidence and habe a look at the rules with minimal confidence 
-0.75
-
+Similarly, you can also prune by confidence and have a look at the rules with confidence 
+of 0.75 or above:
 ```{r}
 print(prune(rules, Confidence = 0.75))
 ```
-
-
-We seem to be pretty sure about these Rules!
-
-
-

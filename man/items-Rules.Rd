@@ -4,7 +4,7 @@
 \name{items-Rules}
 \alias{items-Rules}
 \alias{items,Rules-method}
-\title{Export the item names for a Rules object.}
+\title{Export the item names for a Rules object}
 \usage{
 \S4method{items}{Rules}(x)
 }
@@ -15,5 +15,5 @@
 Vector containing the names of all items in Rules.
 }
 \description{
-Export the item names for a Rules object.
+Export the item names for a Rules object
 }

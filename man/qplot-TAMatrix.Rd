@@ -4,7 +4,7 @@
 \name{qplot-TAMatrix}
 \alias{qplot-TAMatrix}
 \alias{qplot,TAMatrix-method}
-\title{Plot an TAMatrix object with ggplot.}
+\title{Plot an TAMatrix object with ggplot2}
 \usage{
 \S4method{qplot}{TAMatrix}(x)
 }
