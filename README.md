@@ -23,7 +23,7 @@ Example: Creating association rules
 Let's say we would like to mine association rules based on the `Groceries` dataset with the `Rpriori` package. Let's first get a rough overview over the dataset. To do so we could take a look the `summary()` function of Rpriori.
 
 ``` r
-summary(makeTAMatrix(Groceries))
+summary(Groceries)
 #> 
 #> Transaction database in binary sparse matrix representation 
 #>  with 169 rows (items) and 
