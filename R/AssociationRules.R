@@ -17,10 +17,9 @@
 #' @param minconfidence Minimal confidence level the rules should have.
 #' @param minsupport Minimal support level the rules should have. 
 #' @param maxConsequentLength Maximal length of the consequents for the generated rules.
-#' @return Object of class Rules containing the calculated rules as well as information on their
-#' quality.
+#' @return Object of class Rules containing the calculated rules as well as quality measures.
 #' @examples \donttest{
-#' # Calculate the frequent itemsets with minimal support 0.03 
+#' # Calculate the Rules with minimal support 0.03 
 #' # and confidence 0.4 based on the dataset Groceries
 #' Groceries_Rules <- AssociationRules(Itemsets = Groceries, minsupport = 0.03, minconfidence = 0.4)
 #' 
@@ -33,7 +32,8 @@
 AssociationRules <- function(Itemsets, minsupport, minconfidence = 0, FrequentItems,
                              maxConsequentLength = 1) {
   
-  # Check input types of FrequentItems and Itemsets
+  # Check input types of FrequentItems and Itemsets and make them FIMatrix and TAMatrix if 
+  # neccessary.
   if (class(Itemsets)[1] != "TAMatrix") {
     Itemsets <- makeTAMatrix(Itemsets)
   }
@@ -58,14 +58,15 @@ AssociationRules <- function(Itemsets, minsupport, minconfidence = 0, FrequentIt
   
   # At this point I will save the FrequentItems to a variable and will later on assign them to 
   # slot in the output rule object. I need that slot during compution of the rules with conequent
-  # length > 1 but they do not represent the Frequent itemsets anymore.
+  # length > 1 but they do not represent the Frequent itemsets anymore. Therefore, I will overwrite
+  # them in the end with the two frequent itemsets.
   FrequentItems_correct <- FrequentItems
   
   # ---------------------------------------- #
   # Calculate rules with consequent length 1 #
   # ---------------------------------------- #
   
-  # Only frequent itemsets of length >1 are relevant for rules with consequent length > 1.
+  # Only frequent itemsets of length >1 are relevant for rule mining.
   # Therefore, I will select only these itemsets from the itemset matrix. 
   selection <- colSums(FrequentItems) > 1
   FrequentItems <- select(FrequentItems, NULL, selection)
