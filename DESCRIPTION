@@ -1,5 +1,5 @@
 Package: Rpriori
-Version: 0.9
+Version: 1.0
 Date: 2018-08-31
 Title: Implementation of the Apriori Algorithm
 Description: This package includes a full implementation of the Apriori algorithm. It comes with a S4 class structure as well as many convenience functions such as print, plot or summary.

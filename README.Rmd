@@ -31,48 +31,43 @@ devtools::install_github("TimToebrock/Rpriori")
 
 ## Example: Creating association rules
 
-Let's say we would like to mine association rules based on the `Groceries` dataset with the 
-`Rpriori` package. Let's first get a rough overview over the dataset. To do so we could take a look
-the `summary()` function of Rpriori.
+This is a basic example which shows you how to create association rules with `Rpriori` using the `Groceries` dataset.
+
+Before we do that it might be useful to take a look at our data beforehand.
+Use the `summary()` function of Rpriori to do so:
 
 ```{r}
 summary(Groceries)
 ```
 
-Interesting! We have 9835 transactions recorded with a total of 169 items. With a density of 0.026
-the average basket does have 4 items in it. That seems realistic. Let's try to find some frequent
-items with the `FindFrequentItemsets()` function of `Rpriori`!
+We have 9835 transactions recorded with a total of 169 items and a density of 0.026. The average basket has 4 items in it.
+
+Now we can try to find frequent items with the `FindFrequentItemsets()` function:
 
 ```{r}
 Frequent <- FindFrequentItemsets(Groceries, minsupport = 0.1)
 show(Frequent)
 ```
 
-We see that there are some really frequent items that occur in one out of ten transactions! What are
-these items? We can take a closer look at the items by using the `print()` function.
+There are 8 frequent itemsets that occur in one out of ten transactions. 
+If you want to take look at the itemsets now you can use the `print()` function.
 
 ```{r}
 print(Frequent)
 ```
-Does not even seem that unhealthy! Can we already find association rules based on this support value?
-Lets try out the `AssociationRules()` function.
 
-```{r}
-AssociationRules(Groceries, 0.1)
-```
-
-Unfortunately not. Lets try another support value and set the minimal confidence to 0.2.
+To create rules you need to supply `AssociationRules()` with a transactions database and a minimum support threshold. 
+You can additionally set a minimum confidence threshold, the default value for minimal confidence is 0.
 
 ```{r}
 Rules <- AssociationRules(Groceries, minsupport = 0.01, minconfidence = 0.2)
 show(Rules)
 ```
-Wow! We found our first Association rules. In the next example we are going to look a little bit
-closer at them!
+We found 231 rules Association rules with our specified paramters.
 
 ## Example: Inspecting data
 
-To get summary statistics on the rules simply call `summary()`
+To get summary statistics on rules simply call `summary()`
 ```{r}
 summary(Rules)
 ```
@@ -82,12 +77,13 @@ If you want to take a look at the underlying data used in rule creation there ar
 Frequent <- extract(Rules)
 summary(Frequent)
 ```
+
 This extracts the frequent itemsets used to calculate association rules. You can also create a frequent itemmatrix directly:
 ```{r}
 Frequent2 <- FindFrequentItemsets(Groceries, 0.01)
 Frequent2
 ```
-Since frequent item-set generation takes a lot longer than rule creation, it might be better to create a frequent item matrix first, and then use `AssociationRules()` to calculate rules.
+Since frequent itemset generation takes a lot longer than rule creation, it might be better to create a frequent item matrix first, and then use `AssociationRules()` to calculate rules.
 
 ```{r}
 fRules <- AssociationRules(Groceries, Frequent, minsupport = 0.03, minconfidence = 0.4)

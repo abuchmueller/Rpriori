@@ -20,7 +20,9 @@ devtools::install_github("TimToebrock/Rpriori")
 Example: Creating association rules
 -----------------------------------
 
-Let's say we would like to mine association rules based on the `Groceries` dataset with the `Rpriori` package. Let's first get a rough overview over the dataset. To do so we could take a look the `summary()` function of Rpriori.
+This is a basic example which shows you how to create association rules with `Rpriori` using the `Groceries` dataset.
+
+Before we do that it might be useful to take a look at our data beforehand. Use the `summary()` function of Rpriori to do so:
 
 ``` r
 summary(Groceries)
@@ -47,7 +49,9 @@ summary(Groceries)
 #>   1.000   2.000   3.000   4.409   6.000  32.000
 ```
 
-Interesting! We have 9835 transactions recorded with a total of 169 items. With a density of 0.026 the average basket does have 4 items in it. That seems realistic. Let's try to find some frequent items with the `FindFrequentItemsets()` function of `Rpriori`!
+We have 9835 transactions recorded with a total of 169 items and a density of 0.026. The average basket has 4 items in it.
+
+Now we can try to find frequent items with the `FindFrequentItemsets()` function:
 
 ``` r
 Frequent <- FindFrequentItemsets(Groceries, minsupport = 0.1)
@@ -55,7 +59,7 @@ show(Frequent)
 #> Found 8 frequent itemset(s). Use print() to display
 ```
 
-We see that there are some really frequent items that occur in one out of ten transactions! What are these items? We can take a closer look at the items by using the `print()` function.
+There are 8 frequent itemsets that occur in one out of ten transactions. If you want to take look at the itemsets now you can use the `print()` function.
 
 ``` r
 print(Frequent)
@@ -70,16 +74,7 @@ print(Frequent)
 #> 1   tropical fruit 0.1049314
 ```
 
-Does not even seem that unhealthy! Can we already find association rules based on this support value? Lets try out the `AssociationRules()` function.
-
-``` r
-AssociationRules(Groceries, 0.1)
-#> Warning in AssociationRules(Groceries, 0.1): No rules can be calculated for that minimal support and confidence level. 
-#>             Returns empty Rules object
-#> Found no rules. Try lowering the support and/or confidence threshold.
-```
-
-Unfortunately not. Lets try another support value and set the minimal confidence to 0.2.
+To create rules you need to supply `AssociationRules()` with a transactions database and a minimum support threshold. You can additionally set a minimum confidence threshold, the default value for minimal confidence is 0.
 
 ``` r
 Rules <- AssociationRules(Groceries, minsupport = 0.01, minconfidence = 0.2)
@@ -87,12 +82,12 @@ show(Rules)
 #> Found 231 rule(s). Use print() to display
 ```
 
-Wow! We found our first Association rules. In the next example we are going to look a little bit closer at them!
+We found 231 rules Association rules with our specified paramters.
 
 Example: Inspecting data
 ------------------------
 
-To get summary statistics on the rules simply call `summary()`
+To get summary statistics on rules simply call `summary()`
 
 ``` r
 summary(Rules)
@@ -155,7 +150,7 @@ Frequent2
 #> Found 333 frequent itemset(s). Use print() to display
 ```
 
-Since frequent item-set generation takes a lot longer than rule creation, it might be better to create a frequent item matrix first, and then use `AssociationRules()` to calculate rules.
+Since frequent itemset generation takes a lot longer than rule creation, it might be better to create a frequent item matrix first, and then use `AssociationRules()` to calculate rules.
 
 ``` r
 fRules <- AssociationRules(Groceries, Frequent, minsupport = 0.03, minconfidence = 0.4)
@@ -202,13 +197,13 @@ All classes come with base plotting and `ggplot2` methods. Both `plot()` and `qp
 plot(Transactions)
 ```
 
-![](figures/unnamed-chunk-12-1.png)
+![](figures/unnamed-chunk-11-1.png)
 
 ``` r
 qplot(Transactions)
 ```
 
-![](figures/unnamed-chunk-12-2.png)
+![](figures/unnamed-chunk-11-2.png)
 
 ### Plotting frequent items
 
@@ -216,13 +211,13 @@ qplot(Transactions)
 plot(Frequent)
 ```
 
-![](figures/unnamed-chunk-13-1.png)
+![](figures/unnamed-chunk-12-1.png)
 
 ``` r
 qplot(Frequent, type = "scatter", col = "red", alpha = 0.1)
 ```
 
-![](figures/unnamed-chunk-13-2.png)
+![](figures/unnamed-chunk-12-2.png)
 
 ### Plotting frequent items (as a histogram)
 
@@ -230,13 +225,13 @@ qplot(Frequent, type = "scatter", col = "red", alpha = 0.1)
 hist(Frequent)
 ```
 
-![](figures/unnamed-chunk-14-1.png)
+![](figures/unnamed-chunk-13-1.png)
 
 ``` r
 qplot(Frequent, type = "hist")
 ```
 
-![](figures/unnamed-chunk-14-2.png)
+![](figures/unnamed-chunk-13-2.png)
 
 ### Plotting rules
 
@@ -244,13 +239,13 @@ qplot(Frequent, type = "hist")
 plot(Rules)
 ```
 
-![](figures/unnamed-chunk-15-1.png)
+![](figures/unnamed-chunk-14-1.png)
 
 ``` r
 qplot(Rules)
 ```
 
-![](figures/unnamed-chunk-15-2.png)
+![](figures/unnamed-chunk-14-2.png)
 
 Example: Using convenience functions like `support()`
 -----------------------------------------------------
@@ -287,7 +282,7 @@ If you use `qplot` you can see that there are some rules with extremely high lif
 qplot(rules)
 ```
 
-![](figures/unnamed-chunk-18-1.png)
+![](figures/unnamed-chunk-17-1.png)
 
 Now imagine you are only interested in rules with a lift value above 300:
 

@@ -11,9 +11,9 @@
 \arguments{
 \item{x}{Object of class FIMatrix}
 
-\item{pch}{Size of points that is given to plot function.}
+\item{pch}{Gerneric points function}
 
-\item{col}{Colour used by plot()}
+\item{col}{Colour used for plotting}
 }
 \value{
 Scatter plot of itemsize against support
