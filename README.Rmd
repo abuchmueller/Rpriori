@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 options(width = 100)
 library(Rpriori)
 ```
-[![Build Status](https://travis-ci.org/TimToebrock/Rpriori.svg?branch=master)](https://travis-ci.org/TimToebrock/Rpriori)
+[![Build Status](https://travis-ci.org/titoeb/Rpriori.svg?branch=master)](https://travis-ci.org/titoeb/Rpriori)
 
 
 # Rpriori
@@ -26,7 +26,7 @@ You can install `Rpriori` from github with:
 
 ```{r gh-installation, eval = FALSE}
 # install.packages("devtools")
-devtools::install_github("TimToebrock/Rpriori")
+devtools::install_github("abuchmueller/Rpriori")
 ```
 
 ## Example: Creating association rules

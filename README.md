@@ -1,6 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-[![Build Status](https://travis-ci.org/TimToebrock/Rpriori.svg?branch=master)](https://travis-ci.org/TimToebrock/Rpriori)
+[![Build Status](https://travis-ci.org/titoeb/Rpriori.svg?branch=master)](https://travis-ci.org/titoeb/Rpriori)
 
 Rpriori
 =======
@@ -14,7 +14,7 @@ You can install `Rpriori` from github with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("TimToebrock/Rpriori")
+devtools::install_github("abuchmueller/Rpriori")
 ```
 
 Example: Creating association rules
